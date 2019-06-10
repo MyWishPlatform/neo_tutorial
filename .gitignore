@@ -1,0 +1,7 @@
+*/settings_local.py
+.DS_Store
+.idea/
+.venv/
+__pycache__/
+*/.DS_Store
+*/__pycache__/
