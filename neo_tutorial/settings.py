@@ -14,6 +14,7 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ROOT = os.path.dirname(os.path.realpath(__file__))
 
 
 # Quick-start development settings - unsuitable for production
@@ -23,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -73,8 +74,13 @@ WSGI_APPLICATION = 'neo_tutorial.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'neo_tutorial',
+        'USER': 'neo_tutorial',
+        'PASSWORD': 'neo_tutorial',
+        'HOST': 'localhost',
+        'PORT': 5432,
+        'CONN_MAX_AGE': None
     }
 }
 
@@ -114,5 +120,12 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
-
+PROJECT_STATIC_ROOT = os.path.join(BASE_DIR, 'neo_tutorial-frontend/dist/static')
+STATIC_ROOT = os.path.join(ROOT, 'static_collect/')
 STATIC_URL = '/static/'
+
+
+try:
+    from neo_tutorial.settings_local import *
+except ImportError as exc:
+    print("Can't load local settings")
