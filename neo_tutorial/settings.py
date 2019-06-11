@@ -53,8 +53,8 @@ ROOT_URLCONF = 'neo_tutorial.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates'),
-                 os.path.join(BASE_DIR, 'templates/administration')
+        'DIRS': [os.path.join(ROOT, 'templates'),
+                 os.path.join(ROOT, 'templates/administration')
                  ],
         'APP_DIRS': True,
         'OPTIONS': {
