@@ -15,7 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from neo_tutorial.administration.views import AdministrationView, AdministrationLoginView
+from neo_tutorial.profile.views import ProfileView, ProfileLoginView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('administration/', AdministrationView.as_view()),
+    path('administration/login', AdministrationLoginView.as_view()),
+    path('profile/', ProfileView.as_view()),
+    path('profile/login', ProfileLoginView.as_view())
 ]
