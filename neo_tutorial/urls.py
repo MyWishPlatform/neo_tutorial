@@ -23,5 +23,5 @@ urlpatterns = [
 
 
 urlpatterns += [
-    path('administration', include('neo_tutorial.administration.urls')),
+    path('administration/', include('neo_tutorial.administration.urls')),
 ]
