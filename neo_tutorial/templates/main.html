@@ -2,9 +2,29 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+    <script src='{% static "main.js" %}'></script>
+    <link rel="stylesheet" href='{% static "main.css" %}'>
+
+    {% block appScripts %}
+    {% endblock %}
 </head>
 <body>
-{% block appContent %}
-{% endblock %}
+
+<header>
+    <a href="/" class="class-header-logotype">
+        <img src="{% static 'images/photo.jpg' %}"/>
+    </a>
+</header>
+
+<main>
+    {% block appContent %}
+    {% endblock %}
+</main>
+
+<footer></footer>
+
 </body>
 </html>
+
+

@@ -118,7 +118,6 @@ USE_L10N = True
 USE_TZ = True
 
 
-print(os.path.join(BASE_DIR, 'neo_tutorial-frontend/dist/static'));
 # Static files (CSS, JavaScript, Images)
 
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
@@ -126,7 +125,7 @@ print(os.path.join(BASE_DIR, 'neo_tutorial-frontend/dist/static'));
 # PROJECT_STATIC_ROOT = os.path.join(BASE_DIR, 'neo_tutorial-frontend/dist/static/')
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'neo_tutorial-frontend/dist/static/')
+    os.path.join(BASE_DIR, 'neo_tutorial-frontend/dist/')
 ]
 
 STATIC_ROOT = os.path.join(ROOT, 'static_collect/')
