@@ -4,7 +4,7 @@ from django.http import HttpResponse
 
 class AdministrationLoginView(TemplateView):
 
-    template_name = "index.html"
+    template_name = "administration/auth.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -13,6 +13,6 @@ class AdministrationLoginView(TemplateView):
 
 class AdministrationView(TemplateView):
 
-    template_name = 'index.html'
+    template_name = 'administration/index.html'
 
 
