@@ -1,0 +1,10 @@
+{% extends 'administration.html' %}
+
+{% block pageContent %}
+
+{% for i in object_list %}
+    {{ i.username }}
+{% endfor %}
+
+{% endblock %}
+

@@ -2,6 +2,13 @@
 
 
 {% block pageContent %}
+<h2>Administration login</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Login</button>
+</form>
+
 <div ng-controller="AdminAuthController">
     <span ng-bind="adminStartText"></span>
 </div>

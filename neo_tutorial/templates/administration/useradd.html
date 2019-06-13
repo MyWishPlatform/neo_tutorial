@@ -1,0 +1,13 @@
+{% block title %}Users management{% endblock %}
+
+{% block content %}
+<h2>Add user</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" value="Save">
+  {% for message in messages %}
+    {{ message }}
+  {% endfor %}
+</form>
+{% endblock %}
