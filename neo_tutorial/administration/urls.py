@@ -6,7 +6,6 @@ from neo_tutorial.administration.views import AdministrationView, Administration
 urlpatterns = [
     path('', AdministrationView.as_view()),
     path('login/', AdministrationLoginView.as_view()),
-    path('users/add', UserAddView.as_view()),
-    path('users/list', get_all_users)
-
+    path('users/', get_all_users),
+    path('users/add/', UserAddView.as_view())
 ]

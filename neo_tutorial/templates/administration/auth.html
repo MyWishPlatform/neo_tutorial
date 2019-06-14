@@ -2,15 +2,10 @@
 
 
 {% block pageContent %}
-<h2>Administration login</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Login</button>
-</form>
 
 <div ng-controller="AdminAuthController">
-    <form class="admin-auth">
+    <form class="admin-auth" method="post" action="">
+        {% csrf_token %}
         <h1>Login</h1>
         <div class="admin-auth_fieldsset">
 
@@ -19,8 +14,13 @@
                     Username or Email
                 </span>
                 <span class="form-control_input">
-                    <input type="text">
+                    <input type="text" name="username">
                 </span>
+                {% if form.username.errors %}
+                <span class="form-control_errors">
+                    {{form.username.errors}}
+                </span>
+                {% endif %}
             </label>
 
             <label class="form-control">
@@ -28,11 +28,24 @@
                     Password
                 </span>
                 <span class="form-control_input">
-                    <input type="password">
+                    <input type="password" name="password">
                 </span>
+
+                {% if form.password.errors %}
+                <span class="form-control_errors">
+                    {{form.password.errors}}
+                </span>
+                {% endif %}
+
+                {% if form.non_field_errors %}
+                <span class="form-control_errors">
+                    {{form.non_field_errors}}
+                </span>
+                {% endif %}
+
             </label>
             <div class="form-control">
-                <button class="btn btn-submit btn-rounded">
+                <button class="btn btn-submit btn-rounded" type="submit">
                     <span class="uppercase bold">Login</span>
                 </button>
             </div>

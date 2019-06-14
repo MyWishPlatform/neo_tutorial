@@ -8,7 +8,7 @@ input {
   background-color: #fff;
   border: 1px solid #d7dad5;
   color: #7f7f7f;
-  padding: 12px 24px;
+  padding: 12px 18px;
   font-size: 14px;
   line-height: 22px;
 }
@@ -58,9 +58,21 @@ input {
     input {
       &[type="text"], &[type="email"], &[type="password"] {
         width: 100%;
+        color: #4a4a4a;
       }
     }
     display: block;
+  }
+  &_errors {
+    color: #a00;
+    font-size: 12px;
+    margin-top: 10px;
+    display: block;
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
   }
   + .form-control {
     margin-top: 25px;
