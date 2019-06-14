@@ -1,0 +1,20 @@
+{% extends 'administration.html' %}
+
+{% block pageContent %}
+
+<table>
+    <tr>
+        <th>id</th>
+        <th>username</th>
+        <th>role</th>
+    </tr>
+    {% for item in user_list %}
+    <tr>
+        <td>{{ item.id }}</td>
+        <td>{{ item.username }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
+
