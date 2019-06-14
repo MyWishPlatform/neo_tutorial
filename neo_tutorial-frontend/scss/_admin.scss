@@ -45,3 +45,25 @@
   margin: 0.5em 0;
   font-size: 35px;
 }
+
+.administration-result-table {
+  background-color: #f8f8f8;
+  width: 100%;
+  border-collapse: collapse;
+  thead {
+    background-color: #f0f0f0;
+    text-shadow: 0 1px 0 #fff;
+    color: #707070;
+    th {
+      font-weight: normal;
+    }
+  }
+  td, th {
+    border: 1px solid #e8e8e8;
+    padding: 10px;
+    text-align: left;
+    &:first-child {
+      width: 1px;
+    }
+  }
+}

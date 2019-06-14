@@ -12,7 +12,7 @@
 </h1>
 
 <div class="grid-row">
-  <div class="grid-cell grid-cell-1-3 grid-cell-sm-1-2 grid-cell-s-2-3 grid-cell-ls-1">
+  <div class="grid-cell grid-cell-2-5 grid-cell-sm-1-2 grid-cell-s-2-3 grid-cell-ls-1">
     <form class="administration-form" method="post" action name="userForm">
       {% csrf_token %}
 
@@ -35,15 +35,15 @@
         </label>
 
         <label class="form-control">
-      <span class="form-control_label uppercase">
-          Password
-      </span>
+          <span class="form-control_label uppercase">
+              Password
+          </span>
           <span class="form-control_input">
-          <input type="password" name="password"
-                 autocomplete="new-password"
-                 required
-                 ng-model="request.password">
-      </span>
+              <input type="password" name="password"
+                     autocomplete="new-password"
+                     required
+                     ng-model="request.password">
+          </span>
 
           {% if form.password.errors %}
           <span class="form-control_errors">
