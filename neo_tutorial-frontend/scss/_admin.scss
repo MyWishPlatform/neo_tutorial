@@ -1,1 +1,47 @@
 @import 'admin/auth';
+
+.administration-content {
+  padding: 10px 0;
+}
+.administration-menu {
+  list-style-type: none;
+  padding: 20px 0;
+  //text-align: center;
+  margin: 0;
+  li {
+    vertical-align: middle;
+    display: inline-block;
+    margin: 5px;
+  }
+}
+
+.administration-empty-list {
+  padding: 20px;
+  margin: 10px 0 30px;
+  text-align: center;
+  background-color: #f8f8f8;
+  border: 1px solid #e8e8e8;
+  text-shadow: 0 1px 0 #fff;
+  font-size: 14px;
+  color: #7a7a7a;
+  border-radius: 3px;
+  //box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+.administration-form {
+  padding: 20px;
+  margin-bottom: 30px;
+  background-color: #f8f8f8;
+  border: 1px solid #e8e8e8;
+  text-shadow: 0 1px 0 #fff;
+  font-size: 14px;
+  color: #7a7a7a;
+  border-radius: 3px;
+}
+
+.administration-page-title {
+  color: #474747;
+  font-weight: 300;
+  margin: 0.5em 0;
+  font-size: 35px;
+}

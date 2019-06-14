@@ -1,7 +1,14 @@
 {% extends 'administration.html' %}
 
+{% block pageTitle %}
+<title>NEO Portal Administrator | User</title>
+{% endblock %}
+
 {% block pageContent %}
 
+<h1 class="administration-page-title">Users</h1>
+
+{% if user_list.count %}
 <table>
     <tr>
         <th>id</th>
@@ -15,6 +22,18 @@
     </tr>
     {% endfor %}
 </table>
+{% endif %}
+
+
+{% if user_list.count == 0 %}
+<div class="administration-empty-list">
+    Users list is empty
+</div>
+{% endif %}
+
+<a href="{% url 'admin-users-add' %}" class="btn btn-submit btn-rounded">
+    <span>Create user</span>
+</a>
 
 {% endblock %}
 
