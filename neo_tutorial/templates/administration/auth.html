@@ -3,6 +3,34 @@
 
 {% block pageContent %}
 <div ng-controller="AdminAuthController">
-    <span ng-bind="adminStartText"></span>
+    <form class="admin-auth">
+        <h1>Login</h1>
+        <div class="admin-auth_fieldsset">
+
+            <label class="form-control">
+                <span class="form-control_label uppercase">
+                    Username or Email
+                </span>
+                <span class="form-control_input">
+                    <input type="text">
+                </span>
+            </label>
+
+            <label class="form-control">
+                <span class="form-control_label uppercase">
+                    Password
+                </span>
+                <span class="form-control_input">
+                    <input type="password">
+                </span>
+            </label>
+            <div class="form-control">
+                <button class="btn btn-submit btn-rounded">
+                    <span class="uppercase bold">Login</span>
+                </button>
+            </div>
+
+        </div>
+    </form>
 </div>
 {% endblock %}

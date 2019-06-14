@@ -1,0 +1,68 @@
+input, .btn {
+  box-sizing: border-box;
+  outline: 0 none;
+  font-family: inherit;
+}
+
+input {
+  background-color: #fff;
+  border: 1px solid #d7dad5;
+  color: #7f7f7f;
+  padding: 12px 24px;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.btn {
+  padding: 12px 24px;
+  font-size: 14px;
+  line-height: 22px;
+  border: 1px solid #d7dad5;
+  cursor: pointer;
+  &-rounded {
+    border-radius: 3px;
+  }
+  &-submit {
+    background-color: #58bf00;
+    color: #fff;
+    border-color: #58bf00;
+    &:hover {
+      background-color: #5ecd00;
+    }
+    &:active {
+      background-color: #4da800;
+      border-color: #4da800;
+    }
+  }
+}
+
+
+.form-control-group {
+  display: table;
+  &_element {
+    display: table-cell;
+  }
+}
+
+
+.form-control {
+  display: block;
+  &_label {
+    color: #7f7f7f;
+    margin-bottom: 8px;
+    line-height: 14px;
+    display: block;
+    font-size: 14px;
+  }
+  &_input {
+    input {
+      &[type="text"], &[type="email"], &[type="password"] {
+        width: 100%;
+      }
+    }
+    display: block;
+  }
+  + .form-control {
+    margin-top: 25px;
+  }
+}

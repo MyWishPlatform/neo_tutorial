@@ -3,26 +3,51 @@
 <html>
 <head>
 
-    <script src='{% static "main.js" %}'></script>
-    <link rel="stylesheet" href='{% static "main.css" %}'>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap" rel="stylesheet">
 
-    {% block appScripts %}
-    {% endblock %}
+
+
+    <link rel="stylesheet" href='{% static "main.css" %}'>
+    <script src='{% static "main.js" %}'></script>
+
 </head>
 <body>
 
-<header>
-    <a href="/" class="class-header-logotype">
-        <img src="{% static 'images/photo.jpg' %}"/>
-    </a>
+<header class="header">
+    <div class="content-wrapper">
+        <a href="/" class="class-header-logotype">
+            <img src="{% static 'images/logotype.png' %}"/>
+        </a>
+    </div>
 </header>
 
 <main>
-    {% block appContent %}
-    {% endblock %}
+    <div class="content-wrapper">
+        {% block appContent %}
+        {% endblock %}
+    </div>
 </main>
 
-<footer></footer>
+<footer class="footer">
+    <div class="content-wrapper">
+        <form class="footer-subscribe-form">
+            <div class="form-control-group">
+                <div class="form-control-group_element">
+                    <input placeholder="Enter your email">
+                </div>
+                <div class="form-control-group_element">
+                    <button class="btn btn-submit">
+                        <span>Subscribe</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+        <span class="footer-copy">
+            Copyright &copy; NEO Team 2014-2019 ICPA15040337A
+            <a href="#">Site Map</a>
+        </span>
+    </div>
+</footer>
 
 </body>
 </html>

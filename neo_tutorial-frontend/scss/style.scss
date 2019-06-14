@@ -1,3 +1,42 @@
+@import 'admin';
+@import 'common/_form-elements.scss';
+html {
+  height: 100%;
+}
+
 body {
   margin: 0;
+  background-color: #fff;
+  position: relative;
+  padding-bottom: 220px;
+  box-sizing: border-box;
+  min-height: 100%;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
 }
+
+.content-wrapper {
+  width: 90%;
+  max-width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+.bold {
+  font-weight: bold;
+}
+
+header {
+  background-color: #f9f9f9;
+  padding: 20px 0 19px;
+}
+
+@import 'common/_footer.scss';
+
+main {
+
+}
+
