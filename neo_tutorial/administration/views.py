@@ -30,7 +30,7 @@ class UserAddView(FormView):
 
     def get_success_url(self):
         messages.add_message(self.request, messages.SUCCESS, 'User created!')
-        return reverse('user-add')
+        return reverse('admin-users-add')
 
 
 def get_all_users(request):
