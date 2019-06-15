@@ -10,7 +10,8 @@ from django.http import HttpResponseRedirect, HttpResponseForbidden
 
 from neo_tutorial.profile.models import TutorialUser
 from neo_tutorial.profile.views import TutorialLoginView, TutorialAPILoginView
-from .forms import UserForm
+from .forms import UserForm, CourseForm
+from neo_tutorial.courses.models import BasicCourse
 
 
 class TutorialAdminLoginView(TutorialLoginView):
@@ -69,7 +70,6 @@ class UserAddView(CreateView):
 #        messages.add_message(self.request, messages.SUCCESS, 'User created!')
 #        return reverse('admin-users-add')
 
-
 class UserPreview(UpdateView):
     model = TutorialUser
     form_class = UserForm
@@ -84,3 +84,9 @@ def get_all_users(request):
     user_list = TutorialUser.objects.all()
     context = {'user_list': user_list}
     return render(request, 'administration/userlist.html', context)
+
+
+def get_all_courses(request):
+    course_list = BasicCourse.objects.all()
+    context = {'course_list': course_list}
+    return render(request, 'administration/courselist.html', context)
