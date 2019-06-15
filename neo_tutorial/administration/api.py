@@ -7,16 +7,17 @@ from neo_tutorial.courses.models import BasicCourse
 
 @api_view(http_method_names=['GET'])
 def profile_view(request):
-    if request.user.is_anonymous:
-        raise PermissionDenied
+    #if request.user.is_anonymous:
+    #    raise PermissionDenied
 
-    user = TutorialUser.objects.get()
+    user_id = request.data['id']
+    user_object = TutorialUser.objects.get(id=user_id)
 
     details = {
-        'id': user.id,
-        'username': user.email,
-        'is_manager': user.is_manager,
-        'is_administrator': user.is_administrator,
+        'id': user_object.id,
+        'username': user_object.email,
+        'is_manager': user_object.is_manager,
+        'is_administrator': user_object.is_administrator,
     }
 
     return Response(details)
