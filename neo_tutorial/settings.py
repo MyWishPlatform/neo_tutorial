@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 
     'neo_tutorial.administration',
     'neo_tutorial.profile',
+    'neo_tutorial.courses',
 ]
 
 MIDDLEWARE = [

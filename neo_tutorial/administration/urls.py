@@ -1,7 +1,7 @@
 from django.urls import path
 from neo_tutorial.administration.views import AdministrationView, TutorialAdminLoginView,\
     UserAddView, UserPreview, get_all_users
-from neo_tutorial.administration.api import profile_view, all_users_view, create_user_view
+from neo_tutorial.administration.api import profile_view, all_users_view, create_user_view, all_courses_view
 
 
 urlpatterns = [
@@ -16,4 +16,5 @@ urlpatterns = [
     path('api/users/', all_users_view, name='api-admin-all-users'),
     path('api/users/create/', create_user_view, name='api-admin-users-create'),
     path('api/users/preview/', profile_view, name='api-admin-users-preview'),
+    path('api/courses/', all_courses_view, name='api-admin-all-courses'),
 ]

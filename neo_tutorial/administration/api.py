@@ -2,6 +2,7 @@ from rest_framework.decorators import api_view
 from rest_framework.exceptions import PermissionDenied, ParseError
 from rest_framework.response import Response
 from neo_tutorial.profile.models import TutorialUser
+from neo_tutorial.courses.models import BasicCourse
 
 
 @api_view(http_method_names=['GET'])
@@ -68,3 +69,16 @@ def create_user_view(request):
 
     return Response(details)
 
+
+@api_view(http_method_names=['GET'])
+def all_courses_view(request):
+    all_courses = BasicCourse.objects.all()
+
+    details = []
+    for c in all_courses:
+        details.append({
+            'id': c.id,
+            'name': c.name,
+        })
+
+    return Response(details)
