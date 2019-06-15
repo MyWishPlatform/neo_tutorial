@@ -15,7 +15,8 @@
     <tr>
         <th>ID</th>
         <th>Username</th>
-        <th>Role</th>
+        <th>Manager</th>
+        <th>Administrator</th>
     </tr>
     </thead>
     <tbody>
@@ -24,7 +25,8 @@
     <tr>
         <td>{{ item.id }}</td>
         <td>{{ item.username }}</td>
-        <td>{{ item.role }}</td>
+        <td>{{ item.is_manager }}</td>
+        <td>{{ item.is_administrator }}</td>
     </tr>
     {% endfor %}
     </tbody>
