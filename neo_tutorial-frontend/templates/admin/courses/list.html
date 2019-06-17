@@ -1,8 +1,8 @@
 
-<h1 class="administration-page-title">Users</h1>
+<h1 class="administration-page-title">Courses</h1>
 
 
-    <table class="administration-result-table" cellpadding="0" cellspacing="0" ng-if="usersList.length">
+    <table class="administration-result-table" cellpadding="0" cellspacing="0" ng-if="coursesList.length">
         <thead>
         <tr>
             <th>ID</th>
@@ -12,7 +12,7 @@
         </thead>
         <tbody>
 
-        <tr ng-repeat="user in usersList">
+        <tr ng-repeat="user in coursesList">
             <td>
                 {{ user.id }}
             </td>
@@ -26,10 +26,10 @@
         </tbody>
     </table>
 
-    <div class="administration-empty-list" ng-if="!usersList.length">
-        Users list is empty
+    <div class="administration-empty-list" ng-if="!coursesList.length">
+        Courses list is empty
     </div>
     <a ui-sref="addUser" class="btn btn-submit btn-rounded">
-        <span>Create user</span>
+        <span>Create course</span>
     </a>
 </div>

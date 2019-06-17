@@ -1,14 +1,19 @@
 'use strict';
 
-var module = angular.module('adminApp', ['Constants', 'ui.router']);
+var module = angular.module('adminApp', ['Constants', 'ui.router', 'Services']);
 
 require('./admin/login');
 require('./admin/users');
 require('./admin/courses');
 
-module.run();
 
-module.config(['$stateProvider', '$locationProvider', '$urlRouterProvider', function($stateProvider, $locationProvider, $urlRouterProvider) {
+module.run(['$rootScope', '$state', function($rootScope, $state) {
+    $rootScope.currentState = $state;
+}]);
+
+
+module.config(['$stateProvider', '$locationProvider', '$urlRouterProvider',
+    function($stateProvider, $locationProvider, $urlRouterProvider) {
 
     $stateProvider.state('main', {
         abstract: true,
@@ -21,29 +26,51 @@ module.config(['$stateProvider', '$locationProvider', '$urlRouterProvider', func
         url: '/',
         controller: function() {}
     }).state('main.base.users', {
-        url: 'administration/users/',
+        url: 'users',
         controller: 'UsersListController',
-        template: require('!!html-loader!./../templates/admin/users/list.html')
+        template: require('!!html-loader!./../templates/admin/users/list.html'),
+        adminPart: 'users',
+        resolve: {
+            usersList: ['API', 'RequestService', function(API, RequestService) {
+                return RequestService.get({
+                    'API_PATH': API.ADMIN_PATH,
+                    'path': API.USERS.PATH
+                });
+            }]
+        }
     }).state('main.base.users.create', {
-        url: 'administration/users/create/',
+        url: 'users/create',
         controller: 'UsersAddController',
-        template: ''
+        template: '',
+        adminPart: 'users'
     }).state('main.base.courses', {
-        url: 'administration/courses/',
-        controller: 'UsersListController',
-        template: require('!!html-loader!./../templates/admin/users/list.html')
+        url: 'courses',
+        controller: 'CoursesListController',
+        template: require('!!html-loader!./../templates/admin/courses/list.html'),
+        adminPart: 'courses',
+        resolve: {
+            coursesList: ['API', 'RequestService', function(API, RequestService) {
+                return RequestService.get({
+                    'API_PATH': API.ADMIN_PATH,
+                    'path': API.COURSES.PATH
+                });
+            }]
+        }
     }).state('main.base.courses.create', {
-        url: 'administration/courses/create/',
+        url: 'courses/create',
         controller: 'UsersAddController',
-        template: ''
+        template: '',
+        adminPart: 'courses'
     }).state('main.base.glossary', {
-        url: 'administration/glossary/',
+        url: 'glossary',
         controller: 'UsersListController',
-        template: require('!!html-loader!./../templates/admin/users/list.html')
+        template: require('!!html-loader!./../templates/admin/users/list.html'),
+        adminPart: 'glossary'
     }).state('main.base.glossary.create', {
-        url: 'administration/glossary/create/',
+        url: 'glossary/create',
         controller: 'UsersAddController',
-        template: ''
+        template: '',
+        adminPart: 'glossary'
     });
 
 

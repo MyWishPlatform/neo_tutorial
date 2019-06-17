@@ -49,44 +49,23 @@ class TutorialAdminLoginView(TutorialLoginView):
 class AdministrationView(TemplateView):
     template_name = 'administration/index.html'
 
-
-class UserListView(FormView):
-    form_class = UserForm
-    template_name = "administration/userlist.html"
-
-
-class UserAddView(CreateView):
-    form_class = UserForm
-    template_name = "administration/useradd.html"
-
-    success_url = "/administration/users/preview/"
-
-    def get_success_url(self):
-        print(self.object.id)
-
-        return reverse('admin-users-preview', kwargs=[self.object.id])
-
-
-#        messages.add_message(self.request, messages.SUCCESS, 'User created!')
-#        return reverse('admin-users-add')
-
-class UserPreview(UpdateView):
-    model = TutorialUser
-    form_class = UserForm
-    template_name = "administration/userpreview.html"
-
-    def get(self, request, *args, **kwargs):
-        self.object = TutorialUser.objects.get(id=self.kwargs['id'])
-        return super().get(request, *args, **kwargs)
-
-
-def get_all_users(request):
-    user_list = TutorialUser.objects.all()
-    context = {'user_list': user_list}
-    return render(request, 'administration/userlist.html', context)
-
-
-def get_all_courses(request):
-    course_list = BasicCourse.objects.all()
-    context = {'course_list': course_list}
-    return render(request, 'administration/courselist.html', context)
+#
+# class UserListView(FormView):
+#     form_class = UserForm
+#     template_name = "administration/userlist.html"
+#
+#
+# class UserAddView(CreateView):
+#     form_class = UserForm
+#     template_name = "administration/useradd.html"
+#
+#     success_url = "/administration/users/preview/"
+#
+#     def get_success_url(self):
+#         print(self.object.id)
+#
+#         return reverse('admin-users-preview', kwargs=[self.object.id])
+#
+#
+# #        messages.add_message(self.request, messages.SUCCESS, 'User created!')
+# #        return reverse('admin-users-add')
