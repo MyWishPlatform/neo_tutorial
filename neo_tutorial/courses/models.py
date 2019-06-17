@@ -10,11 +10,24 @@ class LessonContent(models.Model):
     raw_text = models.TextField()
 
 
+class CourseImage(models.Model):
+    #course = models.ForeignKey(BasicCourse, on_delete=models.CASCADE, default='')
+    image = models.ImageField(upload_to='course_images')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+
+class CourseTag(models.Model):
+    name = models.CharField(max_length=120, db_index=True)
+
+
 class BasicCourse(models.Model):
     name = models.CharField(max_length=80, null=True, default='')
     speciality = models.ForeignKey(Speciality, on_delete=models.CASCADE, default='')
     description = models.CharField(max_length=120, null=True, default=None)
-    image_url = models.CharField(max_length=120, null=True, default=None)
+    image = models.ForeignKey(CourseImage, on_delete=models.CASCADE, default='', null=True)
+    tag = models.ForeignKey(CourseTag, on_delete=models.CASCADE, default='')
+    #def get_image(self):
+    #    return CourseImage.objects.get(course=self)
 
 
 class CourseMaterial(models.Model):

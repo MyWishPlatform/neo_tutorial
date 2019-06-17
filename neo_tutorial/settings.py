@@ -141,6 +141,9 @@ STATICFILES_DIRS = [
 STATIC_ROOT = os.path.join(ROOT, 'static_collect/')
 STATIC_URL = '/static/'
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media_uploads')
+
 
 try:
     from neo_tutorial.settings_local import *

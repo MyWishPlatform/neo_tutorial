@@ -2,8 +2,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.exceptions import PermissionDenied, ParseError
 from django.http import HttpResponseBadRequest
-from .models import BasicCourse, LessonContent, CourseMaterial, Lesson, Test, Speciality
-from .api import get_or_create_speciality
+from .models import BasicCourse, LessonContent, CourseMaterial, Lesson, Test, Speciality, CourseImage
+from .api import get_or_create_speciality, get_or_create_tag
 
 
 @api_view(http_method_names=['GET'])
@@ -39,16 +39,19 @@ def create_course_view(request):
     if speciality is None:
         return HttpResponseBadRequest('Speciality with id {id} already exists'.format(id=params['speciality']))
 
-    print(speciality)
-
     description = params['description'] if 'description' in params else None
-    image_url = params['image_url'] if 'image_url' in params else None
+
+    tag = get_or_create_tag(params['tag'])
+    print(tag)
+    if tag is None:
+        return HttpResponseBadRequest('Tag with id {id} already exists'.format(id=params['tag']))
+
 
     course = BasicCourse(
             name=params['name'],
             speciality=speciality,
             description=description,
-            image_url=image_url
+            tag=tag
     )
     course.save()
 
@@ -56,8 +59,20 @@ def create_course_view(request):
         'name': course.name,
         'speciality': course.speciality.name,
         'description': course.description,
-        'image_url': course.image_url
+        'tag': course.tag.name
     }
+    print(details)
+
+    if 'image' in params:
+        saved_image = CourseImage(image=request.FILES['image'])
+        saved_image.save()
+        details['image'] = {
+            "id": saved_image.id,
+            'image_url': saved_image.image.name,
+            'uploaded_at': saved_image.uploaded_at
+        }
+        #course.image = saved_image
+
     return Response(details)
 
 
