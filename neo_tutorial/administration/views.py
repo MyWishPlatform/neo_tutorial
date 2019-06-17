@@ -9,7 +9,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 
 from neo_tutorial.profile.models import TutorialUser
-from neo_tutorial.profile.views import TutorialLoginView, TutorialAPILoginView
+from neo_tutorial.profile.views import TutorialLoginView, TutorialLogoutView, TutorialAPILoginView
 from .forms import UserForm, CourseForm
 from neo_tutorial.courses.models import BasicCourse
 
@@ -39,6 +39,12 @@ class TutorialAdminLoginView(TutorialLoginView):
             return HttpResponseRedirect(self.success_url)
         else:
             return HttpResponseForbidden()
+
+
+class TutorialAdminLogoutView(TutorialLogoutView):
+    template_name = 'administration/auth.html'
+    success_url = '/administration/'
+
 
 
 #class AdministrationLoginView(LoginView):

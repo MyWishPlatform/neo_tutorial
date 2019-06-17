@@ -1,8 +1,12 @@
-from django.contrib.auth.views import LoginView as auth_LoginView
+import django.contrib.auth.views as auth_views
 from rest_auth.views import LoginView as rest_LoginView
 
 
-class TutorialLoginView(auth_LoginView):
+class TutorialLoginView(auth_views.LoginView):
+    pass
+
+
+class TutorialLogoutView(auth_views.LogoutView):
     pass
 
 

@@ -1,11 +1,12 @@
 from django.urls import path, re_path
-from neo_tutorial.administration.views import AdministrationView, TutorialAdminLoginView
+from neo_tutorial.administration.views import AdministrationView, TutorialAdminLoginView, TutorialAdminLogoutView
 
 from neo_tutorial.administration.api import profile_view, all_users_view, create_user_view, all_courses_view
 
 
 urlpatterns = [
     path('login/', TutorialAdminLoginView.as_view()),
+    path('logout/', TutorialAdminLogoutView.as_view()),
 
 
 #     path('users/create/', UserAddView.as_view(), name='admin-users-create'),

@@ -41,6 +41,7 @@ def all_users_view(request):
 
 @api_view(http_method_names=['POST'])
 def create_user_view(request):
+    print(request.data)
     if request.data['username'] is None:
         return ParseError('No username in request')
     else:
