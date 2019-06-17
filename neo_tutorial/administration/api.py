@@ -79,16 +79,3 @@ def create_user_view(request):
 
     return Response(details)
 
-
-@api_view(http_method_names=['GET'])
-def all_courses_view(request):
-    all_courses = BasicCourse.objects.all()
-
-    details = []
-    for c in all_courses:
-        details.append({
-            'id': c.id,
-            'name': c.name,
-        })
-
-    return Response(details)
