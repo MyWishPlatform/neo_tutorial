@@ -5,7 +5,8 @@ const path = require('path');
 
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TerserPlugin = require('terser-webpack-plugin');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
 
@@ -17,7 +18,7 @@ module.exports = {
     },
 
     entry: {
-        main: ['./node_modules/angular', './node_modules/angular-ui-router', './js/main.js', './scss/style.scss'],
+        main: ['./node_modules/jquery/dist/jquery.min.js', './node_modules/angular', './node_modules/angular-ui-router', './js/main.js', './scss/style.scss'],
         admin: ['./js/admin.js'],
         portal: ['./js/portal.js']
     },
@@ -65,7 +66,13 @@ module.exports = {
         }),
         new CopyWebpackPlugin([
             {from:'./images',to: 'images'}
-        ])
+        ]),
+
+        new webpack.ProvidePlugin({
+            $: "jquery/dist/jquery.min.js",
+            jQuery: "jquery/dist/jquery.min.js",
+            "window.jQuery": "jquery/dist/jquery.min.js"
+        })
         // new CleanWebpackPlugin(),
         // new HtmlWebpackPlugin({
         //     title: 'Production'

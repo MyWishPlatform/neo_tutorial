@@ -1,0 +1,194 @@
+.select-list-container {
+  position: absolute;
+  z-index: 30;
+  font-weight: normal;
+  max-height: 28em;
+  &.select-1-container {
+    margin: 0.5em 0;
+    overflow: hidden;
+    border-radius: 4px;
+    box-shadow: 0 0.4em 3em rgba(0, 0, 0, 0.25);
+    .select-option {
+      span {
+        box-sizing: border-box;
+        width: 100%;
+        background: 0 none;
+        font-size: 14px;
+        line-height: 1.45em;
+        color: #000;
+        padding: 0.95em;
+      }
+      &:hover, &.active {
+        span {
+          background: #eaeaea;
+        }
+      }
+      &.selected {
+        &, &:hover {
+          span {
+            background: #aaa;
+            color: #fff;
+          }
+        }
+      }
+
+      &_ico {
+        margin: -0.4em 0 -0.4em;
+        /* display: none; */
+        float: left;
+        margin-left: -4em;
+        width: 2.5em;
+        line-height: 2em;
+        text-align: center;
+        img {
+          height: 2em;
+          vertical-align: middle;
+        }
+      }
+      &-text {
+        &.with-ico {
+          padding-left: 5em;
+        }
+      }
+    }
+    &.little-size {
+      .select-option {
+        span {
+          font-size: 1.448em;
+        }
+      }
+    }
+  }
+
+
+  .select-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    background-color: #fafafa;
+  }
+  .select-option {
+    display: block;
+    cursor: default;
+    &:not(.information-item) {
+      cursor: pointer;
+    }
+  }
+  .readable-content {
+    display: block;
+    padding: 0.3em 1em;
+    color: #000;
+    max-width: 20em;
+    white-space: normal;
+    .one-section-content {
+      padding: 0.3em 0;
+      line-height: 1.5em;
+    }
+  }
+  .select-option {
+    &.disabled-value {
+      display: none;
+    }
+    span {
+      display: block;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  }
+}
+
+
+.select {
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  cursor: default;
+  text-align: left;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  margin-left: -0.2em;
+  &.hidden-select {
+    height: 0;
+    overflow: hidden;
+  }
+  + .select {
+    margin-top: 10px;
+  }
+  select {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+  }
+  .hidden-items {
+    overflow: hidden;
+    height: 0;
+    font-size: 15px;
+    padding-right: 39px;
+  }
+  .select-active-area, .hidden-items {
+    display: block;
+    span {
+      white-space: nowrap;
+      display: block;
+    }
+  }
+  .select-button-text {
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .no-visibility {
+    height: 0;
+    padding: 0 2em;
+    overflow: hidden;
+  }
+  select, input {
+    background: none;
+    color: transparent;
+    opacity: 0;
+  }
+}
+.select-1 {
+  .select-active-area {
+    position: relative;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    @extend .text-field;
+
+    margin-left: 0;
+    &.disabled-value {
+      color: #fff;
+    }
+    &:after {
+      content: "";
+      width: 0;
+      height: 0;
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      margin-top: -3px;
+      border-width: 6px 6px 0;
+      border-style: solid;
+      border-color: #8aa8bd transparent;
+    }
+    &_ico {
+      height: 2em;
+      vertical-align: middle;
+      margin: -0.5em 0 -0.3em;
+      /* display: none; */
+      margin-right: 0.3em;
+    }
+  }
+  &.active {
+    .select-active-area {
+      &:after {
+        border-width: 0 6px 6px;
+      }
+    }
+  }
+}

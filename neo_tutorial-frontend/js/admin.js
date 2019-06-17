@@ -1,6 +1,6 @@
 'use strict';
 
-var module = angular.module('adminApp', ['Constants', 'ui.router', 'Services']);
+var module = angular.module('adminApp', ['Constants', 'ui.router', 'Services', 'Directives']);
 
 require('./admin/login');
 require('./admin/users');
@@ -38,10 +38,15 @@ module.config(['$stateProvider', '$locationProvider', '$urlRouterProvider',
                 });
             }]
         }
-    }).state('main.base.users.create', {
+    }).state('main.base.users_create', {
         url: 'users/create',
         controller: 'UsersAddController',
-        template: '',
+        template: require('!!html-loader!./../templates/admin/users/add.html'),
+        adminPart: 'users'
+    }).state('main.base.users_view', {
+        url: 'users/create',
+        controller: 'UsersViewController',
+        template: require('!!html-loader!./../templates/admin/users/view.html'),
         adminPart: 'users'
     }).state('main.base.courses', {
         url: 'courses',

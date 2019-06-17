@@ -1,0 +1,72 @@
+<h1 class="administration-page-title">Create user</h1>
+
+<div class="grid-row">
+    <div class="grid-cell grid-cell-1-2 grid-cell-sm-1-2 grid-cell-s-2-3 grid-cell-ls-1">
+        <form class="administration-form"
+              ng-submit="createUser()"
+              name="userForm">
+            <div class="admin-auth_fieldsset">
+                <label class="form-control">
+                    <span class="form-control_label uppercase">
+                        Username
+                    </span>
+                    <span class="form-control_input">
+                        <input type="text" name="username"
+                               autocomplete="new-password"
+                               required
+                               ng-model="request.username">
+                    </span>
+
+                    <span class="form-control_errors" ng-if="formRequest.errors.username">
+                        {{formRequest.errors.username}}
+                    </span>
+                </label>
+
+                <label class="form-control">
+                    <span class="form-control_label uppercase">
+                        Password
+                    </span>
+                    <span class="form-control_input">
+                        <input type="password" name="password"
+                               autocomplete="new-password"
+                               required
+                               ng-model="request.password">
+                    </span>
+
+                    <span class="form-control_errors" ng-if="formRequest.errors.password">
+                        {{formRequest.errors.password}}
+                    </span>
+
+                    <span class="form-control_errors" ng-if="formRequest.errors.non_field_errors">
+                        {{formRequest.errors.non_field_errors}}
+                    </span>
+                </label>
+
+
+                <label class="form-control">
+                    <span class="form-control_label uppercase">
+                        Role
+                    </span>
+                    <span class="form-control_input">
+                        <div ng-select
+                             ng-model-list="rolesList"
+                             ng-select-options="{class: 'select-1', label: 'label'}"
+                             ng-model="userRole"></div>
+                    </span>
+                </label>
+
+                <div class="form-control">
+                    <button class="btn btn-submit btn-rounded" type="submit" ng-disabled="!userForm.$valid">
+                        <span class="uppercase bold">Create</span>
+                    </button>
+
+                    <span class="form-control_msg">
+                        {{formRequest.message.join(",\n")}}
+                    </span>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

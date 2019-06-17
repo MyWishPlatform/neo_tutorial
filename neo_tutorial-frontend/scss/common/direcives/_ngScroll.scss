@@ -1,0 +1,56 @@
+.scroller-line-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.scroller-ranger {
+  width: 8px;
+  cursor: pointer;
+  //background-color: rgba(0,0,0,0.4);
+}
+.fn-scroller-line {
+  right: 0;
+  width: 0;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  overflow: visible;
+}
+.scrolled-block {
+  margin-right: 10px;
+}
+
+.select-1-container {
+  .fn-scroller-line {
+    right: 3px;
+    top: 2px;
+    bottom: 2px;
+  }
+  .scroller-line-container {
+    border-radius: 3px;
+    background-color: rgba(32, 110, 255, 0.1);
+  }
+  .scroller-ranger {
+    border-radius: 3px;
+    background-color: rgba(0, 0, 0, 0.3);
+    opacity: 0.3;
+  }
+}
+
+.select-2-container {
+  .scroller-line-container {
+    background-color: #aaa;
+  }
+  .scroller-ranger {
+    background-color: #888;
+  }
+}
+
+
+
+.ng-decorate-scroll {
+  height: 100%;
+  overflow: auto;
+}
