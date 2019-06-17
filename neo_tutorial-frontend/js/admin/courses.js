@@ -3,6 +3,9 @@ angular.module('adminApp')
         $scope.coursesList = coursesList.data;
     }])
     .controller('CoursesAddController', ['$scope', '$http', function($scope, $http) {
+        $scope.createCourse = function() {
+
+        };
 
     }]);
 

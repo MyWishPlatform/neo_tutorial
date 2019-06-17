@@ -1,4 +1,4 @@
-input, .btn {
+input, .btn, .text-field {
   box-sizing: border-box;
   outline: 0 none;
   font-family: inherit;
@@ -8,9 +8,17 @@ input, .text-field {
   background-color: #fff;
   border: 1px solid #d7dad5;
   color: #7f7f7f;
-  padding: 12px 18px;
   font-size: 14px;
+  padding: 12px 18px;
   line-height: 22px;
+}
+.text-field-min {
+  @extend .btn-min;
+}
+textarea.text-field {
+  padding: 10px 14px;
+  line-height: 18px;
+  height: 140px;
 }
 
 .btn {
@@ -27,6 +35,11 @@ input, .text-field {
 
   &-rounded {
     border-radius: 3px;
+  }
+  &-min {
+    padding: 4px 14px;
+    font-size: 13px;
+    line-height: 20px;
   }
   &[disabled] {
     opacity: 0.5;
@@ -50,6 +63,29 @@ input, .text-field {
       &.btn-active {
         background-color: #fff;
         color: #4da800;
+      }
+    }
+  }
+  &-file {
+    background-color: #fff;
+    color: #777;
+    border-color: #d7dad5;
+    position: relative;
+    overflow: hidden;
+    input[type="file"] {
+      position: absolute;
+      margin: 0;
+      left: -2px;
+      top: -2px;
+      font-size: 70px;
+      opacity: 0;
+    }
+    &:not([disabled]) {
+      &:hover {
+        background-color: #fafafa;
+      }
+      &:active {
+        background-color: #f0f0f0;
       }
     }
   }
@@ -80,6 +116,12 @@ input, .text-field {
         color: #4a4a4a;
       }
     }
+    .text-field {
+      width: 100%;
+      max-width: 100%;
+      min-width: 100%;
+      color: #4a4a4a;
+    }
     display: block;
   }
   &_errors {
@@ -97,3 +139,4 @@ input, .text-field {
     margin-top: 25px;
   }
 }
+

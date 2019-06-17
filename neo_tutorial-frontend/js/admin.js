@@ -47,7 +47,18 @@ module.config(['$stateProvider', '$locationProvider', '$urlRouterProvider',
         url: 'users/:id',
         controller: 'UsersViewController',
         template: require('!!html-loader!./../templates/admin/users/view.html'),
-        adminPart: 'users'
+        adminPart: 'users',
+        resolve: {
+            userProfile: ['API', 'RequestService', '$stateParams', function(API, RequestService, $stateParams) {
+                return RequestService.get({
+                    'API_PATH': API.ADMIN_PATH,
+                    'path': API.USERS.PATH + API.USERS.METHODS.PREVIEW,
+                    'params': {
+                        id: $stateParams.id
+                    }
+                });
+            }]
+        }
     }).state('main.base.courses', {
         url: 'courses',
         controller: 'CoursesListController',
@@ -61,10 +72,10 @@ module.config(['$stateProvider', '$locationProvider', '$urlRouterProvider',
                 });
             }]
         }
-    }).state('main.base.courses.create', {
+    }).state('main.base.courses_create', {
         url: 'courses/create',
-        controller: 'UsersAddController',
-        template: '',
+        controller: 'CoursesAddController',
+        template: require('!!html-loader!./../templates/admin/courses/add.html'),
         adminPart: 'courses'
     }).state('main.base.glossary', {
         url: 'glossary',

@@ -1,0 +1,91 @@
+<h1 class="administration-page-title">Create course</h1>
+
+<div class="grid-row">
+    <div class="grid-cell grid-cell-1-2 grid-cell-sm-1-2 grid-cell-s-2-3 grid-cell-ls-1">
+        <form class="administration-form"
+              ng-submit="createCourse()"
+              name="courseForm">
+            <div class="admin-auth_fieldsset">
+                <label class="form-control">
+                    <span class="form-control_label">
+                        Title
+                    </span>
+                    <span class="form-control_input">
+                        <input type="text" name="name"
+                               required
+                               ng-model="request.name">
+                    </span>
+                    <span class="form-control_errors" ng-if="formRequest.errors.name">
+                        {{formRequest.errors.name}}
+                    </span>
+                </label>
+
+                <label class="form-control">
+                    <span class="form-control_label">
+                        Section
+                    </span>
+                    <span class="form-control_input">
+                        <input type="text" name="speciality"
+                               required
+                               ng-model="request.speciality">
+                    </span>
+
+                    <span class="form-control_errors" ng-if="formRequest.errors.speciality">
+                        {{formRequest.errors.speciality}}
+                    </span>
+
+                </label>
+
+
+                <label class="form-control">
+                    <span class="form-control_label">
+                        Description
+                    </span>
+                    <span class="form-control_input">
+                        <textarea ng-model="request.description"
+                                  name="description"
+                                  class="text-field"
+                                  placeholder="Course description">
+
+                        </textarea>
+                    </span>
+                </label>
+
+
+                <div class="form-control">
+                    <span class="form-control_label">
+                        Cover
+                    </span>
+                    <span class="form-control_input">
+                        <label class="btn btn-file btn-rounded">
+                            <span>Choose file...</span>
+                            <input type="file">
+                        </label>
+                    </span>
+                </div>
+
+
+                <div class="form-control">
+                    <span class="form-control_label">
+                        Tags
+                    </span>
+                    <div class="form-control_input">
+                        <textarea ng-model="request.tags"
+                                  name="tags"
+                                  class="text-field"
+                                  placeholder="Введите тэги через пробел">
+                        </textarea>
+                    </div>
+                </div>
+
+
+                <div class="form-control">
+                    <button class="btn btn-submit btn-rounded" type="submit" ng-disabled="!userForm.$valid">
+                        <span class="bold">Create</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

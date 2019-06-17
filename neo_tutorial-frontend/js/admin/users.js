@@ -42,6 +42,8 @@ angular.module('adminApp')
 
                 var requestData = angular.extend($scope.request, $scope.userRole.data);
 
+                $scope.formRequest.errors = undefined;
+
                 RequestService.post({
                     API_PATH: API.ADMIN_PATH,
                     path: API.USERS.PATH + API.USERS.METHODS.CREATE,
@@ -49,7 +51,13 @@ angular.module('adminApp')
                 }).then(function(response) {
                     $state.go('main.base.users_view', {id: response.data.id});
                 }, function(error) {
-                    console.log(error);
+                    switch (error.status) {
+                        case 400:
+                            $scope.formRequest.errors = {
+                                username: error.data
+                            };
+                            break;
+                    }
                 });
             };
 
