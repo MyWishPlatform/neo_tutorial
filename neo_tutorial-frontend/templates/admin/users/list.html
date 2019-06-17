@@ -1,0 +1,29 @@
+
+<h1 class="administration-page-title">Users</h1>
+
+
+    <table class="administration-result-table" cellpadding="0" cellspacing="0">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Role</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr ng-repeat="user in usersList">
+            <td>{{ user.id }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.role }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="administration-empty-list">
+        Users list is empty
+    </div>
+    <a ui-sref="addUser" class="btn btn-submit btn-rounded">
+        <span>Create user</span>
+    </a>
+</div>

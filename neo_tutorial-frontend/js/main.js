@@ -1,2 +1,1 @@
-require ('./admin.js');
-require ('./portal.js');
+require('./constants');

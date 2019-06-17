@@ -16,11 +16,12 @@ module.exports = {
         minimizer: [new TerserPlugin()],
     },
 
-    entry: [
-        './node_modules/angular',
-        './js/main.js', './js/admin.js', './js/portal.js',
-        './scss/style.scss'
-    ],
+    entry: {
+        main: ['./node_modules/angular', './node_modules/angular-ui-router', './js/main.js', './scss/style.scss'],
+        admin: ['./js/admin.js'],
+        portal: ['./js/portal.js']
+    },
+
     output: {
         filename: '[name].js',
         path: __dirname + '/dist'
@@ -43,7 +44,16 @@ module.exports = {
                         loader: 'babel-loader'
                     }
                 ]
-            }
+            },
+
+            {
+                test: /\.html$/,
+                use: [
+                    'ngtemplate-loader',
+                    'html-loader'
+                ],
+                include: __dirname + 'templates'
+            },
         ]
     },
     plugins: [

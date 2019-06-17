@@ -26,7 +26,7 @@ class UserListView(FormView):
 
 class UserAddView(FormView):
     form_class = UserForm
-    template_name = "administration/useradd.html"
+    template_name = "administration/users/add.html"
 
     def get_success_url(self):
         messages.add_message(self.request, messages.SUCCESS, 'User created!')
@@ -34,6 +34,20 @@ class UserAddView(FormView):
 
 
 def get_all_users(request):
-    user_list = TutorialCommonUser.objects.all()
-    context = {'user_list': user_list}
-    return render(request, 'administration/userlist.html', context)
+#     user_list = TutorialCommonUser.objects.all()
+#     context = {'user_list': user_list}
+#     return render(request, 'administration/users/list.html', context)
+    return render(request, 'administration.html')
+
+
+
+
+class CoursesListView(TemplateView):
+    template_name = "administration/courses/list.html"
+
+
+class CoursesAddView(TemplateView):
+    template_name = "administration/courses/add.html"
+
+
+

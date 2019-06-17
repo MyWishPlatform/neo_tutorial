@@ -1,26 +1,26 @@
 {% extends 'administration.html' %}
 
 {% block pageTitle %}
-<title>NEO Portal Administrator | User</title>
+<title>NEO Portal Administrator | Courses</title>
 {% endblock %}
 
 {% block pageContent %}
 
-<h1 class="administration-page-title">Users</h1>
+<h1 class="administration-page-title">Courses</h1>
 
 
-{% if user_list.count %}
+{% if courses_list.count %}
 <table class="administration-result-table" cellpadding="0" cellspacing="0">
     <thead>
     <tr>
-        <th>ID</th>
-        <th>Username</th>
+        <th>Title</th>
+        <th>State</th>
         <th>Role</th>
     </tr>
     </thead>
     <tbody>
 
-    {% for item in user_list %}
+    {% for item in courses_list %}
     <tr>
         <td>{{ item.id }}</td>
         <td>{{ item.username }}</td>
@@ -32,14 +32,14 @@
 {% endif %}
 
 
-{% if user_list.count == 0 %}
+{% if courses_list.count == 0 %}
 <div class="administration-empty-list">
-    Users list is empty
+    Courses list is empty
 </div>
 {% endif %}
 
-<a href="{% url 'admin-users-add' %}" class="btn btn-submit btn-rounded">
-    <span>Create user</span>
+<a href="{% url 'admin-course-add' %}" class="btn btn-submit btn-rounded">
+    <span>Create course</span>
 </a>
 
 {% endblock %}

@@ -18,15 +18,19 @@
     "extract-loader": "^3.1.0",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^4.0.0",
+    "html-loader": "^0.5.5",
     "mini-css-extract-plugin": "^0.7.0",
+    "ngtemplate-loader": "^2.0.1",
     "node-sass": "^4.12.0",
     "postcss-loader": "^3.0.0",
+    "raw-loader": "^3.0.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
     "terser": "^3.14.1",
     "webpack": "^4.34.0"
   },
   "dependencies": {
-    "angular": "^1.7.8"
+    "angular": "^1.7.8",
+    "angular-ui-router": "^1.0.22"
   }
 }

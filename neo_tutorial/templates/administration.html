@@ -1,6 +1,12 @@
 {% extends 'main.html' %}
+{% load static %}
+
+{% block appScripts %}
+<script src='{% static "admin.js" %}'></script>
+{% endblock %}
 
 {% block appContent %}
+
 <div ng-app="adminApp" class="administration-content">
     <ul class="administration-menu">
         <li>
@@ -28,7 +34,10 @@
             </a>
         </li>
     </ul>
-    {% block pageContent %}{% endblock %}
+
+    <div ui-view></div>
+
+    <!--{% block pageContent %}{% endblock %}-->
 
 </div>
 {% endblock %}
