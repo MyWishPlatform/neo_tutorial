@@ -1,5 +1,7 @@
 from rest_framework.decorators import api_view
 from rest_framework.exceptions import PermissionDenied, ParseError
+from django.db import IntegrityError
+from django.http import HttpResponseBadRequest
 from rest_framework.response import Response
 from neo_tutorial.profile.models import TutorialUser
 from neo_tutorial.courses.models import BasicCourse
@@ -55,12 +57,18 @@ def create_user_view(request):
     is_manager = request.data['is_manager'] if 'is_manager' in request.data else False
     is_administrator = request.data['is_administrator'] if 'is_administrator' in request.data else False
 
-    user = TutorialUser.objects.create_user(
+    try:
+        u = TutorialUser.objects.get(username=username)
+        return HttpResponseBadRequest('User with username {username} already exists'.format(username=username))
+
+    except TutorialUser.DoesNotExist:
+        user = TutorialUser.objects.create_user(
             email=username,
             password=pwd,
             is_manager=is_manager,
             is_administrator=is_administrator
-    )
+        )
+
 
     details = {
         'id': user.id,
