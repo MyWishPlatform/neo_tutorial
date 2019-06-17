@@ -44,7 +44,7 @@ module.config(['$stateProvider', '$locationProvider', '$urlRouterProvider',
         template: require('!!html-loader!./../templates/admin/users/add.html'),
         adminPart: 'users'
     }).state('main.base.users_view', {
-        url: 'users/create',
+        url: 'users/:id',
         controller: 'UsersViewController',
         template: require('!!html-loader!./../templates/admin/users/view.html'),
         adminPart: 'users'

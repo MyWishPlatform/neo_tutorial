@@ -17,11 +17,34 @@
 
 <header class="header">
     <div class="content-wrapper">
+
+        <div class="header-profile">
+            <div class="header-profile_btn logged"
+                 id="profile-btn"
+                 ng-mousedown="$event.preventDefault();"
+                 ng-class="{'opened': openedMenu}"
+                 ng-click="toggleProfileMenu()">
+                <span class="header-profile_avatar">
+                    <img src="{% static 'images/icons/account.svg' %}"/>
+                </span>
+                <span class="header-profile_username">dimanok</span>
+
+                <ul class="header-profile_menu">
+                   <li>
+                       <a class="header-profile_menu_link" href="{% url 'profile-logout' %}">Log out</a>
+                   </li>
+                </ul>
+
+            </div>
+        </div>
+
         <a href="/" class="class-header-logotype">
             <img src="{% static 'images/logotype.png' %}"/>
         </a>
     </div>
 </header>
+
+
 
 <main>
     <div class="content-wrapper">

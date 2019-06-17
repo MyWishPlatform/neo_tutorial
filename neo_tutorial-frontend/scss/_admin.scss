@@ -58,12 +58,28 @@
       font-weight: normal;
     }
   }
+  tbody {
+    tr {
+      cursor: pointer;
+      color: #444;
+      text-shadow: 0 1px 0 #fff;
+      &:hover {
+        background-color: #58bf00;
+        color: #fff;
+        text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
+        td {
+          border-color: rgba(0, 0, 0, 0.1);
+        }
+      }
+    }
+  }
   td, th {
     border: 1px solid #e8e8e8;
     padding: 10px;
     text-align: left;
     &:first-child {
       width: 1px;
+      text-align: center;
     }
   }
 }

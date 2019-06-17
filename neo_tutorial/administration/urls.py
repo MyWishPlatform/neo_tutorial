@@ -6,7 +6,7 @@ from neo_tutorial.administration.api import profile_view, all_users_view, create
 
 urlpatterns = [
     path('login/', TutorialAdminLoginView.as_view()),
-    path('logout/', TutorialAdminLogoutView.as_view()),
+    path('logout/', TutorialAdminLogoutView.as_view(), name='profile-logout'),
 
 
 #     path('users/create/', UserAddView.as_view(), name='admin-users-create'),

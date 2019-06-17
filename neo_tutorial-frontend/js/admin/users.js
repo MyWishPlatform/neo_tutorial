@@ -47,7 +47,7 @@ angular.module('adminApp')
                     path: API.USERS.PATH + API.USERS.METHODS.CREATE,
                     data: requestData
                 }).then(function(response) {
-                    $state.go('main.base.users_view');
+                    $state.go('main.base.users_view', {id: response.data.id});
                 }, function(error) {
                     console.log(error);
                 });

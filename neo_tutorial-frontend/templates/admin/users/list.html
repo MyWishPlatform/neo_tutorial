@@ -12,7 +12,7 @@
         </thead>
         <tbody>
 
-        <tr ng-repeat="user in usersList">
+        <tr ng-repeat="user in usersList" ui-sref="main.base.users_view({id: user.id})">
             <td>
                 {{ user.id }}
             </td>
