@@ -2,7 +2,8 @@ from django.urls import path, re_path
 from neo_tutorial.administration.views import AdministrationView, TutorialAdminLoginView, TutorialAdminLogoutView
 
 from neo_tutorial.administration.api import profile_view, all_users_view, create_user_view
-from neo_tutorial.courses.views import all_courses_view, create_course_view, update_course_view
+from neo_tutorial.courses.views import all_courses_view, create_course_view, update_course_view, \
+    get_course_view, get_courses_by_tag_view, get_specialities_view
 
 
 urlpatterns = [
@@ -23,6 +24,9 @@ urlpatterns = [
     path('api/courses/', all_courses_view, name='api-admin-all-courses'),
     path('api/courses/create/', create_course_view, name='api-admin-courses-create'),
     path('api/courses/update/', update_course_view, name='api-admin-courses-update'),
+    path('api/courses/preview/',get_course_view, name='api-admin-courses-preview'),
+    path('api/courses/find_from_tag/', get_courses_by_tag_view, name='api-admin-courses-get-from-tag'),
+    path('api/courses/specialities/', get_specialities_view, name='api-admin-courses-specialities'),
 
 
     re_path(r'^(.*)$', AdministrationView.as_view()),

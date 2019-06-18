@@ -1,8 +1,9 @@
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
 
 
 class Speciality(models.Model):
-    name = models.CharField(max_length=120, db_index=True)
+    name = models.CharField(max_length=120, db_index=True, unique=True)
 
 
 class LessonContent(models.Model):
@@ -16,8 +17,8 @@ class CourseImage(models.Model):
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
 
-class CourseTag(models.Model):
-    name = models.CharField(max_length=120, db_index=True)
+#class CourseTag(models.Model):
+#    name = models.CharField(max_length=120, db_index=True)
 
 
 class BasicCourse(models.Model):
@@ -25,7 +26,11 @@ class BasicCourse(models.Model):
     speciality = models.ForeignKey(Speciality, on_delete=models.CASCADE, default='')
     description = models.CharField(max_length=120, null=True, default='')
     image = models.ForeignKey(CourseImage, on_delete=models.CASCADE, default='', null=True)
-    tag = models.ForeignKey(CourseTag, on_delete=models.CASCADE, default='')
+    #tag = models.ForeignKey(CourseTag, on_delete=models.CASCADE, default='')
+    tags = ArrayField(
+            base_field=models.CharField(max_length=30, null=True, default=''),
+            null=True
+    )
 
     #def get_image(self):
     #    return CourseImage.objects.get(id=self.image.id)
