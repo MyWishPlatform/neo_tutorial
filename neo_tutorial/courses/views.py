@@ -12,13 +12,22 @@ def all_courses_view(request):
 
     details = []
     for c in all_courses:
-        details.append({
+        course_details = {
             'id': c.id,
             'name': c.name,
             'speciality': c.speciality.name,
             'description': c.description,
-            'image_url': c.image_url
-        })
+            'image': {}
+        }
+        if c.image is not None:
+            saved_image = c.image
+
+            course_details['image'] = {
+                "id": saved_image.id,
+                'image_url': saved_image.image.name,
+                'uploaded_at': saved_image.uploaded_at
+            }
+        details.append(course_details)
 
     return Response(details)
 
@@ -39,10 +48,9 @@ def create_course_view(request):
     if speciality is None:
         return HttpResponseBadRequest('Speciality with id {id} already exists'.format(id=params['speciality']))
 
-    description = params['description'] if 'description' in params else None
+    description = params['description'] if 'description' in params else ''
 
     tag = get_or_create_tag(params['tag'])
-    print(tag)
     if tag is None:
         return HttpResponseBadRequest('Tag with id {id} already exists'.format(id=params['tag']))
 
@@ -53,26 +61,28 @@ def create_course_view(request):
             description=description,
             tag=tag
     )
-    course.save()
 
-    details = {
-        'name': course.name,
-        'speciality': course.speciality.name,
-        'description': course.description,
-        'tag': course.tag.name
-    }
-    print(details)
-
+    image_details = {}
     if 'image' in params:
         saved_image = CourseImage(image=request.FILES['image'])
         saved_image.save()
-        details['image'] = {
+        course.image = saved_image
+        image_details = {
             "id": saved_image.id,
             'image_url': saved_image.image.name,
             'uploaded_at': saved_image.uploaded_at
         }
-        #course.image = saved_image
 
+    course.save()
+
+    details = {
+        'id': course.id,
+        'name': course.name,
+        'speciality': course.speciality.name,
+        'description': course.description,
+        'tag': course.tag.name,
+        'image': image_details
+    }
     return Response(details)
 
 

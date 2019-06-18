@@ -23,11 +23,12 @@ class CourseTag(models.Model):
 class BasicCourse(models.Model):
     name = models.CharField(max_length=80, null=True, default='')
     speciality = models.ForeignKey(Speciality, on_delete=models.CASCADE, default='')
-    description = models.CharField(max_length=120, null=True, default=None)
+    description = models.CharField(max_length=120, null=True, default='')
     image = models.ForeignKey(CourseImage, on_delete=models.CASCADE, default='', null=True)
     tag = models.ForeignKey(CourseTag, on_delete=models.CASCADE, default='')
+
     #def get_image(self):
-    #    return CourseImage.objects.get(course=self)
+    #    return CourseImage.objects.get(id=self.image.id)
 
 
 class CourseMaterial(models.Model):
