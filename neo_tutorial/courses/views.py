@@ -1,8 +1,9 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.exceptions import PermissionDenied, ParseError
-from .models import BasicCourse, LessonContent, CourseMaterial, Lesson, Test, Speciality, CourseImage
-from .api import get_courses_details, get_or_create_speciality, get_all_courses_details, get_courses_by_tag_details
+from .models import BasicCourse, CourseMaterial, Lesson, Test, Speciality, CourseImage
+from .api import get_courses_details, get_or_create_speciality, get_all_courses_details, get_courses_by_tag_details, \
+    parse_image
 
 
 @api_view(http_method_names=['GET'])
@@ -23,16 +24,9 @@ def create_course_view(request):
         raise ParseError('Speciality of course is required')
 
     speciality = get_or_create_speciality(params['speciality'])
-    #if speciality is None:
-    #    raise ParseError('Speciality with id {id} not exists'.format(id=params['speciality']))
-
-
     description = params['description'] if 'description' in params else ''
     tag_list = params['tags'] if 'tags' in params else []
-    for x in tag_list:
-        print(x)
-    print(tag_list)
-    print(tag_list.__class__)
+
     if not isinstance(tag_list, list):
         raise ParseError('Tags must be passed as list')
 
@@ -42,19 +36,11 @@ def create_course_view(request):
             description=description,
             tags=tag_list
     )
+    course.save()
 
     image_details = {}
     if 'image' in params:
-        saved_image = CourseImage(image=request.FILES['image'])
-        saved_image.save()
-        course.image = saved_image
-        image_details = {
-            "id": saved_image.id,
-            'image_url': saved_image.image.name,
-            'uploaded_at': saved_image.uploaded_at
-        }
-
-    course.save()
+        image_details = parse_image(course, request.FILES['image'])
 
     details = {
         'id': course.id,
@@ -81,17 +67,13 @@ def update_course_view(request):
         raise ParseError('Course with id {course_id} is not found'.format(course_id=course_id))
 
     if 'speciality' in params:
-        speciality = get_or_create_speciality(params['speciality'])
-        if speciality is None:
-            raise ParseError('Speciality with id {id} already exists'.format(id=params['speciality']))
-        else:
-            course.speciality = speciality
+        course.speciality = get_or_create_speciality(params['speciality'])
 
     if 'description' in params:
         course.description = params['description']
 
-    if 'image_url' in params:
-        course.image_url = params['image_url']
+    if 'image' in params:
+        image_details = parse_image(course, request.FILES['image'])
 
     course.save()
 
@@ -99,7 +81,7 @@ def update_course_view(request):
         'name': course.name,
         'speciality': course.speciality.name,
         'description': course.description,
-        'image_url': course.image_url
+        'image_url': image_details
     }
 
     return Response(updated_details)
@@ -135,3 +117,19 @@ def get_specialities_view(request):
             'name': speciality.name
         })
     return Response(speciality_details)
+
+
+@api_view(http_method_names=['GET'])
+def create_lesson_view(request):
+    params = request.data
+
+    if 'name' not in params:
+        raise ParseError('Name of lesson is required')
+
+    lesson = Lesson(
+            name=params['name'],
+            description=params['description'],
+            video_id=params['video_id'],
+            content=params['content']
+
+    )

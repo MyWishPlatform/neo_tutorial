@@ -1,9 +1,5 @@
-from .models import BasicCourse, LessonContent, CourseMaterial, Lesson, Test, Speciality
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
 from rest_framework.exceptions import ParseError
-from .models import BasicCourse, Speciality
-from django.http import HttpResponseBadRequest
+from .models import BasicCourse, Speciality, CourseImage
 
 
 def get_or_create_speciality(param):
@@ -34,12 +30,10 @@ def get_courses_details(courses_queryset):
             'image': {},
             'tags': c.tags
         }
-        if c.image is not None:
-            saved_image = c.image
-
+        saved_image = c.courseimage_set.all().order_by('-uploaded_at').first()
+        if saved_image:
             course_details['image'] = {
-                "id": saved_image.id,
-                'image_url': saved_image.image.name,
+                'image_name': saved_image.image.name,
                 'uploaded_at': saved_image.uploaded_at
             }
         details.append(course_details)
@@ -62,3 +56,12 @@ def get_courses_by_tag_details(tag_param):
     details = get_courses_details(courses)
     return details
 
+
+def parse_image(course_object, file):
+    saved_image = CourseImage(course=course_object, image=file)
+    saved_image.save()
+    details = {
+        'image_name': saved_image.image.name,
+        'uploaded_at': saved_image.uploaded_at
+    }
+    return details

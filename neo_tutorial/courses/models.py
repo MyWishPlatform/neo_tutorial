@@ -6,34 +6,29 @@ class Speciality(models.Model):
     name = models.CharField(max_length=120, db_index=True, unique=True)
 
 
-class LessonContent(models.Model):
-    name = models.CharField(max_length=120, db_index=True)
-    raw_text = models.TextField()
-
-
-class CourseImage(models.Model):
-    #course = models.ForeignKey(BasicCourse, on_delete=models.CASCADE, default='')
-    image = models.ImageField(upload_to='course_images')
-    uploaded_at = models.DateTimeField(auto_now_add=True)
-
-
-#class CourseTag(models.Model):
+#class LessonContent(models.Model):
 #    name = models.CharField(max_length=120, db_index=True)
+#    raw_text = models.TextField()
 
 
 class BasicCourse(models.Model):
     name = models.CharField(max_length=80, null=True, default='')
     speciality = models.ForeignKey(Speciality, on_delete=models.CASCADE, default='')
     description = models.CharField(max_length=120, null=True, default='')
-    image = models.ForeignKey(CourseImage, on_delete=models.CASCADE, default='', null=True)
-    #tag = models.ForeignKey(CourseTag, on_delete=models.CASCADE, default='')
+
     tags = ArrayField(
             base_field=models.CharField(max_length=30, null=True, default=''),
             null=True
     )
 
-    #def get_image(self):
-    #    return CourseImage.objects.get(id=self.image.id)
+    def get_image(self):
+        return CourseImage.objects.get(id=self.image.id)
+
+
+class CourseImage(models.Model):
+    course = models.ForeignKey(BasicCourse, on_delete=models.CASCADE, default='')
+    image = models.ImageField(upload_to='course_images')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
 
 
 class CourseMaterial(models.Model):
@@ -48,9 +43,8 @@ class Lesson(models.Model):
     course = models.ForeignKey(BasicCourse, on_delete=models.CASCADE)
     name = models.CharField(max_length=80, null=True, default='')
     description = models.CharField(max_length=120, null=True, default=None)
-    video_url = models.CharField(max_length=120, null=True, default=None)
-    content = models.ForeignKey(LessonContent, on_delete=models.CASCADE)
-    #test = models.ForeignKey(Test, on_delete=models.CASCADE)
+    video_id = models.CharField(max_length=120, null=True, default=None)
+    content = models.TextField()
 
 
 class Test(models.Model):
