@@ -59,6 +59,7 @@ module.config(['$stateProvider', '$locationProvider', '$urlRouterProvider',
                 });
             }]
         }
+
     }).state('main.base.courses', {
         url: 'courses',
         controller: 'CoursesListController',
@@ -77,7 +78,54 @@ module.config(['$stateProvider', '$locationProvider', '$urlRouterProvider',
         controller: 'CoursesAddController',
         template: require('!!html-loader!./../templates/admin/courses/add.html'),
         adminPart: 'courses'
-    }).state('main.base.glossary', {
+    }).state('main.base.courses_view', {
+        url: 'courses/:id',
+        controller: 'CoursesViewController',
+        template: require('!!html-loader!./../templates/admin/courses/add.html'),
+        adminPart: 'courses'
+
+
+    }).state('main.base.lessons', {
+        url: 'courses/:courseId/lessons',
+        controller: 'LessonsListController',
+        template: require('!!html-loader!./../templates/admin/courses/lessons/list.html'),
+        adminPart: 'courses'
+    }).state('main.base.lessons_create', {
+        url: 'courses/:courseId/lessons/create',
+        controller: 'LessonsAddController',
+        template: require('!!html-loader!./../templates/admin/courses/lessons/add.html'),
+        adminPart: 'courses'
+    }).state('main.base.lessons_view', {
+        url: 'courses/:courseId/lessons/:id',
+        controller: 'LessonsViewController',
+        template: require('!!html-loader!./../templates/admin/courses/lessons/add.html'),
+        adminPart: 'courses'
+
+
+
+    }).state('main.base.materials', {
+        url: 'courses/:courseId/materials',
+        controller: 'MaterialsListController',
+        template: require('!!html-loader!./../templates/admin/courses/materials/list.html'),
+        adminPart: 'courses'
+    }).state('main.base.materials_create', {
+        url: 'courses/:courseId/materials/create',
+        controller: 'MaterialsAddController',
+        template: require('!!html-loader!./../templates/admin/courses/materials/add.html'),
+        adminPart: 'courses'
+    }).state('main.base.materials_view', {
+        url: 'courses/:courseId/materials/:id',
+        controller: 'MaterialsViewController',
+        template: require('!!html-loader!./../templates/admin/courses/materials/add.html'),
+        adminPart: 'courses'
+    })
+
+
+
+
+
+
+        .state('main.base.glossary', {
         url: 'glossary',
         controller: 'UsersListController',
         template: require('!!html-loader!./../templates/admin/users/list.html'),

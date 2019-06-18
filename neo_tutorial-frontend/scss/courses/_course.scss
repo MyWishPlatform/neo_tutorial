@@ -1,0 +1,85 @@
+.course-preview {
+  max-width: 100%;
+  font-weight: 300;
+
+  &:after {
+    clear: both;
+    content: '';
+    display: block;
+  }
+
+  &-content {
+    background-color: #fff;
+    width: 400px;
+    max-width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    float: left;
+  }
+  &-image {
+    width: 100%;
+    height: 200px;
+    max-width: 400px;
+    background: center center;
+    background-size: cover;
+  }
+  &-speciality {
+    font-size: 16px;
+    color: #70c933;
+    margin-top: 10px;
+  }
+  &-name {
+    font-size: 22px;
+    color: #4e5156;
+    margin-top: 10px;
+  }
+  &-tags {
+    font-size: 13px;
+    color: #70d03a;
+    margin-top: 15px;
+    a {
+      color: inherit;
+      text-decoration: underline;
+      &:hover {
+        text-decoration: none;
+        color: #70d03a;
+      }
+    }
+  }
+}
+
+
+.ql-container {
+  font-family: inherit!important;
+  font-size: inherit!important;
+  color: inherit!important;
+}
+
+.lesson-content {
+
+  .ql-editor {
+    min-height: 500px;
+    padding: 20px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    border-width: 0 1px;
+    border-style: dashed;
+    border-color: #eaeaea;
+  }
+
+  font-size: 14px;
+  line-height: 25px;
+  h2 {
+    font-size: 18px;
+    color: #70c933;
+    font-weight: 300;
+  }
+  a {
+    color: #76cb3a!important;
+    text-decoration: none!important;
+    &:hover {
+      text-decoration: underline!important;
+    }
+  }
+}

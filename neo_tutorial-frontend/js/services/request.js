@@ -30,6 +30,26 @@ angular.module('Services').service('RequestService', ['$http', 'API', function($
             }
 
             return $http(requestOptions);
+        },
+        upload: function(params) {
+
+            var fd = new FormData();
+
+            for (var k in params.data) {
+                fd.append(k, params.data[k]);
+            }
+
+            fd.append("image", params.file);
+
+            var url = params.API_PATH || API.PATH;
+            url += params.path || '';
+
+            var requestOptions = {
+                headers: {'Content-Type': undefined},
+                transformRequest: angular.identity
+            };
+            console.log(fd);
+            return $http.post(url, fd, requestOptions);
         }
     }
 }]);

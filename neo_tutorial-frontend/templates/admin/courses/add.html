@@ -53,25 +53,23 @@
 
 
                 <div class="form-control">
-                    <span class="form-control_label">
-                        Cover
-                    </span>
+                    <span class="form-control_label">Cover</span>
                     <span class="form-control_input">
                         <label class="btn btn-file btn-rounded">
                             <span>Choose file...</span>
-                            <input type="file">
+                            <input type="file" ng-model="coverImage" ng-file-select="onFileSelect($file)">
                         </label>
                     </span>
                 </div>
-
 
                 <div class="form-control">
                     <span class="form-control_label">
                         Tags
                     </span>
                     <div class="form-control_input">
-                        <textarea ng-model="request.tags"
+                        <textarea ng-model="courseTags"
                                   name="tags"
+                                  ng-change="parseTags(courseTags)"
                                   class="text-field"
                                   placeholder="Введите тэги через пробел">
                         </textarea>
@@ -80,7 +78,32 @@
 
 
                 <div class="form-control">
-                    <button class="btn btn-submit btn-rounded" type="submit" ng-disabled="!userForm.$valid">
+                    <span class="form-control_label">Course Cover Preview</span>
+                    <div class="form-control_input">
+
+                        <div class="course-preview">
+                            <div class="course-preview-content">
+                                <div class="course-preview-image"
+                                     ng-style="{'background-image' : 'url(' + coverImage + ')'}"></div>
+                                <div class="course-preview-speciality">
+                                    {{ request.speciality }}
+                                </div>
+                                <div class="course-preview-name">
+                                    {{ request.name }}
+                                </div>
+                                <div class="course-preview-tags">
+                                    <span ng-repeat="tag in request.tags track by $index">
+                                        <a href="#">#{{tag}}</a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-control">
+                    <button class="btn btn-submit btn-rounded" type="submit" ng-disabled="!courseForm.$valid">
                         <span class="bold">Create</span>
                     </button>
                 </div>
