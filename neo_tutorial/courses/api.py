@@ -4,7 +4,7 @@ from .models import BasicCourse, Speciality, CourseImage, LessonImage
 
 
 def get_or_create_speciality(param, type):
-    if type == "1":
+    if type != "1":
         try:
             obj = Speciality.objects.get(id=param)
             return obj

@@ -4,6 +4,7 @@ from rest_framework.exceptions import PermissionDenied, ParseError
 from .models import BasicCourse, CourseMaterial, Lesson, Test, Speciality, CourseImage
 from .api import get_courses_details, get_or_create_speciality, get_all_courses_details, get_courses_by_tag_details, \
     parse_image_course, parse_image_lesson
+import json
 
 
 @api_view(http_method_names=['GET'])
@@ -30,10 +31,13 @@ def create_course_view(request):
 
     speciality = get_or_create_speciality(params['speciality'], new_speciality)
     description = params['description'] if 'description' in params else ''
-    tag_list = params['tags'] if 'tags' in params else []
 
-    if not isinstance(tag_list, list):
-        raise ParseError('Tags must be passed as list')
+    if 'tags' not in params:
+        tag_list = []
+    else:
+        tag_list = params['tags']
+
+
 
     course = BasicCourse(
             name=params['name'],
