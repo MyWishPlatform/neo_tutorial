@@ -1,5 +1,6 @@
+from os.path import join
 from rest_framework.exceptions import ParseError
-from .models import BasicCourse, Speciality, CourseImage
+from .models import BasicCourse, Speciality, CourseImage, LessonImage
 
 
 def get_or_create_speciality(param):
@@ -57,10 +58,24 @@ def get_courses_by_tag_details(tag_param):
     return details
 
 
-def parse_image(course_object, file):
+def parse_image_course(course_object, file):
     saved_image = CourseImage(course=course_object, image=file)
     saved_image.save()
     details = {
+        'image_name': saved_image.image.name,
+        'uploaded_at': saved_image.uploaded_at
+    }
+    return details
+
+
+def parse_image_lesson(lesson_object, file):
+    lesson_name = lesson_object.name
+    saved_image = LessonImage(lesson=lesson_object, image=file)
+    saved_image.image.upload_to=join("lesson_images", lesson_name)
+    saved_image.save()
+    details = {
+        'lesson_name': lesson_name,
+        'image_id': saved_image.id,
         'image_name': saved_image.image.name,
         'uploaded_at': saved_image.uploaded_at
     }

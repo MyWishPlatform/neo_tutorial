@@ -31,20 +31,26 @@ class CourseImage(models.Model):
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
 
+class Lesson(models.Model):
+    course = models.ForeignKey(BasicCourse, on_delete=models.CASCADE, null=True)
+    name = models.CharField(max_length=80, null=True, default='')
+    description = models.CharField(max_length=120, null=True, default='')
+    video_id = models.CharField(max_length=120, null=True, default='')
+    content = models.TextField()
+
+
+class LessonImage(models.Model):
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, default='')
+    image = models.ImageField(upload_to='lesson_images/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+
 class CourseMaterial(models.Model):
     course = models.ForeignKey(BasicCourse, on_delete=models.CASCADE, default='')
     name = models.CharField(max_length=80, null=True, default='')
     description = models.CharField(max_length=120, null=True, default=None)
     media_url = models.CharField(max_length=120, null=True, default=None)
     raw_text = models.TextField()
-
-
-class Lesson(models.Model):
-    course = models.ForeignKey(BasicCourse, on_delete=models.CASCADE)
-    name = models.CharField(max_length=80, null=True, default='')
-    description = models.CharField(max_length=120, null=True, default=None)
-    video_id = models.CharField(max_length=120, null=True, default=None)
-    content = models.TextField()
 
 
 class Test(models.Model):
