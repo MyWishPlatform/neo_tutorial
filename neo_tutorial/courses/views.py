@@ -4,7 +4,7 @@ from rest_framework.exceptions import PermissionDenied, ParseError
 from .models import BasicCourse, CourseMaterial, Lesson, Test, Speciality, CourseImage
 from .api import get_courses_details, get_or_create_speciality, get_all_courses_details, get_courses_by_tag_details, \
     parse_image_course, parse_image_lesson
-import json
+from ast import literal_eval
 
 
 @api_view(http_method_names=['GET'])
@@ -35,9 +35,8 @@ def create_course_view(request):
     if 'tags' not in params:
         tag_list = []
     else:
-        tag_list = params['tags']
-
-
+        tag_list_representation = params['tags']
+        tag_list = literal_eval(tag_list_representation)   
 
     course = BasicCourse(
             name=params['name'],
