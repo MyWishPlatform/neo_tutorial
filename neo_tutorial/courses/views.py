@@ -23,7 +23,7 @@ def create_course_view(request):
     if 'speciality' not in params:
         raise ParseError('Speciality of course is required')
 
-    speciality = get_or_create_speciality(params['speciality'])
+    speciality = get_or_create_speciality(params['speciality'], params["new_speciality"])
     description = params['description'] if 'description' in params else ''
     tag_list = params['tags'] if 'tags' in params else []
 
