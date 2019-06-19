@@ -36,7 +36,14 @@ angular.module('Services').service('RequestService', ['$http', 'API', function($
             var fd = new FormData();
 
             for (var k in params.data) {
-                fd.append(k, params.data[k]);
+                if (!angular.isArray(params.data[k])) {
+                    fd.append(k, params.data[k]);
+                } else {
+                    fd.append(k, JSON.stringify(params.data[k]));
+                    // params.data[k].forEach(function(item, index) {
+                    //     fd.append(k + '[' + index + ']', item);
+                    // });
+                }
             }
 
             fd.append("image", params.file);
@@ -46,7 +53,7 @@ angular.module('Services').service('RequestService', ['$http', 'API', function($
 
             var requestOptions = {
                 headers: {'Content-Type': undefined},
-                transformRequest: angular.identity
+                // transformRequest: angular.identity
             };
             console.log(fd);
             return $http.post(url, fd, requestOptions);

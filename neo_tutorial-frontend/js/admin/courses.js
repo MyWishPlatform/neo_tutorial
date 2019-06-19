@@ -2,7 +2,10 @@ angular.module('adminApp')
     .controller('CoursesListController', ['$scope', 'coursesList', function($scope, coursesList) {
         $scope.coursesList = coursesList.data;
     }])
-    .controller('CoursesAddController', ['$scope', 'RequestService', 'API', '$state', function($scope, RequestService, API, $state) {
+    .controller('CoursesAddController',
+        ['$scope', 'RequestService', 'API', '$state', 'specialitiesList', function($scope, RequestService, API, $state, specialitiesList) {
+
+        $scope.specialitiesList = specialitiesList.data;
 
         $scope.request = {};
 
@@ -15,9 +18,11 @@ angular.module('adminApp')
             }, []);
         };
 
+        $scope.newSpeciality = '';
         $scope.createCourse = function() {
             var requestData = angular.copy($scope.request);
-
+            requestData.speciality = requestData.speciality ? requestData.speciality.id : $scope.newSpeciality;
+            $scope.formResponse = {};
             RequestService.upload({
                 API_PATH: API.ADMIN_PATH,
                 path: API.COURSES.PATH + API.COURSES.METHODS.CREATE,
@@ -28,9 +33,7 @@ angular.module('adminApp')
             }, function(error) {
                 switch (error.status) {
                     case 400:
-                        $scope.formRequest.errors = {
-                            username: error.data
-                        };
+                        $scope.formResponse = error.data;
                         break;
                 }
             });

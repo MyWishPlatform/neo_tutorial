@@ -15,23 +15,27 @@
                                required
                                ng-model="request.name">
                     </span>
-                    <span class="form-control_errors" ng-if="formRequest.errors.name">
-                        {{formRequest.errors.name}}
+                    <span class="form-control_errors" ng-if="formResponse.errors.name">
+                        {{formResponse.errors.name}}
                     </span>
                 </label>
 
                 <label class="form-control">
                     <span class="form-control_label">
-                        Section
+                        Speciality
                     </span>
                     <span class="form-control_input">
-                        <input type="text" name="speciality"
-                               required
-                               ng-model="request.speciality">
+                        <div ng-select
+                             required
+                             ng-autocomplete-field="newSpeciality"
+                             ng-model-list="specialitiesList"
+                             ng-select-options="{class: 'select-1', label: 'name', autocomplete: true}"
+                             ng-model="request.speciality"></div>
+
                     </span>
 
-                    <span class="form-control_errors" ng-if="formRequest.errors.speciality">
-                        {{formRequest.errors.speciality}}
+                    <span class="form-control_errors" ng-if="formResponse.errors.speciality">
+                        {{formResponse.errors.speciality}}
                     </span>
 
                 </label>
@@ -43,6 +47,7 @@
                     </span>
                     <span class="form-control_input">
                         <textarea ng-model="request.description"
+                                  required
                                   name="description"
                                   class="text-field"
                                   placeholder="Course description">
@@ -69,6 +74,7 @@
                     <div class="form-control_input">
                         <textarea ng-model="courseTags"
                                   name="tags"
+                                  required
                                   ng-change="parseTags(courseTags)"
                                   class="text-field"
                                   placeholder="Введите тэги через пробел">
@@ -77,7 +83,7 @@
                 </div>
 
 
-                <div class="form-control">
+                <div class="form-control" ng-if="courseForm.$valid">
                     <span class="form-control_label">Course Cover Preview</span>
                     <div class="form-control_input">
 
@@ -86,7 +92,7 @@
                                 <div class="course-preview-image"
                                      ng-style="{'background-image' : 'url(' + coverImage + ')'}"></div>
                                 <div class="course-preview-speciality">
-                                    {{ request.speciality }}
+                                    {{ request.speciality ? request.speciality.name : newSpeciality }}
                                 </div>
                                 <div class="course-preview-name">
                                     {{ request.name }}
@@ -106,6 +112,11 @@
                     <button class="btn btn-submit btn-rounded" type="submit" ng-disabled="!courseForm.$valid">
                         <span class="bold">Create</span>
                     </button>
+
+                    <span class="form-control_errors" ng-if="formResponse.detail">
+                        {{formResponse.detail}}
+                    </span>
+
                 </div>
             </div>
         </form>

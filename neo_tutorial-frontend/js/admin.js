@@ -77,7 +77,15 @@ module.config(['$stateProvider', '$locationProvider', '$urlRouterProvider',
         url: 'courses/create',
         controller: 'CoursesAddController',
         template: require('!!html-loader!./../templates/admin/courses/add.html'),
-        adminPart: 'courses'
+        adminPart: 'courses',
+        resolve: {
+            specialitiesList: ['API', 'RequestService', function(API, RequestService) {
+                return RequestService.get({
+                    'API_PATH': API.ADMIN_PATH,
+                    'path': API.COURSES.PATH + API.COURSES.METHODS.SPECIALITIES
+                });
+            }]
+        }
     }).state('main.base.courses_view', {
         url: 'courses/:id',
         controller: 'CoursesViewController',

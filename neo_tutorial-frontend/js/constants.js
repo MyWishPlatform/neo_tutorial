@@ -13,7 +13,8 @@ angular.module('Constants', []).constant('API', {
         'PATH': 'courses/',
         'METHODS': {
             'CREATE': 'create/',
-            'PREVIEW': 'preview/'
+            'PREVIEW': 'preview/',
+            'SPECIALITIES': 'specialities/'
         }
     }
 
