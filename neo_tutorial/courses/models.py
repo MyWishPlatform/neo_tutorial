@@ -22,7 +22,16 @@ class BasicCourse(models.Model):
     )
 
     def get_image(self):
-        return CourseImage.objects.get(id=self.image.id)
+        image= self.courseimage_set.all().order_by('-uploaded_at').first()
+        return image
+
+    def get_image_details(self):
+        saved_image = self.get_image()
+        details = {
+            'image_name': saved_image.image.name,
+            'uploaded_at': saved_image.uploaded_at
+        }
+        return details
 
 
 class CourseImage(models.Model):

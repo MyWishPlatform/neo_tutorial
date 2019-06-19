@@ -36,7 +36,7 @@ def create_course_view(request):
         tag_list = []
     else:
         tag_list_representation = params['tags']
-        tag_list = literal_eval(tag_list_representation)   
+        tag_list = literal_eval(tag_list_representation)
 
     course = BasicCourse(
             name=params['name'],
@@ -75,11 +75,22 @@ def update_course_view(request):
         raise ParseError('Course with id {course_id} is not found'.format(course_id=course_id))
 
     if 'speciality' in params:
-        course.speciality = get_or_create_speciality(params['speciality'])
+        if 'new_speciality' not in params:
+            new_speciality = ""
+        else:
+            new_speciality = params['new_speciality']
+
+        course.speciality = get_or_create_speciality(params['speciality'], new_speciality)
 
     if 'description' in params:
         course.description = params['description']
 
+    if 'tags' in params:
+        tag_list_representation = params['tags']
+        tag_list = literal_eval(tag_list_representation)
+        course.tags = tag_list
+
+    image_details = course.get_image_details()
     if 'image' in params:
         image_details = parse_image_course(course, request.FILES['image'])
 
@@ -89,7 +100,8 @@ def update_course_view(request):
         'name': course.name,
         'speciality': course.speciality.name,
         'description': course.description,
-        'image_url': image_details
+        'tags': course.tags,
+        'image': image_details
     }
 
     return Response(updated_details)
@@ -215,7 +227,7 @@ def upload_lesson_images_view(request):
 
     images_details = []
     for image in content_images:
-        saved_images = parse_image_lesson(lesson, image)
+        saved_images = parse_image_lesson(lesson, content_images[image])
         images_details.append(saved_images)
 
     return Response(images_details)

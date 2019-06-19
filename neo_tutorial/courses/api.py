@@ -1,6 +1,7 @@
 from os.path import join
 from rest_framework.exceptions import ParseError
 from .models import BasicCourse, Speciality, CourseImage, LessonImage
+from datetime import datetime
 
 
 def get_or_create_speciality(param, type):
@@ -59,24 +60,40 @@ def get_courses_by_tag_details(tag_param):
 
 
 def parse_image_course(course_object, file):
-    saved_image = CourseImage(course=course_object, image=file)
+    time_now = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
+    file.name = "{course_id}_image_{timestamp}".format(
+            course_id=course_object.id,
+            timestamp=time_now)
+    saved_image = CourseImage(
+            course=course_object,
+            image=file,
+            uploaded_at=time_now
+    )
     saved_image.save()
     details = {
         'image_name': saved_image.image.name,
-        'uploaded_at': saved_image.uploaded_at
+        'uploaded_at': saved_image.uploaded_at,
+        'image_url': saved_image.image.url
     }
     return details
 
 
 def parse_image_lesson(lesson_object, file):
-    lesson_name = lesson_object.name
-    saved_image = LessonImage(lesson=lesson_object, image=file)
-    saved_image.image.upload_to=join("lesson_images", lesson_name)
+    time_now = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
+    file.name = "{lesson_id}_image_{timestamp}".format(
+            lesson_id=lesson_object.id,
+            timestamp=time_now)
+    saved_image = LessonImage(
+            lesson=lesson_object,
+            image=file,
+            uploaded_at=time_now
+    )
     saved_image.save()
     details = {
-        'lesson_name': lesson_name,
+        'lesson_name': lesson_object.name,
         'image_id': saved_image.id,
         'image_name': saved_image.image.name,
-        'uploaded_at': saved_image.uploaded_at
+        'uploaded_at': saved_image.uploaded_at,
+        'image_url': saved_image.image.url
     }
     return details
