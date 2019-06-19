@@ -21,7 +21,14 @@ angular.module('adminApp')
         $scope.newSpeciality = '';
         $scope.createCourse = function() {
             var requestData = angular.copy($scope.request);
-            requestData.speciality = requestData.speciality ? requestData.speciality.id : $scope.newSpeciality;
+
+            if (requestData.speciality) {
+                requestData.speciality = requestData.speciality.id;
+            } else {
+                requestData.speciality = $scope.newSpeciality;
+                requestData.new_speciality = '1';
+            }
+
             $scope.formResponse = {};
             RequestService.upload({
                 API_PATH: API.ADMIN_PATH,
