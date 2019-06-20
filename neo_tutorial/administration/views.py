@@ -36,7 +36,7 @@ class TutorialAdminLoginView(TutorialLoginView):
         print(self.check_privileges())
         if user is not None and user.is_active and self.check_privileges():
             login(self.request, user)
-            return HttpResponseRedirect(self.success_url)
+            return HttpResponseRedirect(self.next)
         else:
             return HttpResponseForbidden()
 
@@ -54,6 +54,12 @@ class TutorialAdminLogoutView(TutorialLogoutView):
 
 class AdministrationView(TemplateView):
     template_name = 'administration/index.html'
+
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return HttpResponseForbidden()
+
+        return super().get(request, *args, **kwargs)
 
 #
 # class UserListView(FormView):
