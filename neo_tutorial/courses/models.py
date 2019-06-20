@@ -27,10 +27,13 @@ class BasicCourse(models.Model):
 
     def get_image_details(self):
         saved_image = self.get_image()
-        details = {
-            'image_name': saved_image.image.name,
-            'uploaded_at': saved_image.uploaded_at
-        }
+        if saved_image:
+            details = {
+                'image_name': saved_image.image.name,
+                'uploaded_at': saved_image.uploaded_at
+            }
+        else:
+            details = {}
         return details
 
 

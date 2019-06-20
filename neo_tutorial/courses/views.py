@@ -91,6 +91,7 @@ def update_course_view(request):
         course.tags = tag_list
 
     image_details = course.get_image_details()
+
     if 'image' in params:
         image_details = parse_image_course(course, request.FILES['image'])
     elif 'image_details' in params:
