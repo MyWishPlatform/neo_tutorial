@@ -1,17 +1,8 @@
 from django.views.generic.base import TemplateView
-from django.views.generic.edit import FormView, CreateView, UpdateView
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.views import LoginView
-from django.contrib.auth.forms import AuthenticationForm
-from django.urls import reverse
-from django.contrib import messages
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.http import HttpResponseRedirect, HttpResponseForbidden
-
-from neo_tutorial.profile.models import TutorialUser
-from neo_tutorial.profile.views import TutorialLoginView, TutorialLogoutView, TutorialAPILoginView
-from .forms import UserForm, CourseForm
-from neo_tutorial.courses.models import BasicCourse
+from neo_tutorial.profile.views import TutorialLoginView, TutorialLogoutView
 
 
 class TutorialAdminLoginView(TutorialLoginView):
@@ -46,12 +37,6 @@ class TutorialAdminLogoutView(TutorialLogoutView):
     next_page = '/administration/login/'
 
 
-
-#class AdministrationLoginView(LoginView):
-#    template_name = "administration/auth.html"
-#    success_url = "administration"
-
-
 class AdministrationView(TemplateView):
     template_name = 'administration/index.html'
     user = None
@@ -67,23 +52,3 @@ class AdministrationView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['user'] = self.user
         return context
-#
-# class UserListView(FormView):
-#     form_class = UserForm
-#     template_name = "administration/userlist.html"
-#
-#
-# class UserAddView(CreateView):
-#     form_class = UserForm
-#     template_name = "administration/useradd.html"
-#
-#     success_url = "/administration/users/preview/"
-#
-#     def get_success_url(self):
-#         print(self.object.id)
-#
-#         return reverse('admin-users-preview', kwargs=[self.object.id])
-#
-#
-# #        messages.add_message(self.request, messages.SUCCESS, 'User created!')
-# #        return reverse('admin-users-add')

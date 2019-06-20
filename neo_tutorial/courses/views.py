@@ -3,8 +3,9 @@ from rest_framework.response import Response
 from rest_framework.exceptions import PermissionDenied, ParseError
 from .models import BasicCourse, CourseMaterial, Lesson, Test, Speciality, CourseImage
 from .api import get_courses_details, get_or_create_speciality, get_all_courses_details, get_courses_by_tag_details, \
-    parse_image_course, parse_image_lesson
+    parse_image_course, parse_image_lesson, get_lesson_details
 from ast import literal_eval
+
 
 @api_view(http_method_names=['GET'])
 def all_courses_view(request):
@@ -128,9 +129,6 @@ def get_courses_by_tag_view(request):
 
     details = get_courses_by_tag_details(request.data['tag'])
     return Response(details)
-
-
-
 
 
 @api_view(http_method_names=['GET'])
@@ -284,18 +282,8 @@ def preview_lesson_view(request, id):
     if not id:
         raise ParseError('id of lesson is required')
 
-    lesson = Lesson.objects.get(id=id)
-
-    details = {
-        'id': lesson.id,
-        'course_id': lesson.course_id,
-        'name': lesson.name,
-        'description': lesson.description,
-        'video_id': lesson.video_id,
-        'content': lesson.content
-    }
-
-    return Response(details)
+    lesson_details = get_lesson_details(id)
+    return Response(lesson_details)
 
 
 @api_view(http_method_names=['POST', 'DELETE'])

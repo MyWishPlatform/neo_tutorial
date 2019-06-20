@@ -1,6 +1,5 @@
-from os.path import join
 from rest_framework.exceptions import ParseError
-from .models import BasicCourse, Speciality, CourseImage, LessonImage
+from .models import BasicCourse, Speciality, CourseImage, LessonImage, Lesson
 from datetime import datetime
 
 
@@ -95,5 +94,22 @@ def parse_image_lesson(lesson_object, file):
         'image_name': saved_image.image.name,
         'uploaded_at': saved_image.uploaded_at,
         'image_url': saved_image.image.url
+    }
+    return details
+
+
+def get_lesson_details(lesson_id):
+    try:
+        lesson = Lesson.objects.get(id=lesson_id)
+    except Lesson.DoesNotExist:
+        raise ParseError('Lesson with id {id} not exists'.format(id=lesson_id))
+
+    details = {
+        'id': lesson.id,
+        'course_id': lesson.course_id,
+        'name': lesson.name,
+        'description': lesson.description,
+        'video_id': lesson.video_id,
+        'content': lesson.content
     }
     return details
