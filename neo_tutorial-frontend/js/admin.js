@@ -74,7 +74,7 @@ module.config(['$stateProvider', '$locationProvider', '$urlRouterProvider',
             }]
         }
     }).state('main.base.courses_create', {
-        url: 'courses/create',
+        url: 'courses/create/:id?',
         controller: 'CoursesAddController',
         template: require('!!html-loader!./../templates/admin/courses/add.html'),
         adminPart: 'courses',
@@ -84,13 +84,31 @@ module.config(['$stateProvider', '$locationProvider', '$urlRouterProvider',
                     'API_PATH': API.ADMIN_PATH,
                     'path': API.COURSES.PATH + API.COURSES.METHODS.SPECIALITIES
                 });
+            }],
+            course: ['API', 'RequestService', '$stateParams', function(API, RequestService, $stateParams) {
+                if (!$stateParams.id) {
+                    return false;
+                } else {
+                    return RequestService.get({
+                        'API_PATH': API.ADMIN_PATH,
+                        'path': API.COURSES.PATH + API.COURSES.METHODS.PREVIEW + $stateParams.id + '/'
+                    });
+                }
             }]
         }
     }).state('main.base.courses_view', {
         url: 'courses/:id',
         controller: 'CoursesViewController',
-        template: require('!!html-loader!./../templates/admin/courses/add.html'),
-        adminPart: 'courses'
+        template: require('!!html-loader!./../templates/admin/courses/view.html'),
+        adminPart: 'courses',
+        resolve: {
+            course: ['$stateParams', 'RequestService', 'API', function($stateParams, RequestService, API) {
+                return RequestService.get({
+                    'API_PATH': API.ADMIN_PATH,
+                    'path': API.COURSES.PATH + 'preview/' + $stateParams.id + '/',
+                });
+            }]
+        }
 
 
     }).state('main.base.lessons', {

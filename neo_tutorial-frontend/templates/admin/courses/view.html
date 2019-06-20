@@ -1,0 +1,47 @@
+<h1 class="administration-page-title">
+    Course
+</h1>
+
+<div class="grid-row">
+    <div class="grid-cell">
+        <div class="administration-form">
+            <div class="form-control">
+                <div class="form-control_input">
+                    <div class="course-preview">
+                        <div class="course-preview-content">
+                            <div class="course-preview-image"
+                                 ng-style="{'background-image' : 'url(/media/' + course.image.image_name + ')'}"></div>
+                            <div class="course-preview-speciality">
+                                {{ course.speciality }}
+                            </div>
+                            <div class="course-preview-name">
+                                {{ course.name }}
+                            </div>
+                            <div class="course-preview-tags">
+                                <span ng-repeat="tag in course.tags track by $index">
+                                    <a href="#">#{{tag}}</a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-control">
+                <a ui-sref="main.base.courses_create({id: course.id})"
+                   class="btn btn-file btn-rounded">
+                    <span>Edit</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="form-control">
+            <a ui-sref="main.base.lessons({courseId: course.id})"
+               class="btn btn-submit btn-rounded">
+                <span>Lessons</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+

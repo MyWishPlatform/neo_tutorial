@@ -40,13 +40,12 @@ angular.module('Services').service('RequestService', ['$http', 'API', function($
                     fd.append(k, params.data[k]);
                 } else {
                     fd.append(k, JSON.stringify(params.data[k]));
-                    // params.data[k].forEach(function(item, index) {
-                    //     fd.append(k + '[' + index + ']', item);
-                    // });
                 }
             }
 
-            fd.append("image", params.file);
+            if (params.file) {
+                fd.append("image", params.file);
+            }
 
             var url = params.API_PATH || API.PATH;
             url += params.path || '';
@@ -55,7 +54,7 @@ angular.module('Services').service('RequestService', ['$http', 'API', function($
                 headers: {'Content-Type': undefined},
                 // transformRequest: angular.identity
             };
-            console.log(fd);
+
             return $http.post(url, fd, requestOptions);
         }
     }

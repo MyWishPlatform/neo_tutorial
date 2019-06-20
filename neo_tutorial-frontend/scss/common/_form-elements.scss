@@ -28,7 +28,7 @@ textarea.text-field {
   border: 1px solid #d7dad5;
   cursor: pointer;
   display: inline-block;
-
+  vertical-align: middle;
   &, &:hover, &:active, &:focus {
     text-decoration: none;
   }
@@ -140,3 +140,14 @@ textarea.text-field {
   }
 }
 
+.file-name {
+  display: inline-block;
+  line-height: 48px;
+  vertical-align: middle;
+  margin-left: 10px;
+  span {
+    display: block;
+    line-height: 18px;
+    font-size: 14px;
+  }
+}

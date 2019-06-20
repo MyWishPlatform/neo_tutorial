@@ -3,11 +3,28 @@ angular.module('adminApp')
         $scope.coursesList = coursesList.data;
     }])
     .controller('CoursesAddController',
-        ['$scope', 'RequestService', 'API', '$state', 'specialitiesList', function($scope, RequestService, API, $state, specialitiesList) {
+        ['$scope', 'RequestService', 'API', '$state', 'specialitiesList', 'course', function($scope, RequestService, API, $state, specialitiesList, course) {
 
         $scope.specialitiesList = specialitiesList.data;
 
-        $scope.request = {};
+        var courseModel = course ? course.data : false;
+
+        if (!courseModel) {
+            $scope.request = {};
+        } else {
+            $scope.courseTags = courseModel.tags.join(' ');
+            $scope.request = {
+                id: courseModel.id,
+                image_details: courseModel.image,
+                tags: courseModel.tags,
+                name: courseModel.name,
+                speciality: $scope.specialitiesList.filter(function(speciality) {
+                    return speciality.name === courseModel.speciality
+                })[0],
+                description: courseModel.description,
+            };
+            $scope.coverImage = '/media/' + courseModel.image.image_name;
+        }
 
         $scope.parseTags = function(tags) {
             $scope.request.tags = tags.replace(/[,.]/, '_').split(/\s+/).reduce(function(a, b, c, d) {
@@ -30,9 +47,15 @@ angular.module('adminApp')
             }
 
             $scope.formResponse = {};
+
+            if ($scope.coverFile) {
+                delete requestData.image_details;
+            } else {
+                requestData.image_details = JSON.stringify(requestData.image_details);
+            }
             RequestService.upload({
                 API_PATH: API.ADMIN_PATH,
-                path: API.COURSES.PATH + API.COURSES.METHODS.CREATE,
+                path: API.COURSES.PATH + (!requestData.id ? API.COURSES.METHODS.CREATE : API.COURSES.METHODS.UPDATE),
                 data: requestData,
                 file: $scope.coverFile
             }).then(function(response) {
@@ -44,6 +67,8 @@ angular.module('adminApp')
                         break;
                 }
             });
+
+
         };
 
 
@@ -53,8 +78,8 @@ angular.module('adminApp')
 
 
     }])
-    .controller('CoursesViewController', ['$scope', function($scope) {
-
+    .controller('CoursesViewController', ['$scope', 'course', function($scope, course) {
+        $scope.course = course.data;
     }]);
 
 

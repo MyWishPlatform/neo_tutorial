@@ -5,7 +5,7 @@ from .models import BasicCourse, CourseMaterial, Lesson, Test, Speciality, Cours
 from .api import get_courses_details, get_or_create_speciality, get_all_courses_details, get_courses_by_tag_details, \
     parse_image_course, parse_image_lesson
 from ast import literal_eval
-
+import json;
 
 @api_view(http_method_names=['GET'])
 def all_courses_view(request):
@@ -93,6 +93,8 @@ def update_course_view(request):
     image_details = course.get_image_details()
     if 'image' in params:
         image_details = parse_image_course(course, request.FILES['image'])
+    elif 'image_details' in params:
+        image_details = json.loads(params['image_details']);
 
     course.save()
 
@@ -101,18 +103,20 @@ def update_course_view(request):
         'speciality': course.speciality.name,
         'description': course.description,
         'tags': course.tags,
-        'image': image_details
+        'image': image_details,
+        'id': course.id
     }
 
     return Response(updated_details)
 
 
 @api_view(http_method_names=['GET'])
-def get_course_view(request):
-    if 'id' not in request.data:
+def get_course_view(request, id):
+
+    if not id:
         raise ParseError('id of course is required')
 
-    course = BasicCourse.objects.filter(id=request.data['id'])
+    course = BasicCourse.objects.filter(id=id)
     details = get_courses_details(course)[0]
     return Response(details)
 

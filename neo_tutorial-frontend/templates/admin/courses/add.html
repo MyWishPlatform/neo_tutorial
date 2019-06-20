@@ -26,7 +26,6 @@
                     </span>
                     <span class="form-control_input">
                         <div ng-select
-                             required
                              ng-autocomplete-field="newSpeciality"
                              ng-model-list="specialitiesList"
                              ng-select-options="{class: 'select-1', label: 'name', autocomplete: true}"
@@ -62,8 +61,15 @@
                     <span class="form-control_input">
                         <label class="btn btn-file btn-rounded">
                             <span>Choose file...</span>
-                            <input type="file" ng-model="coverImage" ng-file-select="onFileSelect($file)">
+                            <input type="file" ng-model="coverImage"
+                                   ng-required="!request.image_details"
+                                   ng-file-select="onFileSelect($file)">
                         </label>
+                        <div class="file-name">
+                            <span>
+                                {{ coverFile.name }}
+                            </span>
+                        </div>
                     </span>
                 </div>
 
@@ -109,8 +115,10 @@
 
 
                 <div class="form-control">
-                    <button class="btn btn-submit btn-rounded" type="submit" ng-disabled="!courseForm.$valid">
-                        <span class="bold">Create</span>
+                    <button class="btn btn-submit btn-rounded" type="submit"
+                            ng-disabled="!(courseForm.$valid && (request.speciality.name || newSpeciality))">
+                        <span class="bold" ng-if="!request.id">Create</span>
+                        <span class="bold" ng-if="request.id">Save</span>
                     </button>
 
                     <span class="form-control_errors" ng-if="formResponse.detail">

@@ -14,7 +14,8 @@ angular.module('Constants', []).constant('API', {
         'METHODS': {
             'CREATE': 'create/',
             'PREVIEW': 'preview/',
-            'SPECIALITIES': 'specialities/'
+            'SPECIALITIES': 'specialities/',
+            'UPDATE': 'update/'
         }
     }
 
