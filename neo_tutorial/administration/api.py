@@ -9,10 +9,11 @@ from neo_tutorial.courses.models import BasicCourse
 
 @api_view(http_method_names=['GET'])
 def profile_view(request):
-    #if request.user.is_anonymous:
-    #    raise PermissionDenied
+    if 'user' in request:
+        if request.user.is_anonymous:
+            raise PermissionDenied
 
-    user_id = request.data['id']
+    user_id = request.user.id
     user_object = TutorialUser.objects.get(id=user_id)
 
     details = {
