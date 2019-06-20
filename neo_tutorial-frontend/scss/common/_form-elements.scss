@@ -100,6 +100,17 @@ textarea.text-field {
 }
 
 
+input, textarea, select {
+  form:not(.no-check-submitted).ng-submitted &.ng-invalid, &.ng-invalid:focus, &.ng-touched.ng-invalid, &[invalid="true"] {
+    &:not(:disabled), &:not([disabled]), &:not([readonly]) {
+      border-color: #f91c1c;
+    }
+    &:focus {
+      box-shadow: 0 0 0.2em rgba(249, 28, 28, 0.4);
+    }
+  }
+}
+
 .form-control {
   display: block;
   &_label {

@@ -18,6 +18,7 @@
 <header class="header">
     <div class="content-wrapper">
 
+        {% if user.username %}
         <div class="header-profile">
             <div class="header-profile_btn logged"
                  id="profile-btn"
@@ -27,7 +28,7 @@
                 <span class="header-profile_avatar">
                     <img src="{% static 'images/icons/account.svg' %}"/>
                 </span>
-                <span class="header-profile_username">dimanok</span>
+                <span class="header-profile_username">{{ user.username }}</span>
 
                 <ul class="header-profile_menu">
                    <li>
@@ -37,6 +38,7 @@
 
             </div>
         </div>
+        {% endif %}
 
         <a href="/" class="class-header-logotype">
             <img src="{% static 'images/logotype.png' %}"/>

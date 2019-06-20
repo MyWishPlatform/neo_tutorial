@@ -12,6 +12,13 @@ module.run(['$rootScope', '$state', function($rootScope, $state) {
 }]);
 
 
+module.config(['$httpProvider', '$qProvider', function($httpProvider, $qProvider) {
+    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+    $qProvider.errorOnUnhandledRejections(false);
+}]);
+
+
 module.config(['$stateProvider', '$locationProvider', '$urlRouterProvider',
     function($stateProvider, $locationProvider, $urlRouterProvider) {
 

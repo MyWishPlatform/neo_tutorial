@@ -82,11 +82,14 @@ angular.module('adminApp')
             });
         };
 
+        var lessonContent;
         var updateLesson = function() {
             return RequestService.post({
                 API_PATH: API.ADMIN_PATH,
                 path: API.LESSONS.PATH + API.LESSONS.METHODS.UPDATE,
-                data: $scope.request
+                data: angular.extend({}, $scope.request, {
+                    content: lessonContent.html()
+                })
             }).then(function(result) {
                 $scope.request.id = result.data.id;
                 return $scope.request;
@@ -95,23 +98,20 @@ angular.module('adminApp')
 
         $scope.saveLesson = function() {
 
-            var lessonContent, files = [], imgs, newImgs;
+            var files = [], imgs, newImgs;
 
-            if ($scope.activeTab === 'content') {
-                lessonContent = angular.element('#lesson-editor .ql-editor');
-                imgs = lessonContent.find('img');
-                newImgs = imgs;
-                imgs.each(function(index) {
-                    var jImg = $(this);
-                    var imgFile = dataURLtoFile(jImg.attr('src'));
-                    if (!imgFile) {
-                        newImgs = newImgs.not(jImg);
-                    } else {
-                        files.push(imgFile);
-                    }
-                });
-            }
-
+            lessonContent = angular.element('#lesson-editor .ql-editor');
+            imgs = lessonContent.find('img');
+            newImgs = imgs;
+            imgs.each(function(index) {
+                var jImg = $(this);
+                var imgFile = dataURLtoFile(jImg.attr('src'));
+                if (!imgFile) {
+                    newImgs = newImgs.not(jImg);
+                } else {
+                    files.push(imgFile);
+                }
+            });
 
             var uploadFiles = function() {
                 return RequestService.upload({
@@ -125,15 +125,18 @@ angular.module('adminApp')
                     newImgs.each(function(index) {
                         $(this).attr('src', images.data[index]['image_url'])
                     });
-                    $scope.request.content = lessonContent.html();
                     return images;
                 });
             };
 
             var updateAllContent = function() {
-                uploadFiles().then(function() {
+                if (files.length) {
+                    uploadFiles().then(function() {
+                        updateLesson();
+                    });
+                } else {
                     updateLesson();
-                });
+                }
             };
 
             if (!$scope.request.id) {
@@ -141,11 +144,7 @@ angular.module('adminApp')
                     updateAllContent();
                 });
             } else {
-                if (files.length) {
-                    updateAllContent();
-                } else {
-                    updateLesson();
-                }
+                updateAllContent();
             }
         };
     }])
