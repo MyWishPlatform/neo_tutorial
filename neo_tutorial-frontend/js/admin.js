@@ -1,6 +1,6 @@
 'use strict';
 
-var module = angular.module('adminApp', ['Constants', 'ui.router', 'Services', 'Directives']);
+var module = angular.module('adminApp', ['Constants', 'ui.router', 'Services', 'Directives','ngSanitize']);
 
 require('./admin/login');
 require('./admin/users');
@@ -74,7 +74,7 @@ module.config(['$stateProvider', '$locationProvider', '$urlRouterProvider',
             }]
         }
     }).state('main.base.courses_create', {
-        url: 'courses/create/:id?',
+        url: 'courses/create/:id',
         controller: 'CoursesAddController',
         template: require('!!html-loader!./../templates/admin/courses/add.html'),
         adminPart: 'courses',
@@ -115,12 +115,44 @@ module.config(['$stateProvider', '$locationProvider', '$urlRouterProvider',
         url: 'courses/:courseId/lessons',
         controller: 'LessonsListController',
         template: require('!!html-loader!./../templates/admin/courses/lessons/list.html'),
-        adminPart: 'courses'
+        adminPart: 'courses',
+        resolve: {
+            course: ['$stateParams', 'RequestService', 'API', function($stateParams, RequestService, API) {
+                return RequestService.get({
+                    'API_PATH': API.ADMIN_PATH,
+                    'path': API.COURSES.PATH + 'preview/' + $stateParams.courseId + '/',
+                });
+            }],
+            lessonsList: ['API', 'RequestService', '$stateParams', function(API, RequestService, $stateParams) {
+                return RequestService.get({
+                    'API_PATH': API.ADMIN_PATH,
+                    'path': API.LESSONS.PATH + API.LESSONS.METHODS.BY_COURSE_ID + $stateParams.courseId + '/'
+                });
+            }]
+        }
     }).state('main.base.lessons_create', {
-        url: 'courses/:courseId/lessons/create',
+        url: 'courses/:courseId/lessons/create/:id',
         controller: 'LessonsAddController',
         template: require('!!html-loader!./../templates/admin/courses/lessons/add.html'),
-        adminPart: 'courses'
+        adminPart: 'courses',
+        resolve: {
+            course: ['$stateParams', 'RequestService', 'API', function($stateParams, RequestService, API) {
+                return RequestService.get({
+                    'API_PATH': API.ADMIN_PATH,
+                    'path': API.COURSES.PATH + 'preview/' + $stateParams.courseId + '/',
+                });
+            }],
+            lesson: ['API', 'RequestService', '$stateParams', function(API, RequestService, $stateParams) {
+                if (!$stateParams.id) {
+                    return false;
+                } else {
+                    return RequestService.get({
+                        'API_PATH': API.ADMIN_PATH,
+                        'path': API.LESSONS.PATH + $stateParams.id + '/'
+                    });
+                }
+            }]
+        }
     }).state('main.base.lessons_view', {
         url: 'courses/:courseId/lessons/:id',
         controller: 'LessonsViewController',

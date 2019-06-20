@@ -47,6 +47,7 @@
                     <span class="form-control_input">
                         <textarea ng-model="request.description"
                                   required
+                                  maxlength="120"
                                   name="description"
                                   class="text-field"
                                   placeholder="Course description">
@@ -62,7 +63,7 @@
                         <label class="btn btn-file btn-rounded">
                             <span>Choose file...</span>
                             <input type="file" ng-model="coverImage"
-                                   ng-required="!request.image_details"
+                                   ng-required="!coverImage"
                                    ng-file-select="onFileSelect($file)">
                         </label>
                         <div class="file-name">

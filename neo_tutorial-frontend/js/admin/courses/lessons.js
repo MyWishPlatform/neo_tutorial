@@ -1,12 +1,26 @@
 angular.module('adminApp')
-    .controller('LessonsListController', ['$scope', function($scope) {
+    .controller('LessonsListController', ['$scope', 'lessonsList', 'course', function($scope, lessonsList, course) {
+        $scope.lessonsList = lessonsList.data;
+        $scope.course = course.data;
 
     }])
-    .controller('LessonsAddController', ['$scope', function($scope) {
+    .controller('LessonsAddController', ['$scope', 'RequestService', 'API', 'course', 'lesson', function($scope, RequestService, API, course, lesson) {
+        $scope.course = course.data;
 
-        $scope.createLesson = function() {
+        if (lesson) {
+            $scope.request = lesson.data;
+            if ($scope.request.video_id) {
+                $scope.videoURL = 'https://www.youtube.com/watch?v=' + $scope.request.video_id;
+            }
+        } else {
+            $scope.request = {
+                course_id: $scope.course.id
+            }
+        }
 
-        };
+
+
+        $scope.activeTab = 'base';
 
         $scope.parseYouTubeURL = function(url) {
             var ID = '';
@@ -17,20 +31,19 @@ angular.module('adminApp')
             else {
                 ID = url[0];
             }
-            console.log(ID);
+            $scope.request.video_id = ID;
         };
 
-        $scope.activeTab = 'base';
 
-
+        var quill;
         $scope.setActiveTab = function(tab) {
             if ($scope.activeTab === tab) {
                 return;
             }
             $scope.activeTab = tab;
-            if (tab === 'content') {
+            if ((tab === 'content') && !quill) {
                 setTimeout(function() {
-                    var quill = new Quill('#lesson-editor', {
+                    quill = new Quill('#lesson-editor', {
                         theme: 'snow',
                         modules: {
                             toolbar: '#toolbar-container'
@@ -42,25 +55,99 @@ angular.module('adminApp')
 
 
         var dataURLtoFile = function(dataurl, filename) {
-            var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
-                bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+            var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/);
+
+            if (!(arr && arr[1] && mime)) {
+                return false;
+            }
+
+            var bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
             while(n--){
                 u8arr[n] = bstr.charCodeAt(n);
             }
-            return new File([u8arr], filename, {type:mime});
+            return new File([u8arr], filename, {type: mime[1]});
         };
 
-        $scope.saveLessonContent = function() {
-            var lessonContent = angular.element('#lesson-editor .ql-editor');
 
-            var imgs = lessonContent.find('img');
 
-            imgs.each(function(index) {
-                console.log(dataURLtoFile($(this).attr('src'), 'image' + index));
+
+        var createLesson = function() {
+            return RequestService.post({
+                API_PATH: API.ADMIN_PATH,
+                path: API.LESSONS.PATH + API.LESSONS.METHODS.CREATE,
+                data: $scope.request
+            }).then(function(result) {
+                $scope.request.id = result.data.id;
+                return $scope.request;
             });
-
         };
 
+        var updateLesson = function() {
+            return RequestService.post({
+                API_PATH: API.ADMIN_PATH,
+                path: API.LESSONS.PATH + API.LESSONS.METHODS.UPDATE,
+                data: $scope.request
+            }).then(function(result) {
+                $scope.request.id = result.data.id;
+                return $scope.request;
+            });
+        };
+
+        $scope.saveLesson = function() {
+
+            var lessonContent, files = [], imgs, newImgs;
+
+            if ($scope.activeTab === 'content') {
+                lessonContent = angular.element('#lesson-editor .ql-editor');
+                imgs = lessonContent.find('img');
+                newImgs = imgs;
+                imgs.each(function(index) {
+                    var jImg = $(this);
+                    var imgFile = dataURLtoFile(jImg.attr('src'));
+                    if (!imgFile) {
+                        newImgs = newImgs.not(jImg);
+                    } else {
+                        files.push(imgFile);
+                    }
+                });
+            }
+
+
+            var uploadFiles = function() {
+                return RequestService.upload({
+                    API_PATH: API.ADMIN_PATH,
+                    path: API.LESSONS.PATH + API.LESSONS.METHODS.UPLOAD_IMAGES,
+                    data: {
+                        lesson_id: $scope.request.id
+                    },
+                    files: files
+                }).then(function(images) {
+                    newImgs.each(function(index) {
+                        $(this).attr('src', images.data[index]['image_url'])
+                    });
+                    $scope.request.content = lessonContent.html();
+                    return images;
+                });
+            };
+
+            var updateAllContent = function() {
+                uploadFiles().then(function() {
+                    updateLesson();
+                });
+            };
+
+            if (!$scope.request.id) {
+                createLesson().then(function () {
+                    updateAllContent();
+                });
+            } else {
+                if (files.length) {
+                    updateAllContent();
+                } else {
+                    updateLesson();
+                }
+            }
+        };
     }])
     .controller('LessonsViewController', ['$scope', function($scope) {
 

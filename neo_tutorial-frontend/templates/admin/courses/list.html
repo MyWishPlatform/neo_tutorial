@@ -26,9 +26,10 @@
     </tbody>
 </table>
 
+
 <div class="administration-empty-list" ng-if="!coursesList.length">
     Courses list is empty
 </div>
-<a ui-sref="main.base.courses_create" class="btn btn-submit btn-rounded">
+<a ui-sref="main.base.courses_create({id: null})" class="btn btn-submit btn-rounded">
     <span>Create course</span>
 </a>

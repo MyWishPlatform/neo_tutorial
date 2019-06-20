@@ -47,6 +47,13 @@ angular.module('Services').service('RequestService', ['$http', 'API', function($
                 fd.append("image", params.file);
             }
 
+            if (params.files) {
+                params.files.forEach(function(file) {
+                    fd.append("image", file);
+                });
+            }
+
+
             var url = params.API_PATH || API.PATH;
             url += params.path || '';
 

@@ -17,6 +17,15 @@ angular.module('Constants', []).constant('API', {
             'SPECIALITIES': 'specialities/',
             'UPDATE': 'update/'
         }
+    },
+    'LESSONS': {
+        'PATH': 'lessons/',
+        'METHODS': {
+            'BY_COURSE_ID': 'by_course_id/',
+            'CREATE': 'create/',
+            'UPLOAD_IMAGES': 'upload_images/',
+            'UPDATE': 'update/'
+        }
     }
 
 });

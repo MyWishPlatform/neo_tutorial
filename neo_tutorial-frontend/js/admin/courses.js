@@ -15,7 +15,6 @@ angular.module('adminApp')
             $scope.courseTags = courseModel.tags.join(' ');
             $scope.request = {
                 id: courseModel.id,
-                image_details: courseModel.image,
                 tags: courseModel.tags,
                 name: courseModel.name,
                 speciality: $scope.specialitiesList.filter(function(speciality) {
@@ -48,11 +47,6 @@ angular.module('adminApp')
 
             $scope.formResponse = {};
 
-            if ($scope.coverFile) {
-                delete requestData.image_details;
-            } else {
-                requestData.image_details = JSON.stringify(requestData.image_details);
-            }
             RequestService.upload({
                 API_PATH: API.ADMIN_PATH,
                 path: API.COURSES.PATH + (!requestData.id ? API.COURSES.METHODS.CREATE : API.COURSES.METHODS.UPDATE),

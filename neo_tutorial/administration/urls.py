@@ -4,7 +4,7 @@ from neo_tutorial.administration.views import AdministrationView, TutorialAdminL
 from neo_tutorial.administration.api import profile_view, all_users_view, create_user_view
 from neo_tutorial.courses.views import all_courses_view, create_course_view, update_course_view, \
     get_course_view, get_courses_by_tag_view, get_specialities_view, create_lesson_view, get_lessons_by_course_view,\
-    upload_lesson_images_view, edit_lesson_content_view, delete_lesson_view
+    upload_lesson_images_view, edit_lesson_view, delete_lesson_view, preview_lesson_view
 
 
 urlpatterns = [
@@ -29,9 +29,10 @@ urlpatterns = [
     path('api/courses/by_tag/', get_courses_by_tag_view, name='api-admin-courses-by-tag'),
     path('api/courses/specialities/', get_specialities_view, name='api-admin-courses-specialities'),
     path('api/lessons/create/', create_lesson_view, name='api-admin-lessons-create'),
-    path('api/lessons/by_course_id/', get_lessons_by_course_view, name='api-admin-lessons-by-course-id'),
+    path('api/lessons/<int:id>/', preview_lesson_view, name='api-admin-lessons-preview'),
+    path('api/lessons/by_course_id/<int:course_id>/', get_lessons_by_course_view, name='api-admin-lessons-by-course-id'),
     path('api/lessons/upload_images/', upload_lesson_images_view, name='api-admin-lessons-upload-images'),
-    path('api/lessons/edit_content/', edit_lesson_content_view, name='api-admin-lessons-edit-content'),
+    path('api/lessons/update/', edit_lesson_view, name='api-admin-lessons-edit-content'),
     path('api/lessons/delete/', delete_lesson_view, name='api-admin-lessons-delete'),
 
 

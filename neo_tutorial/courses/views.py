@@ -5,7 +5,6 @@ from .models import BasicCourse, CourseMaterial, Lesson, Test, Speciality, Cours
 from .api import get_courses_details, get_or_create_speciality, get_all_courses_details, get_courses_by_tag_details, \
     parse_image_course, parse_image_lesson
 from ast import literal_eval
-import json;
 
 @api_view(http_method_names=['GET'])
 def all_courses_view(request):
@@ -16,7 +15,6 @@ def all_courses_view(request):
 def create_course_view(request):
 
     params = request.data
-    print(params)
 
     if 'name' not in params:
         raise ParseError('Name of course is required')
@@ -85,6 +83,9 @@ def update_course_view(request):
     if 'description' in params:
         course.description = params['description']
 
+    if 'name' in params:
+        course.name = params['name']
+
     if 'tags' in params:
         tag_list_representation = params['tags']
         tag_list = literal_eval(tag_list_representation)
@@ -94,8 +95,6 @@ def update_course_view(request):
 
     if 'image' in params:
         image_details = parse_image_course(course, request.FILES['image'])
-    elif 'image_details' in params:
-        image_details = json.loads(params['image_details']);
 
     course.save()
 
@@ -131,6 +130,9 @@ def get_courses_by_tag_view(request):
     return Response(details)
 
 
+
+
+
 @api_view(http_method_names=['GET'])
 def get_specialities_view(request):
     speciality_list = Speciality.objects.all()
@@ -145,11 +147,11 @@ def get_specialities_view(request):
 
 
 @api_view(http_method_names=['GET'])
-def get_lessons_by_course_view(request):
-    if 'id' not in request.data:
+def get_lessons_by_course_view(request, course_id):
+    if not course_id:
         raise ParseError('id of course is required')
 
-    course = BasicCourse.objects.filter(id=request.data['id']).first()
+    course = BasicCourse.objects.filter(id=course_id).first()
     lessons = course.lesson_set.all().order_by('id')
 
     lessons_details = []
@@ -159,7 +161,8 @@ def get_lessons_by_course_view(request):
             'name': lesson.name,
             'description': lesson.description,
             'video_id': lesson.video_id,
-            'content': lesson.content
+            'content': lesson.content,
+            'id': lesson.id
         }
 
         if lesson.lessonimage_set.all():
@@ -239,11 +242,12 @@ def upload_lesson_images_view(request):
 
 
 @api_view(http_method_names=['POST'])
-def edit_lesson_content_view(request):
-    if 'lesson_id' not in request.data:
+def edit_lesson_view(request):
+    if 'id' not in request.data:
         raise ParseError('id of lesson is required')
 
-    lesson_id = request.data['lesson_id']
+    params = request.data
+    lesson_id = params['id']
     try:
         lesson = Lesson.objects.get(id=lesson_id)
     except Lesson.DoesNotExist:
@@ -252,13 +256,39 @@ def edit_lesson_content_view(request):
     if 'content' not in request.data:
         raise ParseError('content must be passed for edit')
 
+
+    description = params['description'] if 'description' in params else ""
+    video_id = params['video_id'] if 'video_id' in params else ""
     new_content = request.data['content']
+
+    lesson.description = description
+    lesson.video_id = video_id
     lesson.content = new_content
+
     lesson.save()
 
     details = {
         'id': lesson.id,
-        'course_name': lesson.course.name,
+        'course_id': lesson.course.id,
+        'name': lesson.name,
+        'description': lesson.description,
+        'video_id': lesson.video_id,
+        'content': lesson.content
+    }
+
+    return Response(details)
+
+
+@api_view(http_method_names=['GET'])
+def preview_lesson_view(request, id):
+    if not id:
+        raise ParseError('id of lesson is required')
+
+    lesson = Lesson.objects.get(id=id)
+
+    details = {
+        'id': lesson.id,
+        'course_id': lesson.course_id,
         'name': lesson.name,
         'description': lesson.description,
         'video_id': lesson.video_id,

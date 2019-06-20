@@ -18,7 +18,12 @@ module.exports = {
     },
 
     entry: {
-        main: ['./node_modules/jquery/dist/jquery.min.js', './node_modules/angular', './node_modules/angular-ui-router', './js/main.js', './scss/style.scss'],
+        main: [
+            './node_modules/jquery/dist/jquery.min.js',
+            './node_modules/angular',
+            './node_modules/angular-ui-router',
+            './node_modules/angular-sanitize',
+            './js/main.js', './scss/style.scss'],
         admin: ['./js/admin.js'],
         portal: ['./js/portal.js']
     },

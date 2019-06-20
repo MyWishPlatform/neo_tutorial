@@ -1,4 +1,6 @@
-<h1 class="administration-page-title">Create Lesson (Course: New super course)</h1>
+<h1 class="administration-page-title">
+    {{request.id ? 'Edit' : 'Create'}} Lesson (Course: {{course.name}})
+</h1>
 
 
 
@@ -15,9 +17,9 @@
         </li>
     </ul>
 
-    <div class="grid-row" ng-if="activeTab === 'base'">
+    <div class="grid-row" ng-show="activeTab === 'base'">
         <div class="grid-cell grid-cell-1-2 grid-cell-sm-1-2 grid-cell-s-2-3 grid-cell-ls-1">
-            <form ng-submit="createLesson()"
+            <form ng-submit="saveLesson()"
                   name="lessonForm">
                 <div class="admin-auth_fieldsset">
                     <label class="form-control">
@@ -58,8 +60,9 @@
 
 
                     <div class="form-control">
-                        <button class="btn btn-submit btn-rounded" type="submit" ng-disabled="!lessonForm.$valid">
-                            <span class="bold">Create</span>
+                        <button class="btn btn-submit btn-rounded" type="submit"
+                                ng-disabled="!lessonForm.$valid">
+                            <span class="bold">Save</span>
                         </button>
                     </div>
                 </div>
@@ -67,61 +70,64 @@
         </div>
     </div>
 
-    <div class="grid-row" ng-if="activeTab === 'content'">
-        <div class="grid-cell grid-cell-1">
-            <div class="form-control">
+    <div ng-show="activeTab === 'content'">
+        <div class="form-control">
+            <div class="administration-form_reset-padding">
                 <div id="toolbar-container">
-
                     <span class="ql-formats">
                       <button class="ql-header" value="2"></button>
                     </span>
                     <span class="ql-formats">
-                      <button class="ql-bold"></button>
-                      <button class="ql-italic"></button>
-                      <button class="ql-underline"></button>
-                      <button class="ql-strike"></button>
-                    </span>
+                          <button class="ql-bold"></button>
+                          <button class="ql-italic"></button>
+                          <button class="ql-underline"></button>
+                          <button class="ql-strike"></button>
+                        </span>
                     <span class="ql-formats">
-                      <select class="ql-color"></select>
-                      <select class="ql-background"></select>
-                    </span>
+                          <select class="ql-color"></select>
+                          <select class="ql-background"></select>
+                        </span>
                     <span class="ql-formats">
-                      <button class="ql-script" value="sub"></button>
-                      <button class="ql-script" value="super"></button>
-                    </span>
+                          <button class="ql-script" value="sub"></button>
+                          <button class="ql-script" value="super"></button>
+                        </span>
                     <span class="ql-formats">
-                      <button class="ql-blockquote"></button>
-                      <button class="ql-code-block"></button>
-                    </span>
+                          <button class="ql-blockquote"></button>
+                          <button class="ql-code-block"></button>
+                        </span>
                     <span class="ql-formats">
-                      <button class="ql-list" value="ordered"></button>
-                      <button class="ql-list" value="bullet"></button>
-                      <button class="ql-indent" value="-1"></button>
-                      <button class="ql-indent" value="+1"></button>
-                    </span>
+                          <button class="ql-list" value="ordered"></button>
+                          <button class="ql-list" value="bullet"></button>
+                          <button class="ql-indent" value="-1"></button>
+                          <button class="ql-indent" value="+1"></button>
+                        </span>
                     <span class="ql-formats">
                       <button class="ql-direction" value="rtl"></button>
                       <select class="ql-align"></select>
                     </span>
                     <span class="ql-formats">
-                      <button class="ql-link"></button>
-                      <button class="ql-image"></button>
-                      <button class="ql-video"></button>
-                      <button class="ql-formula"></button>
+                        <button class="ql-link"></button>
+                        <button class="ql-image"></button>
+                        <button class="ql-video"></button>
+                        <button class="ql-formula"></button>
                     </span>
                     <span class="ql-formats">
-                      <button class="ql-clean"></button>
+                          <button class="ql-clean"></button>
                     </span>
                 </div>
-                <div class="lesson-content" id="lesson-editor"></div>
-            </div>
-            <div class="form-control">
-                <button class="btn btn-submit btn-rounded" type="button"
-                        ng-click="saveLessonContent()">
-                    <span class="bold">Save</span>
-                </button>
+                <div class="lesson-content" id="lesson-editor"
+                     ng-bind-html="request.content">
+                </div>
             </div>
         </div>
+        <div class="form-control">
+            <button class="btn btn-submit btn-rounded" type="button"
+                    ng-disabled="!lessonForm.$valid"
+                    ng-click="saveLesson()">
+                <span class="bold">Save</span>
+            </button>
+        </div>
     </div>
+
 
 </div>

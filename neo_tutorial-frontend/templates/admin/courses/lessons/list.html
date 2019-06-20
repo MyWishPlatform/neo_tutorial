@@ -1,0 +1,29 @@
+<h1 class="administration-page-title">
+    Lessons (Course: {{course.name}})
+</h1>
+
+
+<table class="administration-result-table" cellpadding="0" cellspacing="0" ng-if="lessonsList.length">
+    <thead>
+    <tr>
+        <th>Title</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr ng-repeat="lesson in lessonsList"
+        ui-sref="main.base.lessons_create({courseId: course.id, id: lesson.id})">
+        <td class="text-left">
+            <nobr>{{ lesson.name }}</nobr>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+
+<div class="administration-empty-list" ng-if="!lessonsList.length">
+    Lessons list is empty
+</div>
+<a ui-sref="main.base.lessons_create({courseId: course.id, id: null})" class="btn btn-submit btn-rounded">
+    <span>Add lesson</span>
+</a>
