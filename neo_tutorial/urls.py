@@ -26,6 +26,7 @@ urlpatterns = [
 
 urlpatterns += [
     path('administration/', include('neo_tutorial.administration.urls')),
+    path('portal/', include('neo_tutorial.administration.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

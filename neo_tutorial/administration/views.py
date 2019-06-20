@@ -16,7 +16,7 @@ from neo_tutorial.courses.models import BasicCourse
 
 class TutorialAdminLoginView(TutorialLoginView):
     template_name = 'administration/auth.html'
-    success_url = '/administration/'
+    next = '/administration/'
 
     def __init__(self):
         self.profile = None
@@ -43,7 +43,7 @@ class TutorialAdminLoginView(TutorialLoginView):
 
 class TutorialAdminLogoutView(TutorialLogoutView):
     template_name = 'administration/auth.html'
-    success_url = '/administration/'
+    next_page = '/administration/login/'
 
 
 
