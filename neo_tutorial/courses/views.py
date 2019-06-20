@@ -154,14 +154,7 @@ def get_lessons_by_course_view(request, course_id):
 
     lessons_details = []
     for lesson in lessons:
-        details = {
-            'lesson_id': lesson.id,
-            'name': lesson.name,
-            'description': lesson.description,
-            'video_id': lesson.video_id,
-            'content': lesson.content,
-            'id': lesson.id
-        }
+        details = get_lesson_details(lesson.id)
 
         if lesson.lessonimage_set.all():
             images = lesson.lessonimage_set.all()
@@ -194,13 +187,15 @@ def create_lesson_view(request):
     description = params['description'] if 'description' in params else ""
     video_id = params['video_id'] if 'video_id' in params else ""
     content = params['content'] if 'content' in params else ""
+    order = params['order'] if 'order' in params else ""
 
     lesson = Lesson(
             course=course_object,
             name=params['name'],
             description=description,
             video_id=video_id,
-            content=content
+            content=content,
+            order=order
     )
     lesson.save()
 
@@ -210,7 +205,8 @@ def create_lesson_view(request):
         'name': lesson.name,
         'description': lesson.description,
         'video_id': lesson.video_id,
-        'content': lesson.content
+        'content': lesson.content,
+        'order': lesson.order
     }
     return Response(details)
 
@@ -254,14 +250,15 @@ def edit_lesson_view(request):
     if 'content' not in request.data:
         raise ParseError('content must be passed for edit')
 
-
-    description = params['description'] if 'description' in params else ""
-    video_id = params['video_id'] if 'video_id' in params else ""
+    description = params['description'] if 'description' in params else lesson.description
+    video_id = params['video_id'] if 'video_id' in params else lesson.video_id
     new_content = request.data['content']
+    lesson_order = params['order'] if 'order' in params else lesson.order
 
     lesson.description = description
     lesson.video_id = video_id
     lesson.content = new_content
+    lesson.order = lesson_order
 
     lesson.save()
 
@@ -271,7 +268,8 @@ def edit_lesson_view(request):
         'name': lesson.name,
         'description': lesson.description,
         'video_id': lesson.video_id,
-        'content': lesson.content
+        'content': lesson.content,
+        'order': lesson.order
     }
 
     return Response(details)

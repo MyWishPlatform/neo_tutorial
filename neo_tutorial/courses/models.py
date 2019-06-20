@@ -49,6 +49,7 @@ class Lesson(models.Model):
     description = models.CharField(max_length=120, null=True, default='')
     video_id = models.CharField(max_length=120, null=True, default='')
     content = models.TextField()
+    order = models.IntegerField(null=True, default=None)
 
 
 class LessonImage(models.Model):

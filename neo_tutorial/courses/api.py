@@ -110,6 +110,7 @@ def get_lesson_details(lesson_id):
         'name': lesson.name,
         'description': lesson.description,
         'video_id': lesson.video_id,
-        'content': lesson.content
+        'content': lesson.content,
+        'order': lesson.order
     }
     return details
