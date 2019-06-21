@@ -50,11 +50,11 @@ class CourseView(TemplateView):
 
     def get_context_data(self, id, **kwargs):
         context = super().get_context_data(**kwargs)
-        course = BasicCourse.objects.filter(id=id).first()
-        course_details = get_courses_details(course)[0]
+        course_q = BasicCourse.objects.filter(id=id)
+        course_details = get_courses_details(course_q)[0]
         context['course'] = course_details
 
-        lessons = course.lesson_set.all().order_by('id')
+        lessons = course_q.first().lesson_set.all().order_by('id')
 
         lessons_details = []
         for lesson in lessons:
