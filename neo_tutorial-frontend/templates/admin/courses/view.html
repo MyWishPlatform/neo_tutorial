@@ -12,7 +12,7 @@
                             <div class="course-preview-image"
                                  ng-style="{'background-image' : 'url(/media/' + course.image.image_name + ')'}"></div>
                             <div class="course-preview-speciality">
-                                {{ course.speciality }}
+                                {{ course.speciality.name }}
                             </div>
                             <div class="course-preview-name">
                                 {{ course.name }}
@@ -25,6 +25,15 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div class="form-control float-right">
+                <button class="btn btn-rounded" type="button"
+                   ng-click="toggleActivation(!course.is_active)"
+                   ng-class="{'btn-submit': !course.is_active, 'btn-cancel': course.is_active}">
+                    <span ng-if="!course.is_active">Activate</span>
+                    <span ng-if="course.is_active">Deactivate</span>
+                </button>
             </div>
 
             <div class="form-control">

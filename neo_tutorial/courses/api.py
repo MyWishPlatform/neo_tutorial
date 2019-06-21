@@ -26,7 +26,10 @@ def get_courses_details(courses_queryset):
         course_details = {
             'id': c.id,
             'name': c.name,
-            'speciality': c.speciality.name,
+            'speciality': {
+                'id': c.speciality.id,
+                'name': c.speciality.name
+            },
             'description': c.description,
             'image': {},
             'tags': c.tags,

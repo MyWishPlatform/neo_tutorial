@@ -36,6 +36,9 @@
   font-size: 14px;
   color: #7a7a7a;
   border-radius: 3px;
+  .btn {
+    text-shadow: initial;
+  }
   &_reset-padding {
     margin: -20px -20px auto -20px;
   }

@@ -9,6 +9,7 @@
         <th>Speciality</th>
         <th>Lessons</th>
         <th>Materials</th>
+        <th>Active</th>
     </tr>
     </thead>
     <tbody>
@@ -18,10 +19,14 @@
             <nobr>{{ course.name }}</nobr>
         </td>
         <td>
-            {{ course.speciality }}
+            {{ course.speciality.name }}
         </td>
         <td>n/a</td>
         <td>n/a</td>
+        <td>
+            <span ng-if="course.is_active">Yes</span>
+            <span ng-if="!course.is_active">No</span>
+        </td>
     </tr>
     </tbody>
 </table>

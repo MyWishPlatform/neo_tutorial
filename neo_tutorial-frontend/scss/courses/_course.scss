@@ -49,9 +49,11 @@
     font-size: 13px;
     color: #70d03a;
     margin-top: 15px;
+    line-height: 18px;
     a {
       color: inherit;
       text-decoration: underline;
+      margin-right: 5px;
       &:hover {
         text-decoration: none;
         color: #70d03a;

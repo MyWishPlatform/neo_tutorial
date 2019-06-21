@@ -18,9 +18,10 @@ angular.module('adminApp')
                 tags: courseModel.tags,
                 name: courseModel.name,
                 speciality: $scope.specialitiesList.filter(function(speciality) {
-                    return speciality.name === courseModel.speciality
+                    return speciality.name === courseModel.speciality.name
                 })[0],
                 description: courseModel.description,
+                is_active: courseModel.is_active,
             };
             $scope.coverImage = '/media/' + courseModel.image.image_name;
         }
@@ -72,8 +73,30 @@ angular.module('adminApp')
 
 
     }])
-    .controller('CoursesViewController', ['$scope', 'course', function($scope, course) {
+    .controller('CoursesViewController', ['$scope', 'course', 'RequestService', 'API', function($scope, course, RequestService, API) {
         $scope.course = course.data;
+
+        $scope.toggleActivation = function(isActive) {
+            var requestData = angular.copy($scope.course);
+
+            if (isActive) {
+                requestData.is_active = 1;
+            } else {
+                delete requestData.is_active;
+            }
+
+            delete requestData.image;
+            requestData.speciality = requestData.speciality.id;
+
+            RequestService.upload({
+                API_PATH: API.ADMIN_PATH,
+                path: API.COURSES.PATH + (!requestData.id ? API.COURSES.METHODS.CREATE : API.COURSES.METHODS.UPDATE),
+                data: requestData
+            }).then(function(response) {
+                $scope.course = response.data;
+            });
+
+        };
     }]);
 
 

@@ -48,6 +48,25 @@ textarea.text-field {
   &-active {
     cursor: default;
   }
+
+  &-cancel {
+    background-color: #bf1e2a;
+    color: #fff;
+    border-color: #bf1e2a;
+    &:not([disabled]) {
+      &:hover {
+        background-color: #dd2331;
+      }
+      &:active {
+        background-color: #a31a24;
+        border-color: #bf1e2a;
+      }
+      &.btn-active {
+        background-color: #fff;
+        color: #bf1e2a;
+      }
+    }
+  }
   &-submit {
     background-color: #58bf00;
     color: #fff;
@@ -160,5 +179,104 @@ input, textarea, select {
     display: block;
     line-height: 18px;
     font-size: 14px;
+  }
+}
+
+
+.checkbox-decoration {
+  cursor: pointer;
+  margin: 1.03em 0 0.9em;
+  display: inline-block;
+  position: relative;
+  user-select: none;
+  vertical-align: middle;
+  &.disabled {
+    opacity: 0.5;
+  }
+  .disclaimer-btn {
+    position: absolute;
+    opacity: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 10;
+  }
+  &.for-buttons-height {
+    margin: 0.6em 0 0.6em;
+  }
+  &-val {
+    color: #fff;
+    position: absolute;
+    font-size: 1.3em;
+    line-height: 1em;
+    top: 50%;
+    margin-top: -0.5em;
+    text-transform: uppercase;
+    text-align: center;
+    transition: opacity 0.1s linear;
+    z-index: 2;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.1);
+    &_off {
+      right: 0.2em;
+      left: 2em;
+      opacity: 1;
+      input:checked ~ .checkbox-decoration-displaying & {
+        opacity: 0;
+      }
+    }
+    &_on {
+      left: 0.2em;
+      right: 2em;
+      opacity: 0;
+      input:checked ~ .checkbox-decoration-displaying & {
+        opacity: 1;
+      }
+    }
+  }
+
+  &-displaying {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    overflow: hidden;
+    height: 2.9em;
+    width: 7em;
+    border-radius: 1.45em;
+    box-sizing: border-box;
+    background-color: #c2c2c2;
+    transition: all 0.1s linear;
+    input:checked ~ & {
+      background-color: #58bf00;
+    }
+    input:disabled ~ & {
+      opacity: 0.5;
+      cursor: default;
+    }
+    &:after {
+      content: '';
+      width: 2.1em;
+      height: 2.1em;
+      display: block;
+      position: relative;
+      top: 50%;
+      left: 0;
+      transform: translateX(0.5em);
+      margin-top: -1.05em;
+      background-color: #fff;
+      border-radius: 50%;
+      transition: transform 0.15s;
+      input:checked ~ & {
+        transform: translateX(4.4em);
+      }
+    }
+  }
+  input {
+    position: absolute;
+    outline: none;
+    right: 100%;
+    bottom: 100%;
+    margin: 0;
+    opacity: 0;
   }
 }

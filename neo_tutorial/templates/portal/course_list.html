@@ -4,6 +4,15 @@
 {% block appScripts %}{% endblock %}
 
 {% block pageContent %}
+
+
+<ul class="courses-filter">
+    <li>
+        <a href="#">New</a>
+    </li>
+</ul>
+
+
 <ul class="courses-specialities">
     {% for speciality in speciality_list %}
     <li>
@@ -20,7 +29,7 @@
                     <a href="#" class="course-preview-image"
                          style="background-image: url(/media/{{course.image.image_name}})"></a>
                     <a href="#" class="course-preview-speciality">
-                        {{ course.speciality }}
+                        {{ course.speciality.name }}
                     </a>
                     <a href="#" class="course-preview-name">
                         {{ course.name }}
