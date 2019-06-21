@@ -4,18 +4,40 @@
 {% block appScripts %}{% endblock %}
 
 {% block pageContent %}
-<div class="home-page-content">
-    <h1 class="home-page-content_title">
-        Welcome to NEO universe
-    </h1>
-    <strong class="home-page-content_description">
-        Complete the education and become the one who changes the world
-    </strong>
-    <div class="home-page-content_btns">
-        <a href="{% url 'portal-courses-list' %}" class="btn btn-rounded btn-submit bold uppercase">
-            <span>Start learning</span>
-        </a>
+<ul class="courses-specialities">
+    {% for speciality in speciality_list %}
+    <li>
+        <a href="#">{{ speciality.name }}</a>
+    </li>
+    {% endfor %}
+</ul>
+<div class="courses-list">
+    <div class="grid-row">
+    {% for course in courses %}
+        <div class="grid-cell grid-cell-1-3">
+            <div class="course-preview">
+                <div class="course-preview-content">
+                    <a href="#" class="course-preview-image"
+                         style="background-image: url(/media/{{course.image.image_name}})"></a>
+                    <a href="#" class="course-preview-speciality">
+                        {{ course.speciality }}
+                    </a>
+                    <a href="#" class="course-preview-name">
+                        {{ course.name }}
+                    </a>
+                    <div class="course-preview-tags">
+                        {% for tag in course.tags %}
+                        <span>
+                            <a href="#">#{{tag}}</a>
+                        </span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
     </div>
 </div>
+
 {% endblock %}
 
