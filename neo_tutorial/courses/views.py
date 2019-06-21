@@ -56,7 +56,8 @@ def create_course_view(request):
         'description': course.description,
         'tags': course.tags,
         'image': image_details,
-        'is_active': False
+        'is_active': False,
+        'updated_at': course.updated_at
     }
     return Response(details)
 
@@ -110,7 +111,8 @@ def update_course_view(request):
         'description': course.description,
         'tags': course.tags,
         'image': image_details,
-        'is_active': course.is_active
+        'is_active': course.is_active,
+        'updated_at': course.updated_at
     }
 
     return Response(updated_details)

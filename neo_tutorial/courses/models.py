@@ -22,6 +22,7 @@ class BasicCourse(models.Model):
             null=True
     )
     is_active = models.BooleanField(default=False)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def get_image(self):
         image= self.courseimage_set.all().order_by('-uploaded_at').first()

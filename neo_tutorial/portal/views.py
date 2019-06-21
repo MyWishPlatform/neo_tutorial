@@ -19,11 +19,11 @@ class CourseListView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        course_list = get_all_courses_details()
+        active_courses = BasicCourse.objects.filter(is_active=True).order_by('-updated_at')
+        course_list = get_courses_details(active_courses)
         context['courses'] = course_list
 
         active_specialities = []
-        active_courses = BasicCourse.objects.filter(is_active=True)
         for course in active_courses:
             active_specialities.append(
                     get_speciality_by_id(course.speciality_id)
