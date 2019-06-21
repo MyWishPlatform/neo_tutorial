@@ -20,6 +20,17 @@ class CourseListView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         active_courses = BasicCourse.objects.filter(is_active=True).order_by('-updated_at')
+
+        filter_tag = self.request.GET.get('q')
+        if filter_tag is not None:
+            print(filter_tag)
+            active_courses = active_courses.filter(tags__contains=[filter_tag])
+
+        filter_spec = self.request.GET.get('spec')
+        if filter_spec is not None:
+            print(filter_spec)
+            active_courses = active_courses.filter(speciality_id=filter_spec)
+
         course_list = get_courses_details(active_courses)
         context['courses'] = course_list
 
@@ -33,7 +44,6 @@ class CourseListView(TemplateView):
         for spec_id in active_specialities_id:
             active_specialities.append(get_speciality_by_id(spec_id))
         context['speciality_list'] = active_specialities
-
         return context
 
 
