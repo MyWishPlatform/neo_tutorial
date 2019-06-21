@@ -1,5 +1,7 @@
 from django.views.generic.base import TemplateView
-from neo_tutorial.courses.api import get_all_courses_details, get_lesson_details, get_specialities
+from neo_tutorial.courses.api import get_all_courses_details, get_lesson_details, get_speciality_by_id, \
+    get_courses_details
+from neo_tutorial.courses.models import BasicCourse
 
 
 class HomeView(TemplateView):
@@ -11,6 +13,7 @@ class HomeView(TemplateView):
 #         context['courses'] = course_list
 #         return context
 
+
 class CourseListView(TemplateView):
     template_name = 'portal/course_list.html'
 
@@ -18,7 +21,15 @@ class CourseListView(TemplateView):
         context = super().get_context_data(**kwargs)
         course_list = get_all_courses_details()
         context['courses'] = course_list
-        context['speciality_list'] = get_specialities()
+
+        active_specialities = []
+        active_courses = BasicCourse.objects.filter(is_active=True)
+        for course in active_courses:
+            active_specialities.append(
+                    get_speciality_by_id(course.speciality_id)
+            )
+        context['speciality_list'] = active_specialities
+
         return context
 
 
@@ -30,6 +41,3 @@ class CourseLessonView(TemplateView):
         lesson_details = get_lesson_details(id)
         context['lesson'] = lesson_details
         return context
-
-
-

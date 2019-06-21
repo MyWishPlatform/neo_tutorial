@@ -116,13 +116,10 @@ def get_lesson_details(lesson_id):
     return details
 
 
-def get_specialities():
-    all_specialities = Speciality.objects.all()
-    details = []
-    for speciality in all_specialities:
-        details.append({
-            'id': speciality.id,
-            'name': speciality.name
-        })
-
+def get_speciality_by_id(speciality_id):
+    speciality = Speciality.objects.get(id=speciality_id)
+    details = {
+        'id': speciality.id,
+        'name': speciality.name
+    }
     return details

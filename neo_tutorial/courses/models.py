@@ -4,6 +4,7 @@ from django.contrib.postgres.fields import ArrayField
 
 class Speciality(models.Model):
     name = models.CharField(max_length=120, db_index=True, unique=True)
+#    image = models.ImageField(upload_to='speciality_images')
 
 
 #class LessonContent(models.Model):
@@ -20,6 +21,7 @@ class BasicCourse(models.Model):
             base_field=models.CharField(max_length=30, null=True, default=''),
             null=True
     )
+    is_active = models.BooleanField(default=False)
 
     def get_image(self):
         image= self.courseimage_set.all().order_by('-uploaded_at').first()
