@@ -100,7 +100,7 @@ def parse_image_lesson(lesson_object, file):
     return details
 
 
-def get_lesson_details(lesson_id):
+def get_lesson_details(lesson_id, detail_contents=True):
     try:
         lesson = Lesson.objects.get(id=lesson_id)
     except Lesson.DoesNotExist:
@@ -112,9 +112,12 @@ def get_lesson_details(lesson_id):
         'name': lesson.name,
         'description': lesson.description,
         'video_id': lesson.video_id,
-        'content': lesson.content,
+#        'content': lesson.content,
         'order': lesson.order
     }
+
+    if detail_contents:
+        details['content'] = lesson.content
     return details
 
 
