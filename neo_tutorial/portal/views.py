@@ -1,5 +1,5 @@
 from django.views.generic.base import TemplateView
-from neo_tutorial.courses.api import get_all_courses_details, get_lesson_details
+from neo_tutorial.courses.api import get_all_courses_details, get_lesson_details, get_specialities
 
 
 class HomeView(TemplateView):
@@ -28,6 +28,7 @@ class CourseLessonView(TemplateView):
         context = super().get_context_data(**kwargs)
         lesson_details = get_lesson_details(id)
         context['lesson'] = lesson_details
+        context['speciality_list'] = get_specialities()
         return context
 
 
