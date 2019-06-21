@@ -1,4 +1,5 @@
 @import 'admin';
+@import 'portal';
 @import 'common/_form-elements.scss';
 @import 'common/grid';
 @import 'common/direcives/ngSelect';
@@ -49,6 +50,8 @@ body {
 header {
   background-color: #f9f9f9;
   padding: 20px 0 19px;
+  position: relative;
+  z-index: 2;
 }
 
 @import 'common/_footer.scss';

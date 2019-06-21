@@ -1,0 +1,19 @@
+.home-page-content {
+  top: 22vh;
+  position: relative;
+  margin-top: -97px;
+  color: #4e5156;
+  &_title {
+    font-size: 45px;
+    font-weight: 300;
+    margin-bottom: 0.5em;
+  }
+  &_description {
+    font-weight: 300;
+    font-size: 18px;
+    color: #4e5156;
+  }
+  &_btns {
+    margin-top: 50px;
+  }
+}

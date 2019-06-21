@@ -1,7 +1,26 @@
 {% extends 'portal.html' %}
 
 
-{% block appScripts %}{% endblock %}
+{% block appScripts %}
+<style>
+    body:after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 96px;
+        bottom: 221px;
+        background: url('/static/images/home-bg.png') center center no-repeat #f0f0f0;
+        background-size: contain;
+        z-index: 0;
+    }
+    main {
+        z-index: 1;
+        position: relative;
+    }
+
+</style>
+{% endblock %}
 
 {% block pageContent %}
 <div class="home-page-content">
