@@ -30,7 +30,7 @@ class CourseListView(TemplateView):
         filter_spec = self.request.GET.get('spec')
         if filter_spec is not None:
             active_courses = active_courses.filter(speciality_id=filter_spec)
-            context['selected_spec'] = filter_spec
+            context['selected_spec'] = int(filter_spec)
 
         course_list = get_courses_details(active_courses)
         context['courses'] = course_list

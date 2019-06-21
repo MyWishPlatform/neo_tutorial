@@ -45,6 +45,9 @@
   border: 1px solid transparent;
   padding: 15px;
   display: block;
+  border-radius: 4px;
+  position: relative;
+  top: 0;
   &, &:hover {
     text-decoration: none;
   }
@@ -52,6 +55,7 @@
   &:hover {
     box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
     border-color: #f0f0f0;
+    top: -2px;
   }
 
   + .course-lesson {

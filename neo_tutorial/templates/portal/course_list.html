@@ -13,11 +13,12 @@
         </li>
     </ul>
 
-
     <ul class="courses-specialities">
         {% for speciality in speciality_list %}
         <li>
-            <a href="#">{{ speciality.name }}</a>
+            <a href="{% url 'portal-courses-list' %}?spec={{speciality.id}}"
+               {% ifequal selected_spec speciality.id %} class="active"{% endifequal %}
+            >{{ speciality.name }}</a>
         </li>
         {% endfor %}
     </ul>
