@@ -29,7 +29,8 @@ def get_courses_details(courses_queryset):
             'speciality': c.speciality.name,
             'description': c.description,
             'image': {},
-            'tags': c.tags
+            'tags': c.tags,
+            'is_active': c.is_active
         }
         saved_image = c.courseimage_set.all().order_by('-uploaded_at').first()
         if saved_image:

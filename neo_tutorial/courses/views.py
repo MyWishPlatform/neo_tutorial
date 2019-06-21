@@ -55,7 +55,8 @@ def create_course_view(request):
         'speciality': course.speciality.name,
         'description': course.description,
         'tags': course.tags,
-        'image': image_details
+        'image': image_details,
+        'is_active': False
     }
     return Response(details)
 
@@ -97,15 +98,19 @@ def update_course_view(request):
     if 'image' in params:
         image_details = parse_image_course(course, request.FILES['image'])
 
+    if 'is_active' in params:
+        course.is_active = params['is_active']
+
     course.save()
 
     updated_details = {
+        'id': course.id,
         'name': course.name,
         'speciality': course.speciality.name,
         'description': course.description,
         'tags': course.tags,
         'image': image_details,
-        'id': course.id
+        'is_active': course.is_active
     }
 
     return Response(updated_details)
