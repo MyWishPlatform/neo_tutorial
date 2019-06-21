@@ -25,9 +25,11 @@ class CourseListView(TemplateView):
 
         active_specialities = []
         for course in active_courses:
-            active_specialities.append(
-                    get_speciality_by_id(course.speciality_id)
-            )
+            speciality_id = course.speciality_id
+            if speciality_id not in active_specialities:
+                active_specialities.append(
+                        get_speciality_by_id(course.speciality_id)
+                )
         context['speciality_list'] = active_specialities
 
         return context
