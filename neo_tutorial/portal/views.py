@@ -41,3 +41,22 @@ class CourseLessonView(TemplateView):
         lesson_details = get_lesson_details(id)
         context['lesson'] = lesson_details
         return context
+
+
+class CourseView(TemplateView):
+    template_name= 'portal/course.html'
+
+    def get_context_data(self, id, **kwargs):
+        context = super().get_context_data(**kwargs)
+        course = BasicCourse.objects.filter(id=id).first()
+        course_details = get_courses_details(course)[0]
+        context['course'] = course_details
+
+        lessons = course.lesson_set.all().order_by('id')
+
+        lessons_details = []
+        for lesson in lessons:
+            details = get_lesson_details(lesson.id, detail_contents=False)
+            lessons_details.append(details)
+
+        context['lessons'] = lessons_details
