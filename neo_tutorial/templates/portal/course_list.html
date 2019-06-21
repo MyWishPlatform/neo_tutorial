@@ -26,9 +26,9 @@
         <div class="grid-cell grid-cell-1-3">
             <div class="course-preview">
                 <div class="course-preview-content">
-                    <a href="#" class="course-preview-image"
+                    <a href="{% url 'portal-course-view' course.id %}" class="course-preview-image"
                          style="background-image: url(/media/{{course.image.image_name}})"></a>
-                    <a href="#" class="course-preview-speciality">
+                    <a href="{% url 'portal-course-view' course.id %}" class="course-preview-speciality">
                         {{ course.speciality.name }}
                     </a>
                     <a href="#" class="course-preview-name">
