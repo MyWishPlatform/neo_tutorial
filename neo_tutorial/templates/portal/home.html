@@ -23,17 +23,20 @@
 {% endblock %}
 
 {% block pageContent %}
-<div class="home-page-content">
-    <h1 class="home-page-content_title">
-        Welcome to NEO universe
-    </h1>
-    <strong class="home-page-content_description">
-        Complete the education and become the one who changes the world
-    </strong>
-    <div class="home-page-content_btns">
-        <a href="{% url 'portal-courses-list' %}" class="btn btn-rounded btn-submit bold uppercase">
-            <span>Start learning</span>
-        </a>
+
+<div class="content-wrapper">
+    <div class="home-page-content">
+        <h1 class="home-page-content_title">
+            Welcome to NEO universe
+        </h1>
+        <strong class="home-page-content_description">
+            Complete the education and become the one who changes the world
+        </strong>
+        <div class="home-page-content_btns">
+            <a href="{% url 'portal-courses-list' %}" class="btn btn-rounded btn-submit bold uppercase">
+                <span>Start learning</span>
+            </a>
+        </div>
     </div>
 </div>
 {% endblock %}

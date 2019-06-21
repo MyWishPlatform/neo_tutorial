@@ -64,3 +64,4 @@ class CourseView(TemplateView):
             lessons_details.append(details)
 
         context['lessons'] = lessons_details
+        return context;

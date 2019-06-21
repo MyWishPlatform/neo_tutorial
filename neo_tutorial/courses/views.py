@@ -266,11 +266,13 @@ def edit_lesson_view(request):
         raise ParseError('content must be passed for edit')
 
     description = params['description'] if 'description' in params else lesson.description
+    name = params['name'] if 'name' in params else lesson.name
     video_id = params['video_id'] if 'video_id' in params else lesson.video_id
     new_content = request.data['content']
     lesson_order = params['order'] if 'order' in params else lesson.order
 
     lesson.description = description
+    lesson.name = name
     lesson.video_id = video_id
     lesson.content = new_content
     lesson.order = lesson_order
