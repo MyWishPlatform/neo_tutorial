@@ -23,13 +23,13 @@ class CourseListView(TemplateView):
 
         filter_tag = self.request.GET.get('q')
         if filter_tag is not None:
-            print(filter_tag)
             active_courses = active_courses.filter(tags__contains=[filter_tag])
+            context['selected_tag'] = filter_tag
 
         filter_spec = self.request.GET.get('spec')
         if filter_spec is not None:
-            print(filter_spec)
             active_courses = active_courses.filter(speciality_id=filter_spec)
+            context['selected_spec'] = filter_spec
 
         course_list = get_courses_details(active_courses)
         context['courses'] = course_list
