@@ -8,16 +8,24 @@
 <div class="course-top" style="background-image: url(/media/{{course.image.image_name}})">
     <div class="course-top_content">
         <div class="content-wrapper">
-            <div class="course-top_wrapper">
-                <a href="#" class="course-top_speciality">
-                    {{course.speciality.name}}
-                </a>
-                <h1 class="course-top_name">
-                    {{course.name}}
-                </h1>
-                <strong class="course-top_description">
-                    {{course.description}}
-                </strong>
+            <div class="course-content-wrapper">
+                <div class="course-top_wrapper">
+                    <a href="{% url 'portal-courses-list' %}?spec={{course.speciality.id}}" class="course-top_speciality">
+                        {{course.speciality.name}}
+                    </a>
+                    <h1 class="course-top_name">
+                        {{course.name}}
+                    </h1>
+                    <div class="course-top_mat">
+                        <a href="{% url 'portal-course-view' course.id %}" class="course-top_mat__lessons">
+                            <i class="icon-play"></i>
+                            <span>{{ lessons|length }} lessons</span>
+                        </a>
+                    </div>
+                    <strong class="course-top_description">
+                        {{course.description}}
+                    </strong>
+                </div>
             </div>
         </div>
     </div>
@@ -25,22 +33,25 @@
 
 
 <div class="content-wrapper">
-    <div class="course-lessons_list">
+    <div class="course-content-wrapper">
+        <div class="course-lessons_list">
+
         {% for lesson in lessons %}
-        <a href="#" class="course-lesson">
-            <div class="course-lesson_img">
+        <a href="{% url 'portal-lesson' lesson.id %}" class="course-lesson_list_item">
+            <div class="course-lesson_list_item_img">
                 <img src="https://img.youtube.com/vi/{{lesson.video_id}}/mqdefault.jpg">
             </div>
-            <div class="course-lesson_content">
-                <h3 class="course-lesson_content__name">
+            <div class="course-lesson_list_item_content">
+                <h3 class="course-lesson_list_item_content__name">
                     {{ lesson.name }}
                 </h3>
-                <div class="course-lesson_content__description">
+                <div class="course-lesson_list_item_content__description">
                     {{ lesson.description }}
                 </div>
             </div>
         </a>
         {% endfor %}
+        </div>
     </div>
 </div>
 {% endblock %}

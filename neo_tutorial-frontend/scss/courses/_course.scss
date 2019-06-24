@@ -66,11 +66,10 @@
 .ql-container {
   font-family: inherit!important;
   font-size: inherit!important;
-  color: inherit!important;
+  color: #000;
 }
 
 .lesson-content {
-
   .ql-editor {
     min-height: 500px;
     padding: 20px;
@@ -80,20 +79,6 @@
     border-width: 0 1px;
     border-style: dashed;
     border-color: #eaeaea;
-  }
-
-  font-size: 14px;
-  line-height: 25px;
-  h2 {
-    font-size: 18px;
-    color: #70c933;
-    font-weight: 300;
-  }
-  a {
-    color: #76cb3a!important;
-    text-decoration: none!important;
-    &:hover {
-      text-decoration: underline!important;
-    }
+    font-size: 16px;
   }
 }

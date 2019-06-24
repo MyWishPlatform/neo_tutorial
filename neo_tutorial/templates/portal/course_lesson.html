@@ -1,1 +1,85 @@
-<h1></h1>
+{% extends 'portal.html' %}
+
+
+{% block appScripts %}{% endblock %}
+
+{% block pageContent %}
+
+<div class="course-top" style="background-image: url(/media/{{lesson.course.image.image_name}})">
+
+    <div class="course-top_content">
+        <div class="content-wrapper">
+            <div class="course-content-wrapper">
+                <div class="course-top_wrapper">
+                    <a href="{% url 'portal-courses-list' %}?spec={{lesson.course.speciality.id}}" class="course-top_speciality">
+                        {{lesson.course.speciality.name}}
+                    </a>
+                    <h1 class="course-top_name">
+                        {{lesson.course.name}}
+                    </h1>
+                    <div class="course-top_mat">
+                        <a href="{% url 'portal-course-view' lesson.course_id %}" class="course-top_mat__lessons">
+                            <i class="icon-play"></i>
+                            <span>{{ lesson.course.lessons|length }} lessons</span>
+                        </a>
+                    </div>
+                    <strong class="course-top_description">
+                        {{lesson.course.description}}
+                    </strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content-wrapper">
+    <div class="course-lesson_wrapper">
+
+        <div class="lesson-page-wrapper">
+
+            {% for less in lesson.course.lessons %}
+
+            {% ifequal less.index|add:1 lesson.index %}
+            <div class="other-lesson other-lesson__prev">
+                <a href="{% url 'portal-lesson' less.id %}" class="other-lesson-content" title="Lesson {{less.index}}: {{less.name}}">
+                    <img src="https://img.youtube.com/vi/{{less.video_id}}/mqdefault.jpg">
+                </a>
+            </div>
+            {% endifequal %}
+
+            {% ifequal lesson.index|add:1 less.index %}
+            <div class="other-lesson other-lesson__next">
+                <a href="{% url 'portal-lesson' less.id %}" class="other-lesson-content" title="Lesson {{less.index}}: {{less.name}}">
+                    <img src="https://img.youtube.com/vi/{{less.video_id}}/mqdefault.jpg">
+                </a>
+            </div>
+            {% endifequal %}
+
+
+            {% if less.id == lesson.id %}
+
+            <div class="course-content-wrapper">
+                <div class="lesson-content">
+
+                    <h2>Lesson {{ forloop.counter }}/{{lesson.course.lessons|length}}: {{ lesson.name }}</h2>
+
+                    <div class="lesson-content_video">
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/{{lesson.video_id}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+
+                    {% autoescape off %}
+                    {{lesson.content}}
+                    {% endautoescape %}
+
+                </div>
+            </div>
+
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
+

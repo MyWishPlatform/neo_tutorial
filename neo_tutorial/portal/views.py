@@ -54,7 +54,28 @@ class CourseLessonView(TemplateView):
     def get_context_data(self, id, **kwargs):
         context = super().get_context_data(**kwargs)
         lesson_details = get_lesson_details(id)
+
+        course_q = BasicCourse.objects.filter(id=lesson_details['course_id'])
+        lessons = course_q.first().lesson_set.all().order_by('id')
+
+        lessons_details = []
+        for i, lesson in enumerate(lessons):
+            details = get_lesson_details(lesson.id, detail_contents=False)
+            details['index'] = i + 1;
+            if details['id'] == lesson_details['id']:
+                lesson_details['index'] = i + 1;
+
+            lessons_details.append(details)
+
+        course_details = get_courses_details(course_q)[0]
+        course_details['lessons'] = lessons_details;
+
+        lesson_details['course'] = course_details;
+
         context['lesson'] = lesson_details
+
+        print(lesson_details);
+
         return context
 
 

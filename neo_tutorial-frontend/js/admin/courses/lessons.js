@@ -6,7 +6,6 @@ angular.module('adminApp')
     }])
     .controller('LessonsAddController', ['$scope', 'RequestService', 'API', 'course', 'lesson', function($scope, RequestService, API, course, lesson) {
         $scope.course = course.data;
-
         if (lesson) {
             $scope.request = lesson.data;
             if ($scope.request.video_id) {

@@ -51,7 +51,6 @@ module.exports = {
                     }
                 ]
             },
-
             {
                 test: /\.html$/,
                 use: [
@@ -71,6 +70,9 @@ module.exports = {
         }),
         new CopyWebpackPlugin([
             {from:'./images',to: 'images'}
+        ]),
+        new CopyWebpackPlugin([
+            {from:'./fonts',to: 'fonts'}
         ]),
 
         new webpack.ProvidePlugin({
