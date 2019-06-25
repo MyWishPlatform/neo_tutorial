@@ -50,9 +50,11 @@ $(function() {
             indexAnchor++;
         }
 
+
         if (activeAnchor !==  active) {
             if (activeAnchor) {
                 activeAnchor.data('link').removeClass('active');
+                activeAnchor = false;
             }
             if (active) {
                 activeAnchor = active;
