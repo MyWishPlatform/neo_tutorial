@@ -52,12 +52,56 @@ body {
   float: right;
 }
 
+a {
+  color: #56bf0d;
+  &:hover {
+    text-decoration: none;
+  }
+}
 
 header {
   background-color: #f9f9f9;
   padding: 20px 0 19px;
   position: relative;
   z-index: 2;
+  &:before, &:after {
+    content: '';
+    display: table;
+    width: 100%;
+  }
+}
+
+.class-header-logotype {
+  float: left;
+}
+.header-menu {
+  list-style-type: none;
+  color: #777;
+  font-size: 20px;
+  margin: 0 0 0 200px;
+  padding: 7px 0 0;
+  &:after {
+    content: '';
+    display: block;
+    width: 100%;
+    clear: both;
+  }
+  li {
+    float: left;
+  }
+  a {
+    color: inherit;
+    font-weight: 300;
+    display: block;
+    padding: 10px 20px;
+    border-radius: 3px;
+    &, &:hover {
+      text-decoration: none;
+    }
+    &:hover {
+      background-color: #f0f0f0;
+    }
+  }
 }
 
 @import 'common/_footer.scss';

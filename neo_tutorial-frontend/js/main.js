@@ -38,3 +38,8 @@ require('./directives');
         });
     });
 })();
+
+
+require('./portal/lesson');
+
+

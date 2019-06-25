@@ -36,6 +36,21 @@
     <div class="course-lesson_wrapper">
 
         <div class="lesson-page-wrapper">
+            <div class="lesson-right-sidebar">
+                <div class="lesson-right-sidebar_section">
+                    <ul class="lesson-steps-list" id="lesson-steps">
+                        <div class="lesson-right-sidebar_title">Table of contents</div>
+                    </ul>
+                </div>
+                <div class="lesson-right-sidebar_section">
+                    <div class="lesson-tags-list">
+                        <div class="lesson-right-sidebar_title">Tags:</div>
+                        {% for tag in lesson.course.tags %}
+                        <a href="#">#{{tag}}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
 
             {% for less in lesson.course.lessons %}
 
@@ -56,6 +71,7 @@
             {% endifequal %}
 
 
+
             {% if less.id == lesson.id %}
 
             <div class="course-content-wrapper">
@@ -68,13 +84,14 @@
                     </div>
 
                     {% autoescape off %}
-                    {{lesson.content}}
+                    <div id="lesson-content">{{lesson.content}}</div>
                     {% endautoescape %}
 
                 </div>
             </div>
-
             {% endif %}
+
+
             {% endfor %}
         </div>
     </div>
