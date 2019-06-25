@@ -265,3 +265,11 @@
     }
   }
 }
+
+#lesson-right-sidebar_wrapper {
+  padding-top: 30px;
+  &.sidebar-fixed {
+    position: fixed;
+    top: 0;
+  }
+}

@@ -1,6 +1,8 @@
 $(function() {
     var lessonSections = $('#lesson-steps');
 
+    if (!lessonSections.length) return;
+
     var anchors = [], activeAnchor;
 
     $('.lesson-content h3').each(function(index) {
@@ -31,8 +33,12 @@ $(function() {
 
 
     var win = $(window);
-    console.log(win.height);
-    win.on('scroll', function(e) {
+
+    var lessonRightSidebar = $('#lesson-right-sidebar');
+    var rightSidebarContent = $('#lesson-right-sidebar_wrapper');
+    var sidebarOffset = lessonRightSidebar.offset()['top'];
+
+    var checkSidebarPosition = function() {
         var active;
         var indexAnchor = 0;
         var windowScrollTop = win.scrollTop();
@@ -48,10 +54,28 @@ $(function() {
             if (activeAnchor) {
                 activeAnchor.data('link').removeClass('active');
             }
-            activeAnchor = active;
-            activeAnchor.data('link').addClass('active');
+            if (active) {
+                activeAnchor = active;
+                activeAnchor.data('link').addClass('active');
+            }
         }
-    });
 
+        if (sidebarOffset <= windowScrollTop) {
+            rightSidebarContent.addClass('sidebar-fixed');
+        } else {
+            rightSidebarContent.removeClass('sidebar-fixed');
+        }
+    };
+
+    win.on('scroll', checkSidebarPosition);
+
+    var checkSidebarSize = function() {
+        rightSidebarContent.width(lessonRightSidebar.width());
+    };
+
+    win.on('resize', checkSidebarSize);
+
+    checkSidebarPosition();
+    checkSidebarSize();
 
 });

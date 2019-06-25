@@ -36,18 +36,20 @@
     <div class="course-lesson_wrapper">
 
         <div class="lesson-page-wrapper">
-            <div class="lesson-right-sidebar">
-                <div class="lesson-right-sidebar_section">
-                    <ul class="lesson-steps-list" id="lesson-steps">
-                        <div class="lesson-right-sidebar_title">Table of contents</div>
-                    </ul>
-                </div>
-                <div class="lesson-right-sidebar_section">
-                    <div class="lesson-tags-list">
-                        <div class="lesson-right-sidebar_title">Tags:</div>
-                        {% for tag in lesson.course.tags %}
-                        <a href="#">#{{tag}}</a>
-                        {% endfor %}
+            <div class="lesson-right-sidebar" id="lesson-right-sidebar">
+                <div id="lesson-right-sidebar_wrapper">
+                    <div class="lesson-right-sidebar_section">
+                        <ul class="lesson-steps-list" id="lesson-steps">
+                            <div class="lesson-right-sidebar_title">Table of contents</div>
+                        </ul>
+                    </div>
+                    <div class="lesson-right-sidebar_section">
+                        <div class="lesson-tags-list">
+                            <div class="lesson-right-sidebar_title">Tags:</div>
+                            {% for tag in lesson.course.tags %}
+                            <a href="#">#{{tag}}</a>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
             </div>

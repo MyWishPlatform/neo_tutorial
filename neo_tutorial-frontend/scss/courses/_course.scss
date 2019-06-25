@@ -67,6 +67,9 @@
   font-family: inherit!important;
   font-size: inherit!important;
   color: #000;
+  min-height: 500px;
+  height: calc(100vh - 136px);
+  overflow: auto;
 }
 
 .lesson-content {
