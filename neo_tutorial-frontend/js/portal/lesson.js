@@ -4,41 +4,50 @@ $(function() {
     if (!lessonSections.length) return;
 
     var anchors = [], activeAnchor;
+    var lessonTitles = $('.lesson-content h3');
 
-    $('.lesson-content h3').each(function(index) {
 
-        var h3 = $(this);
-        var li = $('<li>');
-        var a =  $('<a>');
-        var anchor = $('<a>');
 
-        anchors.push(anchor);
+    if (!lessonTitles.length) {
+        lessonSections.parent().hide();
+    } else {
+        lessonTitles.each(function(index) {
 
-        li.append(a);
-        a.text(h3.text());
+            var h3 = $(this);
+            var li = $('<li>');
+            var a =  $('<a>');
+            var anchor = $('<a>');
 
-        anchor.data('link', a);
+            anchors.push(anchor);
 
-        var anchorId = 'section-' + (index + 1);
-        a.attr('href', '#' + anchorId);
-        anchor.attr('id', anchorId);
+            li.append(a);
+            a.text(h3.text());
 
-        anchor.prependTo(h3);
-        lessonSections.append(li);
+            anchor.data('link', a);
 
-        if (!index) {
-            a.addClass('active');
-        }
-    });
+            var anchorId = 'section-' + (index + 1);
+            a.attr('href', '#' + anchorId);
+            anchor.attr('id', anchorId);
+
+            anchor.prependTo(h3);
+            lessonSections.append(li);
+
+            if (!index) {
+                a.addClass('active');
+            }
+        });
+    }
+
 
 
     var win = $(window);
 
     var lessonRightSidebar = $('#lesson-right-sidebar');
     var rightSidebarContent = $('#lesson-right-sidebar_wrapper');
-    var sidebarOffset = lessonRightSidebar.offset()['top'];
+
 
     var checkSidebarPosition = function() {
+        var sidebarOffset = lessonRightSidebar.offset()['top'];
         var active;
         var indexAnchor = 0;
         var windowScrollTop = win.scrollTop();
