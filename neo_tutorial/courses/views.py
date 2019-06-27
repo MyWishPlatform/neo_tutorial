@@ -202,15 +202,13 @@ def create_lesson_view(request):
     description = params['description'] if 'description' in params else ""
     video_id = params['video_id'] if 'video_id' in params else ""
     content = params['content'] if 'content' in params else ""
-    order = params['order'] if 'order' in params else ""
 
     lesson = Lesson(
             course=course_object,
             name=params['name'],
             description=description,
             video_id=video_id,
-            content=content,
-            order=order
+            content=content
     )
     lesson.save()
 
@@ -269,13 +267,11 @@ def edit_lesson_view(request):
     name = params['name'] if 'name' in params else lesson.name
     video_id = params['video_id'] if 'video_id' in params else lesson.video_id
     new_content = request.data['content']
-    lesson_order = params['order'] if 'order' in params else lesson.order
 
     lesson.description = description
     lesson.name = name
     lesson.video_id = video_id
     lesson.content = new_content
-    lesson.order = lesson_order
 
     lesson.save()
 
