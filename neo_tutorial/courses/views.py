@@ -333,16 +333,8 @@ def save_lesson_by_order(request):
     lessons_details = []
     for lesson in lessons:
         details = get_lesson_details(lesson.id)
-
-        if lesson.lessonimage_set.all():
-            images = lesson.lessonimage_set.all()
-            images_details = []
-            for lesson_image in images:
-                images_details.append({
-                    'name': lesson_image.image.name,
-                    'uploaded_at': lesson_image.uploaded_at
-                })
-            details['images'] = images_details
+        details.pop('content')
+        details.pop('video_id')
 
         lessons_details.append(details)
 
