@@ -315,14 +315,35 @@ def delete_lesson_view(request):
 
 @api_view(http_method_names=['POST'])
 def save_lesson_by_order(request):
-        request_data = request.data
-        course_id = request_data['course_id']
-        lessons_by_order = request_data['lesson_order']
+    request_data = request.data
+    course_id = request_data['course_id']
+    lessons_by_order = request_data['lesson_order']
 
-        course = BasicCourse.objects.filter(id=course_id).first()
-        lessons_all = course.lesson_set.all().order_by('id')
+    course = BasicCourse.objects.filter(id=course_id).first()
+    lessons_all = course.lesson_set.all().order_by('id')
 
-        for x in lessons_by_order:
-            lesson = lessons_all.filter(id=x).first()
-            lesson.order = lessons_by_order[x]
-            lesson.save()
+    for x in lessons_by_order:
+        lesson = lessons_all.filter(id=x).first()
+        lesson.order = lessons_by_order[x]
+        lesson.save()
+
+        lessons = course.lesson_set.all().order_by('id')
+
+    lessons_all.refresh_from_db()
+    lessons_details = []
+    for lesson in lessons:
+        details = get_lesson_details(lesson.id)
+
+        if lesson.lessonimage_set.all():
+            images = lesson.lessonimage_set.all()
+            images_details = []
+            for lesson_image in images:
+                images_details.append({
+                    'name': lesson_image.image.name,
+                    'uploaded_at': lesson_image.uploaded_at
+                })
+            details['images'] = images_details
+
+        lessons_details.append(details)
+
+    return Response(lessons_details)
