@@ -324,7 +324,7 @@ def save_lesson_by_order(request):
 
     for x in lessons_by_order:
         lesson = lessons_all.filter(id=x).first()
-        lesson.order = lessons_by_order[x]
+        lesson.order = lessons_by_order.index(x)
         lesson.save()
 
         lessons = course.lesson_set.all().order_by('id')
