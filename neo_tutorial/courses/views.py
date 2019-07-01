@@ -311,3 +311,18 @@ def delete_lesson_view(request):
     return Response({"detail": "lesson {name} with id {id} deleted".format(
             name=lesson.name, id=lesson.id
     )})
+
+
+@api_view(http_method_names=['POST'])
+def save_lesson_by_order(request):
+        request_data = request.data
+        course_id = request_data['course_id']
+        lessons_by_order = request_data['lesson_order']
+
+        course = BasicCourse.objects.filter(id=course_id).first()
+        lessons_all = course.lesson_set.all().order_by('id')
+
+        for x in lessons_by_order:
+            lesson = lessons_all.filter(id=x).first()
+            lesson.order = lessons_by_order[x]
+            lesson.save()
