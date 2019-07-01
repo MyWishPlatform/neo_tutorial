@@ -329,7 +329,7 @@ def save_lesson_by_order(request):
 
         lessons = course.lesson_set.all().order_by('id')
 
-    lessons_all.refresh_from_db()
+    #lessons_all.refresh_from_db()
     lessons_details = []
     for lesson in lessons:
         details = get_lesson_details(lesson.id)
