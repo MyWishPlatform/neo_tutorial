@@ -34,7 +34,7 @@ urlpatterns = [
     path('api/lessons/upload_images/', upload_lesson_images_view, name='api-admin-lessons-upload-images'),
     path('api/lessons/update/', edit_lesson_view, name='api-admin-lessons-edit-content'),
     path('api/lessons/delete/', delete_lesson_view, name='api-admin-lessons-delete'),
-    path('api/lessons/save_order/', delete_lesson_view, name='api-admin-lessons-order'),
+    path('api/lessons/save_order/', save_lesson_by_order, name='api-admin-lessons-order'),
 
 
     re_path(r'^(.*)$', AdministrationView.as_view()),
