@@ -130,7 +130,7 @@
     border: 1px solid #e8e8e8;
     padding: 10px;
     text-align: left;
-    &:first-child {
+    &:first-child:not(.normal-width) {
       width: 1px;
       text-align: center;
     }

@@ -1,7 +1,51 @@
 angular.module('adminApp')
-    .controller('LessonsListController', ['$scope', 'lessonsList', 'course', function($scope, lessonsList, course) {
-        $scope.lessonsList = lessonsList.data;
+    .controller('LessonsListController', ['$scope', 'lessonsList', 'course', 'RequestService', 'API',
+        function($scope, lessonsList, course, RequestService, API) {
+
+        $scope.lessonsList = lessonsList.data.sort(function(lesson1, lesson2) {
+            return lesson1.order > lesson2.order ? 1 : -1;
+        });
         $scope.course = course.data;
+
+
+        var saveSorting = function() {
+            return RequestService.post({
+                API_PATH: API.ADMIN_PATH,
+                path: API.LESSONS.PATH + API.LESSONS.METHODS.SAVE_ORDER,
+                data: {
+                    course_id: $scope.course.id,
+                    lesson_order: $scope.lessonsList.reduce(function(val, item) {
+                        val.push(item.id);
+                        return val;
+                    }, [])
+                }
+            }).then(function(images) {
+
+            });
+        };
+
+        $scope.toUp = function(lesson) {
+            var indexItem = $scope.lessonsList.indexOf(lesson);
+            var fromRight = $scope.lessonsList.length - indexItem - 1;
+            $scope.lessonsList =
+                $scope.lessonsList.slice(0, indexItem - 1).concat(
+                    [lesson],
+                    [$scope.lessonsList[indexItem - 1]],
+                    fromRight ? $scope.lessonsList.slice(-fromRight) : []
+                );
+            saveSorting();
+        };
+        $scope.toBottom = function(lesson) {
+            var indexItem = $scope.lessonsList.indexOf(lesson);
+            var fromRight = $scope.lessonsList.length - indexItem - 2;
+            $scope.lessonsList =
+                $scope.lessonsList.slice(0, indexItem).concat(
+                    [$scope.lessonsList[indexItem + 1]],
+                    [lesson],
+                    fromRight ? $scope.lessonsList.slice(-fromRight) : []
+                );
+            saveSorting();
+        };
 
     }])
     .controller('LessonsAddController', ['$scope', 'RequestService', 'API', 'course', 'lesson', function($scope, RequestService, API, course, lesson) {

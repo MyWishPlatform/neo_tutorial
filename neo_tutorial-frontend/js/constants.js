@@ -24,7 +24,8 @@ angular.module('Constants', []).constant('API', {
             'BY_COURSE_ID': 'by_course_id/',
             'CREATE': 'create/',
             'UPLOAD_IMAGES': 'upload_images/',
-            'UPDATE': 'update/'
+            'UPDATE': 'update/',
+            'SAVE_ORDER': 'save_order/'
         }
     }
 
