@@ -16,6 +16,8 @@ class BasicCourse(models.Model):
     name = models.CharField(max_length=80, null=True, default='')
     speciality = models.ForeignKey(Speciality, on_delete=models.CASCADE, default='')
     description = models.CharField(max_length=120, null=True, default='')
+    course_id = models.IntegerField()
+    lng = models.CharField(default='en')
 
     tags = ArrayField(
             base_field=models.CharField(max_length=30, null=True, default=''),

@@ -28,6 +28,18 @@ def create_course_view(request):
     else:
         new_speciality = params['new_speciality']
 
+    if 'course_id' not in params:
+        course_id = len(BasicCourse.objects.all()) + 1
+        lng = 'en'
+    else:
+        if 'lng' not in params:
+            raise ParseError('lng is required if course id specified')
+        if params['lng'] == 'en':
+            raise ParseError('lng must be different than "en"')
+
+        course_id = params['course_id']
+        lng = params['lng']
+
     speciality = get_or_create_speciality(params['speciality'], new_speciality)
     description = params['description'] if 'description' in params else ''
 
@@ -41,7 +53,9 @@ def create_course_view(request):
             name=params['name'],
             speciality=speciality,
             description=description,
-            tags=tag_list
+            tags=tag_list,
+            course_id=course_id,
+            lng=lng
     )
     course.save()
 
@@ -339,3 +353,19 @@ def save_lesson_by_order(request):
         lessons_details.append(details)
 
     return Response(lessons_details)
+
+
+@api_view(http_method_names=['GET'])
+def get_course_by_id(request):
+    if 'course_id' not in request.data:
+        raise ParseError('course id is required')
+
+    course_id = request.data['course_id']
+    lang = request.data['lng'] if 'lng' in request.data else 'en'
+
+    course = BasicCourse.objects.filter(course_id=course_id, lng=lang)
+    if not course:
+        raise ParseError('course with this id is not found')
+
+    details = get_courses_details(course)[0]
+    return Response(details)

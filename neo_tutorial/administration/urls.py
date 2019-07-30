@@ -3,7 +3,8 @@ from neo_tutorial.administration.views import AdministrationView, TutorialAdminL
 
 from neo_tutorial.administration.api import profile_view, all_users_view, create_user_view
 from neo_tutorial.courses.views import all_courses_view, create_course_view, update_course_view, \
-    get_course_view, get_courses_by_tag_view, get_specialities_view, create_lesson_view, get_lessons_by_course_view,\
+    get_course_view, get_courses_by_tag_view, get_specialities_view, get_course_by_id
+from neo_tutorial.courses.views import create_lesson_view, get_lessons_by_course_view,\
     upload_lesson_images_view, edit_lesson_view, delete_lesson_view, preview_lesson_view, save_lesson_by_order
 
 
@@ -28,6 +29,7 @@ urlpatterns = [
     path('api/courses/preview/<int:id>/',get_course_view, name='api-admin-courses-preview'),
     path('api/courses/by_tag/', get_courses_by_tag_view, name='api-admin-courses-by-tag'),
     path('api/courses/specialities/', get_specialities_view, name='api-admin-courses-specialities'),
+    path('api/courses/by_course_id/', get_course_by_id, name='api-admin-courses-by-course-id'),
     path('api/lessons/create/', create_lesson_view, name='api-admin-lessons-create'),
     path('api/lessons/<int:id>/', preview_lesson_view, name='api-admin-lessons-preview'),
     path('api/lessons/by_course_id/<int:course_id>/', get_lessons_by_course_view, name='api-admin-lessons-by-course-id'),
