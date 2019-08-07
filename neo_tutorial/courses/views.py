@@ -357,11 +357,12 @@ def save_lesson_by_order(request):
 
 @api_view(http_method_names=['GET'])
 def get_course_by_id(request):
-    if 'course_id' not in request.data:
+    request_params = request.GET
+    course_id = request_params.get('course_id', None)
+    if not course_id:
         raise ParseError('course id is required')
 
-    course_id = request.data['course_id']
-    lang = request.data['lng'] if 'lng' in request.data else 'en'
+    lang = request_params.get('lng', 'en')
 
     course = BasicCourse.objects.filter(course_id=course_id, lng=lang)
     if not course:
