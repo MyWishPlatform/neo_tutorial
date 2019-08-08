@@ -19,7 +19,7 @@ class CourseListView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        active_courses = BasicCourse.objects.filter(is_active=True).order_by('-updated_at')
+        active_courses = BasicCourse.objects.filter(is_active=True, lng='en').order_by('-updated_at')
         all_active_courses = active_courses
 
         filter_tag = self.request.GET.get('q')
