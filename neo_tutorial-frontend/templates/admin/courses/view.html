@@ -14,19 +14,24 @@
                                  ng-style="{'background-image' : 'url(/media/' + course.image.image_name + ')'}"></div>
 
                             <div class="course-preview-languages">
-                                <a href="#" class="course-preview-languages_link">
+                                <a ui-sref="main.base.courses_view({course_id: course.course_id, lng: null})"
+                                   class="course-preview-languages_link">
                                     <img src="/static/images/lng/en.svg"/>
                                 </a>
-                                <a href="#" class="course-preview-languages_link">
+                                <a ui-sref="main.base.courses_view({course_id: course.course_id, lng: 'ru'})"
+                                   class="course-preview-languages_link">
                                     <img src="/static/images/lng/ru.svg"/>
                                 </a>
-                                <a href="#" class="course-preview-languages_link">
+                                <a ui-sref="main.base.courses_view({course_id: course.course_id, lng: 'zh'})"
+                                   class="course-preview-languages_link">
                                     <img src="/static/images/lng/zh.svg"/>
                                 </a>
-                                <a href="#" class="course-preview-languages_link">
+                                <a ui-sref="main.base.courses_view({course_id: course.course_id, lng: 'ko'})"
+                                   class="course-preview-languages_link">
                                     <img src="/static/images/lng/ko.svg"/>
                                 </a>
-                                <a href="#" class="course-preview-languages_link">
+                                <a ui-sref="main.base.courses_view({course_id: course.course_id, lng: 'ja'})"
+                                   class="course-preview-languages_link">
                                     <img src="/static/images/lng/ja.svg"/>
                                 </a>
                             </div>

@@ -10,18 +10,23 @@ angular.module('adminApp')
         var courseModel = course ? course.data : false;
 
         if (!courseModel) {
-            $scope.request = {};
+            $scope.request = {
+                course_id: $state.params.course_id,
+                lng: $state.params.lng
+            };
         } else {
             $scope.courseTags = courseModel.tags.join(' ');
             $scope.request = {
                 id: courseModel.id,
                 tags: courseModel.tags,
                 name: courseModel.name,
+                course_id: courseModel.course_id,
+                lng: courseModel.lng,
                 speciality: $scope.specialitiesList.filter(function(speciality) {
                     return speciality.name === courseModel.speciality.name
                 })[0],
                 description: courseModel.description,
-                is_active: courseModel.is_active,
+                is_active: courseModel.is_active
             };
             $scope.coverImage = '/media/' + courseModel.image.image_name;
         }
@@ -54,7 +59,10 @@ angular.module('adminApp')
                 data: requestData,
                 file: $scope.coverFile
             }).then(function(response) {
-                $state.go('main.base.courses_view', {id: response.data.id});
+                $state.go('main.base.courses_view', {
+                    course_id: requestData.course_id,
+                    lng: requestData.lng
+                });
             }, function(error) {
                 switch (error.status) {
                     case 400:
@@ -73,7 +81,8 @@ angular.module('adminApp')
 
 
     }])
-    .controller('CoursesViewController', ['$scope', 'course', 'RequestService', 'API', function($scope, course, RequestService, API) {
+    .controller('CoursesViewController', ['$scope', 'course', 'RequestService', 'API', '$stateParams', '$state', '$timeout',
+        function($scope, course, RequestService, API, $stateParams, $state, $timeout) {
         $scope.course = course.data;
 
         $scope.toggleActivation = function(isActive) {

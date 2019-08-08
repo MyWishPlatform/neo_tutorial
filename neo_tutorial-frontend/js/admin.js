@@ -7,7 +7,7 @@ require('./admin/users');
 require('./admin/courses');
 
 
-module.run(['$rootScope', '$state', function($rootScope, $state) {
+module.run(['$rootScope', '$state', '$timeout', function($rootScope, $state, $timeout) {
     $rootScope.currentState = $state;
 }]);
 
@@ -81,7 +81,7 @@ module.config(['$stateProvider', '$locationProvider', '$urlRouterProvider',
             }]
         }
     }).state('main.base.courses_create', {
-        url: 'courses/create/:id',
+        url: 'courses/create/:id?:lng&:course_id',
         controller: 'CoursesAddController',
         template: require('!!html-loader!./../templates/admin/courses/add.html'),
         adminPart: 'courses',
@@ -104,18 +104,34 @@ module.config(['$stateProvider', '$locationProvider', '$urlRouterProvider',
             }]
         }
     }).state('main.base.courses_view', {
-        url: 'courses/:id',
+        url: 'courses/:course_id?:lng',
         controller: 'CoursesViewController',
         template: require('!!html-loader!./../templates/admin/courses/view.html'),
         adminPart: 'courses',
         resolve: {
-            course: ['$stateParams', 'RequestService', 'API', function($stateParams, RequestService, API) {
+            course: ['$stateParams', 'RequestService', 'API', '$state', '$timeout',
+                function($stateParams, RequestService, API, $state, $timeout) {
+
                 return RequestService.get({
                     'API_PATH': API.ADMIN_PATH,
                     'path': API.COURSES.PATH + API.COURSES.METHODS.GET_BY_COURSE_ID,
                     'params': {
-                        course_id: $stateParams.id
+                        course_id: $stateParams.course_id,
+                        lng: $stateParams.lng
                     }
+                }).then(function(result) {
+                    return result;
+                }, function(err) {
+                    $timeout(function() {
+                        $state.transitionTo('main.base.courses_create', {
+                            course_id: $stateParams.course_id,
+                            lng: $stateParams.lng,
+                            id: null
+                        }, {
+                            location: 'replace'
+                        });
+                    });
+                    return {};
                 });
             }]
         }
