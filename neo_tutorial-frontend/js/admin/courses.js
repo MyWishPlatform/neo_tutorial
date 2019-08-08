@@ -102,7 +102,7 @@ angular.module('adminApp')
                 path: API.COURSES.PATH + (!requestData.id ? API.COURSES.METHODS.CREATE : API.COURSES.METHODS.UPDATE),
                 data: requestData
             }).then(function(response) {
-                $scope.course = response.data;
+                $scope.course.is_active = response.data.is_active;
             });
         };
     }]);
