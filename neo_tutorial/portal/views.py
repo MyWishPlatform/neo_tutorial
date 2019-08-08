@@ -36,11 +36,13 @@ class CourseListView(TemplateView):
         for course in course_list:
             other_lang_courses = BasicCourse.objects.filter(course_id=course['course_id'])
 
-            lang_lessons = {}
+            internal_ids = {}
             for course_lang in other_lang_courses:
-                lang_lessons[course_lang.lng] = len(Lesson.objects.filter(course=course_lang))
+                lessons_count = len(Lesson.objects.filter(course=course_lang))
+                if lessons_count > 0 and course_lang.lng != 'en':
+                    internal_ids[course_lang.lng] = course_lang.id
 
-            course['lessons_count'] = lang_lessons
+            course['other_lang_ids'] = internal_ids
 
         context['courses'] = course_list
 
