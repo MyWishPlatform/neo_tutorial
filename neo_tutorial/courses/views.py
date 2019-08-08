@@ -9,7 +9,9 @@ from ast import literal_eval
 
 @api_view(http_method_names=['GET'])
 def all_courses_view(request):
-    return Response(get_all_courses_details())
+    all_courses = BasicCourse.objects.filter(lng='en')
+    details = get_courses_details(all_courses)
+    return Response(details)
 
 
 @api_view(http_method_names=['POST'])
