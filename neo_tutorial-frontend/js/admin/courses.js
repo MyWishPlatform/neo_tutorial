@@ -81,8 +81,8 @@ angular.module('adminApp')
 
 
     }])
-    .controller('CoursesViewController', ['$scope', 'course', 'RequestService', 'API', '$stateParams', '$state', '$timeout',
-        function($scope, course, RequestService, API, $stateParams, $state, $timeout) {
+    .controller('CoursesViewController', ['$scope', 'course', 'RequestService', 'API',
+        function($scope, course, RequestService, API) {
         $scope.course = course.data;
 
         $scope.toggleActivation = function(isActive) {
@@ -97,7 +97,7 @@ angular.module('adminApp')
             delete requestData.image;
             requestData.speciality = requestData.speciality.id;
 
-            RequestService.post({
+            RequestService.upload({
                 API_PATH: API.ADMIN_PATH,
                 path: API.COURSES.PATH + (!requestData.id ? API.COURSES.METHODS.CREATE : API.COURSES.METHODS.UPDATE),
                 data: requestData

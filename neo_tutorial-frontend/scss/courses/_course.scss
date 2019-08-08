@@ -25,6 +25,10 @@
       display: inline-block;
       vertical-align: middle;
       margin-right: 8px;
+      opacity: 0.6;
+      &.active, &:hover {
+        opacity: 1;
+      }
       img {
         width: 28px;
       }

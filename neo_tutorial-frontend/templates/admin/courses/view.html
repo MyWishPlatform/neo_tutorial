@@ -15,23 +15,23 @@
 
                             <div class="course-preview-languages">
                                 <a ui-sref="main.base.courses_view({course_id: course.course_id, lng: null})"
-                                   class="course-preview-languages_link">
+                                   class="course-preview-languages_link" ng-class="{active: course.lng === 'en'}">
                                     <img src="/static/images/lng/en.svg"/>
                                 </a>
                                 <a ui-sref="main.base.courses_view({course_id: course.course_id, lng: 'ru'})"
-                                   class="course-preview-languages_link">
+                                   class="course-preview-languages_link" ng-class="{active: course.lng === 'ru'}">
                                     <img src="/static/images/lng/ru.svg"/>
                                 </a>
                                 <a ui-sref="main.base.courses_view({course_id: course.course_id, lng: 'zh'})"
-                                   class="course-preview-languages_link">
+                                   class="course-preview-languages_link" ng-class="{active: course.lng === 'zh'}">
                                     <img src="/static/images/lng/zh.svg"/>
                                 </a>
                                 <a ui-sref="main.base.courses_view({course_id: course.course_id, lng: 'ko'})"
-                                   class="course-preview-languages_link">
+                                   class="course-preview-languages_link" ng-class="{active: course.lng === 'ko'}">
                                     <img src="/static/images/lng/ko.svg"/>
                                 </a>
                                 <a ui-sref="main.base.courses_view({course_id: course.course_id, lng: 'ja'})"
-                                   class="course-preview-languages_link">
+                                   class="course-preview-languages_link" ng-class="{active: course.lng === 'ja'}">
                                     <img src="/static/images/lng/ja.svg"/>
                                 </a>
                             </div>
