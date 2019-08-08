@@ -1,7 +1,7 @@
 from django.views.generic.base import TemplateView
 from neo_tutorial.courses.api import get_all_courses_details, get_lesson_details, get_speciality_by_id, \
     get_courses_details
-from neo_tutorial.courses.models import BasicCourse
+from neo_tutorial.courses.models import BasicCourse, Lesson
 
 
 class HomeView(TemplateView):
@@ -33,6 +33,15 @@ class CourseListView(TemplateView):
             context['selected_spec'] = int(filter_spec)
 
         course_list = get_courses_details(active_courses)
+        for course in course_list:
+            other_lang_courses = BasicCourse.objects.filter(course_id=course['course_id'])
+
+            lang_lessons = {}
+            for course_lang in other_lang_courses:
+                lang_lessons[course_lang.lng] = len(Lesson.objects.filter(course=course_lang))
+
+            course['lessons_count'] = lang_lessons
+
         context['courses'] = course_list
 
         active_specialities_id = []
