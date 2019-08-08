@@ -45,6 +45,11 @@ class CourseListView(TemplateView):
         for spec_id in active_specialities_id:
             active_specialities.append(get_speciality_by_id(spec_id))
         context['speciality_list'] = active_specialities
+
+        lessons_count = {}
+
+
+
         return context
 
 
