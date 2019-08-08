@@ -12,14 +12,15 @@ def all_courses_view(request):
     all_courses = BasicCourse.objects.filter(lng='en')
     details = get_courses_details(all_courses)
 
-    # for course in details:
-    #     course = BasicCourse.objects.get(course['id'])
-    #     course_lessons = Lesson.objects.filter(course=course)
-    #     lessons_count = {}
-    #     for lesson in course_lessons.values('lng'):
-    #         lessons_count[lesson]
-    #98
-    #     course['lessons_count'] = len(course_lessons)
+    for course in details:
+        other_lang_courses = BasicCourse.objects.filter(id=course['id'])
+
+        lang_lessons = {}
+        for course_lang in other_lang_courses:
+            lang_lessons[course_lang.lng] = len(Lesson.objects.filter(course=course_lang))
+
+        course['lessons_count'] = lang_lessons
+
     return Response(details)
 
 
