@@ -371,4 +371,8 @@ def get_course_by_id(request):
         raise ParseError('course with this id is not found')
 
     details = get_courses_details(course)[0]
+
+    lessons_by_course =Lesson.objects.filter(course=course)
+
+    details['lessons_count'] = len(lessons_by_course)
     return Response(details)
