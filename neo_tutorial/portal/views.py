@@ -34,7 +34,7 @@ class CourseListView(TemplateView):
 
         course_list = get_courses_details(active_courses)
         for course in course_list:
-            other_lang_courses = BasicCourse.objects.filter(course_id=course['course_id'])
+            other_lang_courses = BasicCourse.objects.filter(course_id=course['course_id'], is_active=True)
 
             internal_ids = {}
             for course_other_lang in other_lang_courses:
