@@ -19,6 +19,17 @@
       text-decoration: none;
     }
   }
+  &-languages {
+    margin-top: 10px;
+    &_link {
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 8px;
+      img {
+        width: 28px;
+      }
+    }
+  }
   &-image {
     width: 100%;
     height: 200px;
@@ -29,7 +40,7 @@
   &-speciality {
     font-size: 16px;
     color: #70c933;
-    margin-top: 16px;
+    margin-top: 10px;
     display: block;
     &:hover {
       text-decoration: underline;

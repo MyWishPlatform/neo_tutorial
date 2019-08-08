@@ -88,16 +88,16 @@ angular.module('adminApp')
             delete requestData.image;
             requestData.speciality = requestData.speciality.id;
 
-            RequestService.upload({
+            RequestService.post({
                 API_PATH: API.ADMIN_PATH,
                 path: API.COURSES.PATH + (!requestData.id ? API.COURSES.METHODS.CREATE : API.COURSES.METHODS.UPDATE),
                 data: requestData
             }).then(function(response) {
                 $scope.course = response.data;
             });
-
         };
     }]);
+
 
 
 require('./courses/lessons');

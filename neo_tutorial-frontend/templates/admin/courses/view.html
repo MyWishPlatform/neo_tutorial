@@ -1,6 +1,7 @@
-<h1 class="administration-page-title">
-    Course
-</h1>
+
+<!--<h1 class="administration-page-title">-->
+    <!--{{course.name}}-->
+<!--</h1>-->
 
 <div class="grid-row">
     <div class="grid-cell">
@@ -11,6 +12,25 @@
                         <div class="course-preview-content">
                             <div class="course-preview-image"
                                  ng-style="{'background-image' : 'url(/media/' + course.image.image_name + ')'}"></div>
+
+                            <div class="course-preview-languages">
+                                <a href="#" class="course-preview-languages_link">
+                                    <img src="/static/images/lng/en.svg"/>
+                                </a>
+                                <a href="#" class="course-preview-languages_link">
+                                    <img src="/static/images/lng/ru.svg"/>
+                                </a>
+                                <a href="#" class="course-preview-languages_link">
+                                    <img src="/static/images/lng/zh.svg"/>
+                                </a>
+                                <a href="#" class="course-preview-languages_link">
+                                    <img src="/static/images/lng/ko.svg"/>
+                                </a>
+                                <a href="#" class="course-preview-languages_link">
+                                    <img src="/static/images/lng/ja.svg"/>
+                                </a>
+                            </div>
+
                             <div class="course-preview-speciality">
                                 {{ course.speciality.name }}
                             </div>

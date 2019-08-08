@@ -112,7 +112,10 @@ module.config(['$stateProvider', '$locationProvider', '$urlRouterProvider',
             course: ['$stateParams', 'RequestService', 'API', function($stateParams, RequestService, API) {
                 return RequestService.get({
                     'API_PATH': API.ADMIN_PATH,
-                    'path': API.COURSES.PATH + 'preview/' + $stateParams.id + '/',
+                    'path': API.COURSES.PATH + API.COURSES.METHODS.GET_BY_COURSE_ID,
+                    'params': {
+                        course_id: $stateParams.id
+                    }
                 });
             }]
         }

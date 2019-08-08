@@ -15,7 +15,8 @@ angular.module('Constants', []).constant('API', {
             'CREATE': 'create/',
             'PREVIEW': 'preview/',
             'SPECIALITIES': 'specialities/',
-            'UPDATE': 'update/'
+            'UPDATE': 'update/',
+            'GET_BY_COURSE_ID': 'by_course_id/'
         }
     },
     'LESSONS': {
