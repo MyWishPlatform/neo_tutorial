@@ -145,3 +145,12 @@
 #lesson-editor {
   background-color: #fff;
 }
+
+.lng-indicator {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 15px;
+  img, span {
+    vertical-align: middle;
+  }
+}

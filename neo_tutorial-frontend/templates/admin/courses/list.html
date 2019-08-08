@@ -8,7 +8,7 @@
         <th>Title</th>
         <th>Speciality</th>
         <th>Lessons</th>
-        <th>Materials</th>
+        <!--<th>Materials</th>-->
         <th>Active</th>
     </tr>
     </thead>
@@ -21,8 +21,13 @@
         <td>
             {{ course.speciality.name }}
         </td>
-        <td>n/a</td>
-        <td>n/a</td>
+        <td>
+            <span ng-repeat="(key, item) in course.lessons_count" class="lng-indicator">
+                <img ng-attr-src="/static/images/lng/{{key}}.svg" width="16px;"/>
+                <span>{{ item }}</span>
+            </span>
+        </td>
+        <!--<td>n/a</td>-->
         <td>
             <span ng-if="course.is_active">Yes</span>
             <span ng-if="!course.is_active">No</span>

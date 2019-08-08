@@ -33,18 +33,24 @@
             <div class="grid-cell grid-cell-1-3">
                 <div class="course-preview">
                     <div class="course-preview-content">
-
                         <a href="{% url 'portal-course-view' course.id %}" class="course-preview-image"
                              style="background-image: url(/media/{{course.image.image_name}})"></a>
+
+                        <div class="course-preview-languages">
+                            {% for key, value in course.other_lang_ids.items %}
+                            <a href="{% url 'portal-course-view' value %}"
+                               class="course-preview-languages_link active">
+                                <img src="/static/images/lng/{{key}}.svg"/>
+                            </a>
+                            {% endfor %}
+                        </div>
 
                         <a href="{% url 'portal-courses-list' %}?spec={{course.speciality.id}}" class="course-preview-speciality">
                             {{ course.speciality.name }}
                         </a>
-
                         <a href="{% url 'portal-course-view' course.id %}" class="course-preview-name">
                             {{ course.name }}
                         </a>
-
                         <div class="course-preview-tags">
                             {% for tag in course.tags %}
                             <span>
