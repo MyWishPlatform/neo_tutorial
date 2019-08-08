@@ -13,7 +13,7 @@ def all_courses_view(request):
     details = get_courses_details(all_courses)
 
     for course in details:
-        other_lang_courses = BasicCourse.objects.filter(id=course['id'])
+        other_lang_courses = BasicCourse.objects.filter(id=course['course_id'])
 
         lang_lessons = {}
         for course_lang in other_lang_courses:
