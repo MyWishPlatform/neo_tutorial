@@ -11,6 +11,15 @@ from ast import literal_eval
 def all_courses_view(request):
     all_courses = BasicCourse.objects.filter(lng='en')
     details = get_courses_details(all_courses)
+
+    # for course in details:
+    #     course = BasicCourse.objects.get(course['id'])
+    #     course_lessons = Lesson.objects.filter(course=course)
+    #     lessons_count = {}
+    #     for lesson in course_lessons.values('lng'):
+    #         lessons_count[lesson]
+    #
+    #     course['lessons_count'] = len(course_lessons)
     return Response(details)
 
 
@@ -370,9 +379,10 @@ def get_course_by_id(request):
     if not course:
         raise ParseError('course with this id is not found')
 
+    course = course.first()
     details = get_courses_details(course)[0]
 
-    lessons_by_course =Lesson.objects.filter(course=course)
+    lessons_by_course = Lesson.objects.filter(course=course)
 
     details['lessons_count'] = len(lessons_by_course)
     return Response(details)
