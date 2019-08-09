@@ -38,7 +38,7 @@ class CourseListView(TemplateView):
 
             internal_ids = {}
             for course_other_lang in other_lang_courses:
-                lessons_count = len(Lesson.objects.filter(course=course_other_lang))
+                lessons_count = len(Lesson.objects.filter(course=course_other_lang).order_by('order'))
                 if lessons_count > 0:
                     internal_ids[course_other_lang.lng] = course_other_lang.id
 
