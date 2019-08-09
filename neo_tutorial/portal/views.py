@@ -100,7 +100,7 @@ class CourseView(TemplateView):
         course_details = get_courses_details(course_q)[0]
         context['course'] = course_details
 
-        lessons = course_q.first().lesson_set.all().order_by('id')
+        lessons = course_q.first().lesson_set.all().order_by('order')
 
         lessons_details = []
         for lesson in lessons:
