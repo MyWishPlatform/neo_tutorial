@@ -68,7 +68,7 @@ class CourseLessonView(TemplateView):
         lesson_details = get_lesson_details(id)
 
         course_q = BasicCourse.objects.filter(id=lesson_details['course_id'])
-        lessons = course_q.first().lesson_set.all().order_by('id')
+        lessons = course_q.first().lesson_set.all().order_by('order')
 
         lessons_details = []
         for i, lesson in enumerate(lessons):
