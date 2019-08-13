@@ -162,7 +162,7 @@ def get_specialities(course_set):
     active_specialities = []
     for course in course_set:
         spec_id = course.speciality_id
-        lessons_count = Lesson.objects.filter(course_id=course.course_id).order_by('-order')
+        lessons_count = Lesson.objects.filter(id=course.id).order_by('-order')
         if spec_id not in active_specialities:
             if len(lessons_count) > 0:
                 active_specialities.append(spec_id)
