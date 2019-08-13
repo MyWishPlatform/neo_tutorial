@@ -66,6 +66,9 @@ class CourseListView(TemplateView):
         elif filter_spec is None and filter_lng is not None:
             # active_language_list = None  # get_languages(active_courses_lng)
             active_specialities_list = get_specialities(active_courses)
+        elif filter_spec is None and filter_lng is None:
+            active_language_list = get_languages(all_active_courses)
+            active_specialities_list = get_specialities(all_active_courses)
         else:
             active_language_list = get_languages(active_courses)
             active_specialities_list = get_specialities(active_courses)
