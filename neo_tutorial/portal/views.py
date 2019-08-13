@@ -1,6 +1,6 @@
 from django.views.generic.base import TemplateView
 from neo_tutorial.courses.api import get_all_courses_details, get_lesson_details, get_speciality_by_id, \
-    get_courses_details, get_languages
+    get_courses_details, get_languages, get_specialities
 from neo_tutorial.courses.models import BasicCourse, Lesson
 
 
@@ -35,24 +35,43 @@ class CourseListView(TemplateView):
         context['speciality_list'] = active_specialities
 
         filter_tag = self.request.GET.get('q')
+        filter_spec = self.request.GET.get('spec')
+        filter_lng = self.request.GET.get('l')
+
         if filter_tag is not None:
             active_courses = active_courses.filter(tags__contains=[filter_tag])
             context['selected_tag'] = filter_tag
 
-        filter_spec = self.request.GET.get('spec')
         if filter_spec is not None:
             active_courses = active_courses.filter(speciality_id=filter_spec)
+            active_courses_spec = active_courses
             context['selected_spec'] = int(filter_spec)
-            context['language_list'] = get_languages(active_courses)
-        else:
-            context['language_list'] = get_languages(all_active_courses)
+            #context['language_list'] = get_languages(active_courses)
+        #else:
+            #context['language_list'] = get_languages(all_active_courses)
 
-        filter_lng = self.request.GET.get('l')
         if filter_lng is None:
             filter_lng = 'en'
 
         active_courses = active_courses.filter(lng=filter_lng)
+        active_courses_lng = active_courses
         context['selected_lng'] = filter_lng
+
+        active_language_list = None
+        active_specialities_list = None
+
+        if filter_spec is not None and filter_lng is None:
+            active_language_list = get_languages(active_courses)
+            # active_specialities_list = None  # get_specialities(active_courses_spec)
+        elif filter_spec is None and filter_lng is not None:
+            # active_language_list = None  # get_languages(active_courses_lng)
+            active_specialities_list = get_specialities(active_courses)
+        else:
+            active_language_list = get_languages(active_courses)
+            active_specialities_list = get_specialities(active_courses)
+
+        context['language_list'] = active_language_list
+        context['speciality_list'] = active_specialities_list
 
         course_list = get_courses_details(active_courses)
         for course in course_list:

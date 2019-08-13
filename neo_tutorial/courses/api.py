@@ -135,11 +135,22 @@ def get_speciality_by_id(speciality_id):
     return details
 
 
-def get_languages(course_set):
-    active_language_names = []
+def get_field_values(field, course_set):
+    active_field_values = []
     for course in course_set:
-        language_name = course.lng
-        if language_name not in active_language_names:
-            active_language_names.append(course.lng)
+        field_value = getattr(course, field)
+        lessons_count = CourseImage.objects.filter(course.id).order_by('-updated_at')
+        if field_value not in active_field_values and lessons_count > 0:
+            active_field_values.append(field_value)
 
-    return active_language_names
+    return active_field_values
+
+
+def get_languages(course_set):
+    attr_name = 'lng'
+    return get_field_values(attr_name, course_set)
+
+
+def get_specialities(course_set):
+    attr_name = 'speciality'
+    return get_field_values(attr_name, course_set)
