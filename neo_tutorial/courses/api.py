@@ -139,7 +139,7 @@ def get_field_values(field, course_set):
     active_field_values = []
     for course in course_set:
         field_value = getattr(course, field)
-        lessons_count = Lesson.objects.filter(course_id=course.course_id).order_by('-order')
+        lessons_count = Lesson.objects.filter(id=course.id).order_by('-order')
         if field_value not in active_field_values and len(lessons_count) > 0:
             active_field_values.append(field_value)
 
@@ -150,7 +150,7 @@ def get_languages(course_set):
     active_language_names = []
     for course in course_set:
         lng_name = course.lng
-        lessons_count = Lesson.objects.filter(course_id=course.course_id).order_by('-order')
+        lessons_count = Lesson.objects.filter(id=course.id).order_by('-order')
         if lng_name not in active_language_names:
             if len(lessons_count) > 0:
                 active_language_names.append(lng_name)
