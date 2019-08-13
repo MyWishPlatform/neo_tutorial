@@ -21,20 +21,30 @@
         </li>
         {% for speciality in speciality_list %}
         <li>
-            <a href="{% url 'portal-courses-list' %}?spec={{speciality.id}}"
+            <a href="?{% if selected_lng %}l={{selected_lng}}&{% endif %}spec={{speciality.id}}"
                {% ifequal selected_spec speciality.id %} class="active"{% endifequal %}
             >{{ speciality.name }}</a>
         </li>
         {% endfor %}
     </ul>
+
+    <div class="course-preview-languages">
+        {% for value in language_list %}
+        <a href="?{% if selected_spec %}spec={{selected_spec}}&{% endif %}l={{value}}"
+           class="course-preview-languages_link active">
+            <img src="/static/images/lng/{{value}}.svg"/>
+        </a>
+        {% endfor %}
+    </div>
+
     <div class="courses-list">
         <div class="grid-row">
         {% for course in courses %}
             <div class="grid-cell grid-cell-1-3">
                 <div class="course-preview">
                     <div class="course-preview-content">
-                        <a href="{% url 'portal-course-view' course.id %}" class="course-preview-image"
-                             style="background-image: url(/media/{{course.image.image_name}})"></a>
+                        <span class="course-preview-image"
+                             style="background-image: url(/media/{{course.image.image_name}})"></span>
 
                         <div class="course-preview-languages">
                             {% for key, value in course.other_lang_ids.items %}
@@ -58,7 +68,7 @@
                             </span>
                             {% endfor %}
                         </div>
-
+                        <a href="{% url 'portal-course-view' course.id %}" class="course-preview-link"></a>
                     </div>
                 </div>
             </div>

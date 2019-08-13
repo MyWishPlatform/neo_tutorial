@@ -7,7 +7,6 @@
     content: '';
     display: block;
   }
-
   &-content {
     background-color: #fff;
     width: 400px;
@@ -18,9 +17,20 @@
     a {
       text-decoration: none;
     }
+    position: relative;
+  }
+  &-link {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
   }
   &-languages {
     margin-top: 10px;
+    position: relative;
+    z-index: 2;
     &_link {
       display: inline-block;
       vertical-align: middle;
@@ -46,6 +56,8 @@
     color: #70c933;
     margin-top: 10px;
     display: block;
+    position: relative;
+    z-index: 2;
     &:hover {
       text-decoration: underline;
     }
@@ -65,6 +77,8 @@
     color: #70d03a;
     margin-top: 15px;
     line-height: 18px;
+    position: relative;
+    z-index: 2;
     a {
       color: inherit;
       text-decoration: underline;
