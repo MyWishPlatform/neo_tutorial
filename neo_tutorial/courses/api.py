@@ -147,10 +147,20 @@ def get_field_values(field, course_set):
 
 
 def get_languages(course_set):
-    attr_name = 'lng'
-    return get_field_values(attr_name, course_set)
+    active_language_names = []
+    for course in course_set:
+        lng_name = course.lng
+        if lng_name not in active_language_names:
+            active_language_names.append(lng_name)
+
+    return active_language_names
 
 
 def get_specialities(course_set):
-    attr_name = 'speciality'
-    return get_field_values(attr_name, course_set)
+    active_specialities = []
+    for course in course_set:
+        spec_id = course.speciality_id
+        if spec_id not in active_specialities:
+            active_specialities.append(spec_id)
+
+    return active_specialities
