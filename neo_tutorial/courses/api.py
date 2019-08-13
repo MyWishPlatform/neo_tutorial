@@ -150,8 +150,10 @@ def get_languages(course_set):
     active_language_names = []
     for course in course_set:
         lng_name = course.lng
+        lessons_count = Lesson.objects.filter(course_id=course.course_id).order_by('-order')
         if lng_name not in active_language_names:
-            active_language_names.append(lng_name)
+            if len(lessons_count) > 0:
+                active_language_names.append(lng_name)
 
     return active_language_names
 
@@ -160,7 +162,9 @@ def get_specialities(course_set):
     active_specialities = []
     for course in course_set:
         spec_id = course.speciality_id
+        lessons_count = Lesson.objects.filter(course_id=course.course_id).order_by('-order')
         if spec_id not in active_specialities:
-            active_specialities.append(spec_id)
+            if len(lessons_count) > 0:
+                active_specialities.append(spec_id)
 
     return active_specialities
