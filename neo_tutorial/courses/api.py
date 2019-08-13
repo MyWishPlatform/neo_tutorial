@@ -139,7 +139,7 @@ def get_field_values(field, course_set):
     active_field_values = []
     for course in course_set:
         field_value = getattr(course, field)
-        lessons_count = CourseImage.objects.filter(course.id).order_by('-updated_at')
+        lessons_count = Lesson.objects.filter(course.id).order_by('-updated_at')
         if field_value not in active_field_values and lessons_count > 0:
             active_field_values.append(field_value)
 
