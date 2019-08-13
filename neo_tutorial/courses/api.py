@@ -133,3 +133,13 @@ def get_speciality_by_id(speciality_id):
         'name': speciality.name
     }
     return details
+
+
+def get_languages(course_set):
+    active_language_names = []
+    for course in course_set:
+        language_name = course.lng
+        if language_name not in active_language_names:
+            active_language_names.append(course.lng)
+
+    return active_language_names

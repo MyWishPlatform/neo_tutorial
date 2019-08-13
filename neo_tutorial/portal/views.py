@@ -1,6 +1,6 @@
 from django.views.generic.base import TemplateView
 from neo_tutorial.courses.api import get_all_courses_details, get_lesson_details, get_speciality_by_id, \
-    get_courses_details
+    get_courses_details, get_languages
 from neo_tutorial.courses.models import BasicCourse, Lesson
 
 
@@ -19,8 +19,20 @@ class CourseListView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
         active_courses = BasicCourse.objects.filter(is_active=True).order_by('-updated_at')
         all_active_courses = active_courses
+
+        active_specialities_id = []
+        for course in all_active_courses:
+            speciality_id = course.speciality_id
+            if speciality_id not in active_specialities_id:
+                active_specialities_id.append(course.speciality_id)
+
+        active_specialities = []
+        for spec_id in active_specialities_id:
+            active_specialities.append(get_speciality_by_id(spec_id))
+        context['speciality_list'] = active_specialities
 
         filter_tag = self.request.GET.get('q')
         if filter_tag is not None:
@@ -31,7 +43,9 @@ class CourseListView(TemplateView):
         if filter_spec is not None:
             active_courses = active_courses.filter(speciality_id=filter_spec)
             context['selected_spec'] = int(filter_spec)
-
+            context['language_list'] = get_languages(active_courses)
+        else:
+            context['language_list'] = get_languages(all_active_courses)
 
         filter_lng = self.request.GET.get('l')
         if filter_lng is None:
@@ -54,16 +68,7 @@ class CourseListView(TemplateView):
 
         context['courses'] = course_list
 
-        active_specialities_id = []
-        for course in all_active_courses:
-            speciality_id = course.speciality_id
-            if speciality_id not in active_specialities_id:
-                active_specialities_id.append(course.speciality_id)
 
-        active_specialities = []
-        for spec_id in active_specialities_id:
-            active_specialities.append(get_speciality_by_id(spec_id))
-        context['speciality_list'] = active_specialities
 
         return context
 
