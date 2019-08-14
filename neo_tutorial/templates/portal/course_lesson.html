@@ -3,6 +3,12 @@
 
 {% block appScripts %}{% endblock %}
 
+
+{% block pageTitle %}
+<title>{{lesson.name}}</title>
+<meta name="description" content="{{lesson.description}}">
+{% endblock %}
+
 {% block pageContent %}
 
 <div class="course-top" style="background-image: url(/media/{{lesson.course.image.image_name}})">
