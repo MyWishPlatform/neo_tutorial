@@ -68,6 +68,9 @@ class CourseListView(TemplateView):
 
         print('selected_lng', context['selected_lng'])
 
+        if filter_lng is None and filter_spec is None:
+            active_courses = active_courses.filter(lng='en')
+
         course_list = get_courses_details(active_courses)
         for course in course_list:
             other_lang_courses = BasicCourse.objects.filter(course_id=course['course_id'], is_active=True)
