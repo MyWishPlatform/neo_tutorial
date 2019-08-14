@@ -37,7 +37,7 @@ def get_courses_details(courses_queryset):
             'updated_at': c.updated_at,
             'course_id': c.course_id,
             'lng': c.lng,
-            'other_lang_ids': get_langs_for_course(c.id)
+            'other_lang_ids': get_langs_for_course(c.course_id)
         }
         saved_image = c.courseimage_set.all().order_by('-uploaded_at').first()
         if saved_image:
