@@ -33,7 +33,8 @@ class CourseListView(TemplateView):
         for spec_id in active_specialities_id:
             active_specialities.append(get_speciality_by_id(spec_id))
         context['speciality_list'] = active_specialities
-        context['language_list'] = get_languages(all_active_courses)
+        #context['language_list'] = get_languages(all_active_courses)
+        #print(context['speciality_list'])
 
         filter_tag = self.request.GET.get('q')
         filter_spec = self.request.GET.get('spec')
@@ -46,18 +47,26 @@ class CourseListView(TemplateView):
         if filter_spec is not None:
             active_courses = active_courses.filter(speciality_id=filter_spec)
             context['selected_spec'] = int(filter_spec)
+            print('selected_spec', context['selected_spec'])
             if filter_lng is None:
+                context['language_list'] = get_languages(all_active_courses)
+                print('language_list', context['language_list'])
+            else:
                 context['language_list'] = get_languages(active_courses)
+                print('language_list', context['language_list'])
 
         default_filter_lng = 'en'
         if filter_lng is not None:
             active_courses = active_courses.filter(lng=filter_lng)
+            context['selected_lng'] = filter_lng
             if filter_spec is None:
                 context['speciality_list'] = get_specialities(active_courses)
+                print('speciality_list', context['speciality_list'])
         else:
-            filter_lng = default_filter_lng
+            context['selected_lng'] = default_filter_lng
+            context['speciality_list'] = active_specialities
 
-        context['selected_lng'] = filter_lng
+        print('selected_lng', context['selected_lng'])
 
         course_list = get_courses_details(active_courses)
         for course in course_list:
