@@ -1,33 +1,105 @@
-.footer {
+.main-footer {
+  position: relative;
+  padding: 35px 0 0;
+  width: 100%;
   text-align: center;
-  padding: 60px 0;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: #f9f9f9;
-  color: #7c7c7c;
-  font-size: 14px;
-  a {
-    color: inherit;
-    text-decoration: underline;
-    &:hover {
-      text-decoration: none;
-    }
-  }
-  &-subscribe-form {
-    text-align: center;
-    margin-bottom: 36px;
-    .form-control-group {
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .btn {
-      margin-left: -1px;
-    }
-    input {
-      vertical-align: middle;
-    }
+}
+
+
+.footer-logo {
+  text-align: left;
+  letter-spacing: 2px;
+  img {
+    height: 70px;
   }
 }
 
+.footer-link {
+  padding: 0;
+  text-align: right;
+  list-style: none;
+  margin-bottom: 1rem;
+  float: right;
+  width: 100%;
+  max-width: 520px;
+  li {
+    display: inline-block;
+    width: 16%;
+    line-height: 1.8;
+  }
+  a, a:active, .btn-link, .btn-link:active {
+    color: #9a9a9a;
+    text-decoration: none;
+  }
+  a:hover, a:focus, .btn-link:hover, .btn-link:focus {
+    color: #58bf00;
+    text-decoration: none;
+    outline: none;
+  }
+  i.iconfont {
+    font-style: normal;
+    vertical-align: middle;
+    font-size: 32px;
+    color: inherit;
+  }
+}
+.copyright {
+  text-align: center;
+}
+.pop-up {
+  position: relative;
+}
+.pop-hide {
+  position: absolute;
+  z-index: 99;
+  left: 0;
+  right: 0;
+  display: none;
+}
+.pop-up:hover .pop-hide {
+  display: block;
+}
+
+.t2 {
+  font-size: 22px;
+}
+.t4 {
+  font-size: 14px;
+}
+
+.gray-text {
+  color: #555;
+}
+.m1 {
+  margin-top: 60px!important;
+}
+.m4 {
+  margin-top: 10px!important;
+}
+.mb0 {
+  margin-bottom: 0!important;
+}
+.light-text {
+  color: #aaa;
+}
+
+.row {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+//@media (min-width: 768px) {
+  .col-md-5 {
+    -ms-flex: 0 0 41.666667%;
+    flex: 0 0 41.666667%;
+    max-width: 41.666667%;
+  }
+  .col-md-7 {
+    -ms-flex: 0 0 58.333333%;
+    flex: 0 0 58.333333%;
+    max-width: 58.333333%;
+  }
+//}

@@ -56,7 +56,7 @@
                             {% endfor %}
                         </div>
 
-                        <a href="{% url 'portal-courses-list' %}?spec={{course.speciality.id}}" class="course-preview-speciality">
+                        <a href="?{% if selected_lng %}l={{selected_lng}}&{% endif %}spec={{course.speciality.id}}" class="course-preview-speciality">
                             {{ course.speciality.name }}
                         </a>
                         <a href="{% url 'portal-course-view' course.id %}" class="course-preview-name">
