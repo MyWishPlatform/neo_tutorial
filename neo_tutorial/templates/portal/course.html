@@ -24,8 +24,18 @@
                     </div>
                     <strong class="course-top_description">
                         {{course.description}}
-                    </strong>
+                    </strong><br/>
+                    <div class="course-preview-languages">
+                        {% for key, value in course.other_lang_ids.items %}
+                        <a href="{% url 'portal-course-view' value %}"
+                           class="course-preview-languages_link active">
+                            <img src="/static/images/lng/{{key}}.svg"/>
+                        </a>
+                        {% endfor %}
+                    </div>
                 </div>
+
+
             </div>
         </div>
     </div>
