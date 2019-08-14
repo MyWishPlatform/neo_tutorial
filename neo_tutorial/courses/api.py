@@ -36,7 +36,8 @@ def get_courses_details(courses_queryset):
             'is_active': c.is_active,
             'updated_at': c.updated_at,
             'course_id': c.course_id,
-            'lng': c.lng
+            'lng': c.lng,
+            'other_lang_ids': get_langs_for_course(c.course_id)
         }
         saved_image = c.courseimage_set.all().order_by('-uploaded_at').first()
         if saved_image:
@@ -168,3 +169,15 @@ def get_specialities(course_set):
                 active_specialities.append(spec_id)
 
     return active_specialities
+
+
+def get_langs_for_course(course_id):
+    other_lang_courses = BasicCourse.objects.filter(course_id=course_id, is_active=True).order_by('id')
+
+    internal_ids = {}
+    for course_other_lang in other_lang_courses:
+        lessons_count = len(Lesson.objects.filter(course=course_other_lang).order_by('order'))
+        if lessons_count > 0:
+            internal_ids[course_other_lang.lng] = course_other_lang.id
+
+    return internal_ids

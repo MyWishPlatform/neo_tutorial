@@ -20,7 +20,7 @@ class CourseListView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        active_courses = BasicCourse.objects.filter(is_active=True).order_by('-updated_at')
+        active_courses = BasicCourse.objects.filter(is_active=True).order_by('id')
         all_active_courses = active_courses
 
         active_specialities_id = []
@@ -39,6 +39,7 @@ class CourseListView(TemplateView):
         filter_tag = self.request.GET.get('q')
         filter_spec = self.request.GET.get('spec')
         filter_lng = self.request.GET.get('l')
+        default_filter_lng = 'en'
 
         if filter_tag is not None:
             active_courses = active_courses.filter(tags__contains=[filter_tag])
@@ -49,13 +50,13 @@ class CourseListView(TemplateView):
             context['selected_spec'] = int(filter_spec)
             print('selected_spec', context['selected_spec'])
             if filter_lng is None:
+                active_courses = active_courses.filter(lng=default_filter_lng)
                 context['language_list'] = get_languages(all_active_courses)
                 print('language_list', context['language_list'])
             else:
                 context['language_list'] = get_languages(active_courses)
                 print('language_list', context['language_list'])
 
-        default_filter_lng = 'en'
         if filter_lng is not None:
             active_courses = active_courses.filter(lng=filter_lng)
             context['selected_lng'] = filter_lng
@@ -70,25 +71,16 @@ class CourseListView(TemplateView):
             context['selected_lng'] = default_filter_lng
             context['speciality_list'] = active_specialities
 
-        print('selected_lng', context['selected_lng'])
+        #print('spec_list_1', context['speciality_list'])
+        #print('selected_lng', context['selected_lng'])
 
         if filter_lng is None and filter_spec is None:
             active_courses = active_courses.filter(lng='en')
 
         course_list = get_courses_details(active_courses)
-        for course in course_list:
-            other_lang_courses = BasicCourse.objects.filter(course_id=course['course_id'], is_active=True)
-
-            internal_ids = {}
-            for course_other_lang in other_lang_courses:
-                lessons_count = len(Lesson.objects.filter(course=course_other_lang).order_by('order'))
-                if lessons_count > 0:
-                    internal_ids[course_other_lang.lng] = course_other_lang.id
-
-            course['other_lang_ids'] = internal_ids
-
         context['courses'] = course_list
         print(context['courses'])
+
         return context
 
 
@@ -105,20 +97,18 @@ class CourseLessonView(TemplateView):
         lessons_details = []
         for i, lesson in enumerate(lessons):
             details = get_lesson_details(lesson.id, detail_contents=False)
-            details['index'] = i + 1;
+            details['index'] = i + 1
             if details['id'] == lesson_details['id']:
-                lesson_details['index'] = i + 1;
+                lesson_details['index'] = i + 1
 
             lessons_details.append(details)
 
         course_details = get_courses_details(course_q)[0]
-        course_details['lessons'] = lessons_details;
 
-        lesson_details['course'] = course_details;
-
+        course_details['lessons'] = lessons_details
+        lesson_details['course'] = course_details
         context['lesson'] = lesson_details
-
-        print(lesson_details);
+        print(lesson_details)
 
         return context
 
@@ -130,15 +120,7 @@ class CourseView(TemplateView):
         context = super().get_context_data(**kwargs)
         course_q = BasicCourse.objects.filter(id=id)
         course_details = get_courses_details(course_q)[0]
-        other_lang_courses = BasicCourse.objects.filter(course_id=course_q.first().course_id, is_active=True)
 
-        internal_ids = {}
-        for course_other_lang in other_lang_courses:
-            lessons_count = len(Lesson.objects.filter(course=course_other_lang).order_by('order'))
-            if lessons_count > 0:
-                internal_ids[course_other_lang.lng] = course_other_lang.id
-
-        course_details['other_lang_ids'] = internal_ids
         context['course'] = course_details
         print(context['course'])
 
