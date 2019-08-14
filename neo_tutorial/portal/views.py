@@ -39,6 +39,7 @@ class CourseListView(TemplateView):
         filter_tag = self.request.GET.get('q')
         filter_spec = self.request.GET.get('spec')
         filter_lng = self.request.GET.get('l')
+        default_filter_lng = 'en'
 
         if filter_tag is not None:
             active_courses = active_courses.filter(tags__contains=[filter_tag])
@@ -49,13 +50,13 @@ class CourseListView(TemplateView):
             context['selected_spec'] = int(filter_spec)
             print('selected_spec', context['selected_spec'])
             if filter_lng is None:
+                active_courses = active_courses.filter(lng=default_filter_lng)
                 context['language_list'] = get_languages(all_active_courses)
                 print('language_list', context['language_list'])
             else:
                 context['language_list'] = get_languages(active_courses)
                 print('language_list', context['language_list'])
 
-        default_filter_lng = 'en'
         if filter_lng is not None:
             active_courses = active_courses.filter(lng=filter_lng)
             context['selected_lng'] = filter_lng
