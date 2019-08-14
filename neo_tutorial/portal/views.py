@@ -33,7 +33,7 @@ class CourseListView(TemplateView):
         for spec_id in active_specialities_id:
             active_specialities.append(get_speciality_by_id(spec_id))
         context['speciality_list'] = active_specialities
-        #context['language_list'] = get_languages(all_active_courses)
+        context['language_list'] = get_languages(all_active_courses)
         #print(context['speciality_list'])
 
         filter_tag = self.request.GET.get('q')
