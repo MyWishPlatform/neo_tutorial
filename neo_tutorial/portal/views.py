@@ -60,7 +60,11 @@ class CourseListView(TemplateView):
             active_courses = active_courses.filter(lng=filter_lng)
             context['selected_lng'] = filter_lng
             if filter_spec is None:
-                context['speciality_list'] = get_specialities(active_courses)
+                filtered_specs = []
+                lng_specs = get_specialities(active_courses)
+                for spec_id in lng_specs:
+                    filtered_specs.append(get_speciality_by_id(spec_id))
+                context['speciality_list'] = filtered_specs
                 print('speciality_list', context['speciality_list'])
         else:
             context['selected_lng'] = default_filter_lng
