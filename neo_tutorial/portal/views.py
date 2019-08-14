@@ -88,6 +88,7 @@ class CourseListView(TemplateView):
             course['other_lang_ids'] = internal_ids
 
         context['courses'] = course_list
+        print(context['courses'])
         return context
 
 
@@ -123,7 +124,7 @@ class CourseLessonView(TemplateView):
 
 
 class CourseView(TemplateView):
-    template_name= 'portal/course.html'
+    template_name = 'portal/course.html'
 
     def get_context_data(self, id, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -139,4 +140,16 @@ class CourseView(TemplateView):
             lessons_details.append(details)
 
         context['lessons'] = lessons_details
-        return context;
+
+        other_lang_courses = BasicCourse.objects.filter(course_id=course_q.first().course_id, is_active=True)
+
+        internal_ids = {}
+        for course_other_lang in other_lang_courses:
+            lessons_count = len(Lesson.objects.filter(course=course_other_lang).order_by('order'))
+            if lessons_count > 0:
+                internal_ids[course_other_lang.lng] = course_other_lang.id
+
+        context['other_lang_ids'] = internal_ids
+        print(context['other_lang_ids'])
+
+        return context
