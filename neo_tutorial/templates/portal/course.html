@@ -25,7 +25,7 @@
                     <strong class="course-top_description">
                         {{course.description}}
                     </strong><br/>
-                    {{course}}
+
                     <div class="course-preview-languages">
                         {% for key, value in course.other_lang_ids.items %}
                         <a href="{% url 'portal-course-view' value %}"
