@@ -25,7 +25,16 @@
                     </div>
                     <strong class="course-top_description">
                         {{lesson.course.description}}
-                    </strong>
+                    </strong><br/>
+
+                    <div class="course-preview-languages">
+                        {% for key, value in lesson.course.other_lang_ids.items %}
+                        <a href="{% url 'portal-course-view' value %}"
+                           class="course-preview-languages_link{% ifequal key lesson.course.lng %} active{% endifequal %}">
+                            <img src="/static/images/lng/{{key}}.svg"/>
+                        </a>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>

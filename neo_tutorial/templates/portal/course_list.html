@@ -13,6 +13,15 @@
         </li>
     </ul>
 
+    <div class="course-preview-languages courses-list-filter">
+        {% for value in language_list %}
+        <a href="?{% if selected_spec %}spec={{selected_spec}}&{% endif %}l={{value}}"
+           class="course-preview-languages_link{% ifequal value selected_lng %} active{% endifequal %}">
+            <img src="/static/images/lng/{{value}}.svg"/>
+        </a>
+        {% endfor %}
+    </div>
+
     <ul class="courses-specialities">
         <li>
             <a href="{% url 'portal-courses-list' %}"
@@ -28,14 +37,6 @@
         {% endfor %}
     </ul>
 
-    <div class="course-preview-languages">
-        {% for value in language_list %}
-        <a href="?{% if selected_spec %}spec={{selected_spec}}&{% endif %}l={{value}}"
-           class="course-preview-languages_link active">
-            <img src="/static/images/lng/{{value}}.svg"/>
-        </a>
-        {% endfor %}
-    </div>
 
     <div class="courses-list">
         <div class="grid-row">

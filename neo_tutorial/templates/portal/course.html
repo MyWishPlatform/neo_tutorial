@@ -29,7 +29,7 @@
                     <div class="course-preview-languages">
                         {% for key, value in course.other_lang_ids.items %}
                         <a href="{% url 'portal-course-view' value %}"
-                           class="course-preview-languages_link active">
+                           class="course-preview-languages_link{% ifequal key course.lng %} active{% endifequal %}">
                             <img src="/static/images/lng/{{key}}.svg"/>
                         </a>
                         {% endfor %}

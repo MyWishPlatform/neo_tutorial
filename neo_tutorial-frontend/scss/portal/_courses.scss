@@ -30,17 +30,21 @@
   }
 }
 
+
+.courses-list-filter {
+  &.course-preview-languages {
+    float: right;
+    margin-top: 0;
+    padding: 13px;
+  }
+}
+
 .courses-specialities {
   list-style-type: none;
   margin: 20px 0 10px;
   padding: 0;
   font-size: 14px;
   float: left;
-  + .course-preview-languages {
-    float: left;
-    margin-top: 20px;
-    padding: 13px;
-  }
   li {
     display: inline-block;
     vertical-align: middle;
