@@ -37,7 +37,9 @@ angular.module('Services').service('RequestService', ['$http', 'API', function($
 
             for (var k in params.data) {
                 if (!angular.isArray(params.data[k])) {
-                    fd.append(k, params.data[k]);
+                    if (params.data[k] !== undefined) {
+                        fd.append(k, params.data[k]);
+                    }
                 } else {
                     fd.append(k, JSON.stringify(params.data[k]));
                 }
