@@ -43,9 +43,18 @@
             Complete the education and become the one who changes the world
         </strong>
         <div class="home-page-content_btns">
+
+            {% if not user.username %}
+            <button class="btn btn-submit btn-rounded bold uppercase" data-open-modal="auth">
+                <span>Start learning</span>
+            </button>
+            {% endif %}
+
+            {% if user.username %}
             <a href="{% url 'portal-courses-list' %}" class="btn btn-rounded btn-submit bold uppercase">
                 <span>Start learning</span>
             </a>
+            {% endif %}
         </div>
     </div>
 </div>

@@ -1,9 +1,108 @@
+$(document).ready(function() {
+    const getCookie = function(c_name) {
+        if(document.cookie.length > 0) {
+            c_start = document.cookie.indexOf(c_name + "=");
+            if(c_start != -1) {
+                c_start = c_start + c_name.length + 1;
+                c_end = document.cookie.indexOf(";", c_start);
+                if(c_end == -1) c_end = document.cookie.length;
+                return unescape(document.cookie.substring(c_start,c_end));
+            }
+        }
+        return "";
+    };
+
+    $(document).ajaxSend(function(elm, xhr, s) {
+        if (s.type === "POST") {
+            xhr.setRequestHeader('X-CSRFToken', getCookie("csrftoken"));
+        }
+    });
+});
+
+
+
+const registrationUser = (data) => {
+    data.username = data.email;
+    return new Promise((resolve, reject) => {
+        const ajax = $.ajax({
+            method: "POST",
+            url: '/api/rest-auth/registration/',
+            data: data
+        });
+        ajax.done(function(result) {
+            resolve(result);
+        }).fail(function(error) {
+            reject(error);
+        });
+    });
+};
+
+const authUser = (data) => {
+    return new Promise((resolve, reject) => {
+        const ajax = $.ajax({
+            method: "POST",
+            url: '/api/rest-auth/login/',
+            data: data
+        });
+        ajax.done(function(result) {
+            resolve(result);
+        }).fail(function(error) {
+            reject(error);
+        });
+    });
+};
+
+
+
+
 $(function() {
     const authForm = $('#auth-form');
     const authMenu = $('#modal-menu');
     const backLink = $('#back-to-form');
     const authFormMenuItems = $('.custom-modal_menu_item a', authForm);
 
+
+    const regForm = $('#registration-form');
+    const loginForm = $('#login-form');
+
+    regForm.on('submit', function(event) {
+        event.preventDefault();
+        const data = {};
+        for (let k in fields.register.fields) {
+            data[k] = fields.register.fields[k].val();
+        }
+        registrationUser(data).then(function(response) {
+            openModal('confirm-email');
+        }, function(error) {
+            const errors = error.responseJSON;
+            for (let i in errors) {
+                let fieldName = i === 'username' ? 'email': 'non_field_errors' ? 'password2': i;
+                fields.register.errors[fieldName].server.show();
+                fields.register.errors[fieldName].server.html(errors[i].join("<br/>"));
+            }
+        });
+        return false;
+    });
+
+
+    loginForm.on('submit', function(event) {
+        event.preventDefault();
+        const data = {};
+        for (let k in fields.signin.fields) {
+            data[k === 'email' ? 'username' : k] = fields.signin.fields[k].val();
+        }
+        authUser(data).then(function() {
+            window.location = window.location;
+        }, function(error) {
+            const errors = error.responseJSON;
+            for (let i in errors) {
+                let fieldName = i === 'username' ? 'email': 'non_field_errors' ? 'password': i;
+                fields.signin.errors[fieldName].server.show();
+                fields.signin.errors[fieldName].server.html(errors[i].join("<br/>"));
+            }
+        });
+        return false;
+    });
 
 
     const fields = {};
@@ -135,10 +234,27 @@ $(function() {
     });
 
 
+    let openedModal;
+
+    const openModal = function(name) {
+        if (openedModal) {
+            closeModal(openedModal);
+        }
+        openedModal = name;
+        $('[data-modal="' + name + '"]').show();
+    };
+
+    const closeModal = function(name) {
+        if (openedModal === name) {
+            openedModal = false;
+        }
+        $('[data-modal="' + name + '"]').hide();
+    };
+
     $('[data-open-modal]').each(function() {
         const _th = $(this);
         _th.on('click', function() {
-            $('[data-modal="' + $(this).data('open-modal') + '"]').show();
+            openModal($(this).data('open-modal'));
         });
     });
 
@@ -146,7 +262,7 @@ $(function() {
     $('[data-close-modal]').each(function() {
         const _th = $(this);
         _th.on('click', function() {
-            $('[data-modal="' + $(this).data('close-modal') + '"]').hide();
+            closeModal($(this).data('close-modal'));
         });
     });
 

@@ -71,6 +71,7 @@
 
             </div>
             <form class="custom-modal_content_body" data-form="signup"
+                  id="registration-form"
                   name="register" novalidate  autocomplete="off">
                 <div class="form-control">
                     <span class="form-control_label">
@@ -84,6 +85,8 @@
                         </div>
                         <div class="form-control_errors" data-error="email" data-field="email">
                             Enter your e-mail
+                        </div>
+                        <div class="form-control_errors" data-error="server" data-field="email">
                         </div>
                     </div>
                 </div>
@@ -105,6 +108,8 @@
                         <div class="form-control_errors" data-error="pattern" data-field="password1">
                             Incorrect password
                         </div>
+                        <div class="form-control_errors" data-error="server" data-field="password1">
+                        </div>
                     </div>
                 </div>
                 <div class="form-control">
@@ -119,6 +124,10 @@
                         <div class="form-control_errors" data-error="match" data-field="password2">
                             Passwords do not match
                         </div>
+                        <div class="form-control_errors" data-error="server" data-field="password2">
+                        </div>
+                        <div class="form-control_errors" data-error="server" data-field="non_field_errors">
+                        </div>
                     </div>
                 </div>
                 <div class="custom-modal_content_footer">
@@ -129,13 +138,17 @@
                     </div>
                 </div>
             </form>
-            <form class="custom-modal_content_body" data-form="signin" name="signin" novalidate>
+            <form class="custom-modal_content_body"
+                  id="login-form"
+                  data-form="signin" name="signin" novalidate>
                 <label class="form-control">
                     <span class="form-control_label">
                         E-mail
                     </span>
                     <span class="form-control_input">
                         <input type="email" name="email" required>
+                        <div class="form-control_errors" data-error="server" data-field="email">
+                        </div>
                     </span>
                 </label>
                 <label class="form-control">
@@ -146,6 +159,8 @@
                         <input type="password"
                                minlength="8"
                                name="password" required>
+                        <div class="form-control_errors" data-error="server" data-field="password">
+                        </div>
                     </span>
                 </label>
                 <div class="custom-modal_content_footer">
@@ -195,6 +210,44 @@
         </div>
     </div>
 </div>
+
+
+
+
+<div data-modal="confirm-email" class="custom-modal" style="display: none">
+    <div class="custom-modal_overlay">
+        <div class="custom-modal_content">
+            <div class="custom-modal_content_header">
+                <div class="back-to-forms">
+                    <div>
+                        Confirm Email
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="custom-modal_content_body" style="display: block;">
+                <p class="modal-text">
+                    На Ваш Email отправлено письмо, подтвердите адрес электронной почты перейдя по ссылке в письме
+                </p>
+            </div>
+
+            <div class="custom-modal_content_footer">
+                <div class="custom-modal_buttons">
+                    <button class="btn btn-submit uppercase btn-rounded bold" type="button" data-close-modal="confirm-email">
+                        Ok
+                    </button>
+                </div>
+            </div>
+
+            <button class="custom-modal-close" data-close-modal="confirm-email">
+                <span></span>
+            </button>
+        </div>
+    </div>
+</div>
+
 
 {% endblock %}
 
