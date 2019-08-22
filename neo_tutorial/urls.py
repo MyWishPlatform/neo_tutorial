@@ -27,6 +27,8 @@ urlpatterns = [
 urlpatterns += [
     path('administration/', include('neo_tutorial.administration.urls')),
     path('', include('neo_tutorial.portal.urls')),
+    path('api/rest-auth/', include('rest_auth.urls')),
+    path('api/rest-auth/registration/', include('rest_auth.registration.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
