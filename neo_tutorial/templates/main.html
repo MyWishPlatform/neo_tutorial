@@ -24,6 +24,15 @@
 <header class="header">
     <div class="content-wrapper">
 
+        {% if not user.username %}
+        <div class="header-profile" data-open-modal="auth">
+            <button class="btn btn-submit btn-rounded bold">
+                Sign in
+            </button>
+        </div>
+        {% endif %}
+
+
         {% if user.username %}
         <div class="header-profile">
             <div class="header-profile_btn logged"

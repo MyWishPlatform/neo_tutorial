@@ -1,0 +1,162 @@
+.custom-modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  &_overlay {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+  &_content {
+    background-color: #fff;
+    max-width: 400px;
+    width: 90%;
+    position: relative;
+    &_header, &_footer, &_body {
+      padding-left: 25px;
+      padding-right: 25px;
+    }
+    &_header {
+      padding-top: 25px;
+      padding-bottom: 13px;
+      top: 0;
+    }
+    &_footer {
+      padding-bottom: 25px;
+      padding-top: 13px;
+      bottom: 0;
+    }
+    &_body {
+      padding-bottom: 92px;
+      padding-top: 92px;
+      display: none;
+    }
+    &_header,
+    &_footer {
+      position: absolute;
+      left: 0;
+      right: 0;
+    }
+  }
+
+  //.form-control_errors {
+  //  display: none;
+  //}
+  input:not(.touched) ~ .form-control_errors {
+    display: none!important;
+  }
+
+}
+
+.custom-modal-close {
+  position: absolute;
+  background: #FFFFFF;
+  border: 1px solid #979797;
+  border-radius: 4px;
+  padding: 10px;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  span {
+    display: block;
+    width: 10px;
+    height: 10px;
+    &:after, &:before {
+      content: '';
+      display: block;
+      height: 2px;
+      background-color: #616161;
+      position: relative;
+      top: 4px;
+    }
+    &:after {
+      transform: rotate(45deg);
+      margin-top: -2px;
+    }
+    &:before {
+      transform: rotate(-45deg);
+    }
+  }
+}
+
+.custom-modal_menu {
+  list-style-type: none;
+  font-size: 18px;
+  color: #4E5156;
+  line-height: 25px;
+  font-weight: 300;
+  margin: 0;
+  padding: 0;
+  &:after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+  &_item {
+    float: left;
+    width: 33.333%;
+    margin: 0;
+    padding: 0;
+  }
+  a {
+    color: inherit;
+    display: inline-block;
+    border-bottom: 2px solid #ECECEC;
+    width: 100%;
+    vertical-align: middle;
+    padding: 8px 0;
+    outline: none;
+    &, &:hover, &:focus, &:active {
+      text-decoration: none;
+    }
+    &:after {
+      display: block;
+      position: absolute;
+      width: 33.333%;
+      left: 0;
+      height: 2px;
+      bottom: 0;
+      border: 2px solid #58BF00;
+    }
+    &.active {
+      border-color: #58BF00;
+    }
+  }
+}
+
+.reset-password-link {
+  float: right;
+  font-size: 14px;
+  color: #4E5156;
+  line-height: 48px;
+  font-weight: 300;
+  cursor: pointer;
+}
+
+.back-to-forms {
+  font-size: 18px;
+  color: #58BF00;
+  line-height: 25px;
+  a {
+    cursor: pointer;
+    span {
+      font-size: 30px;
+    }
+  }
+}
+.modal-text {
+  font-size: 14px;
+  color: #4E5156;
+  line-height: 25px;
+  font-weight: 300;
+  margin: 0 0 30px;
+}
+
+

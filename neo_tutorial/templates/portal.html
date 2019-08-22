@@ -4,15 +4,12 @@
 {% block appScripts %}{% endblock %}
 
 {% block appContent %}
-
     {% block pageContent %}{% endblock%}
-
 {% endblock%}
 
 
 {% block footer %}
-
-
+<script src='{% static "portal.js" %}'></script>
 
 <div class="main-footer">
     <div class="content-wrapper">
@@ -50,4 +47,156 @@
     </div>
 </div>
 
+
+<div data-modal="auth" class="custom-modal" style="display: none">
+    <div class="custom-modal_overlay" id="auth-form">
+        <div class="custom-modal_content">
+            <div class="custom-modal_content_header">
+
+                <ul class="custom-modal_menu" id="modal-menu">
+                    <li class="custom-modal_menu_item">
+                        <a href="#" data-form-link="signin">Sign in</a>
+                    </li>
+                    <li class="custom-modal_menu_item">
+                        <a href="#" data-form-link="signup">Sign up</a>
+                    </li>
+                </ul>
+
+                <div class="back-to-forms" id="back-to-form">
+                    <a data-open-form data-form-link="signin">
+                        <span>←</span>
+                        Password assistance
+                    </a>
+                </div>
+
+            </div>
+            <form class="custom-modal_content_body" data-form="signup"
+                  name="register" novalidate  autocomplete="off">
+                <div class="form-control">
+                    <span class="form-control_label">
+                        E-mail
+                    </span>
+                    <div class="form-control_input">
+                        <input type="email" name="email" required
+                               autocomplete="new-password">
+                        <div class="form-control_errors" data-error="required" data-field="email">
+                            Required field
+                        </div>
+                        <div class="form-control_errors" data-error="email" data-field="email">
+                            Enter your e-mail
+                        </div>
+                    </div>
+                </div>
+                <div class="form-control">
+                    <span class="form-control_label">
+                        Password
+                    </span>
+                    <div class="form-control_input">
+                        <input type="password"
+                               minlength="8"
+                               autocomplete="new-password"
+                               name="password1" required>
+                        <div class="form-control_errors" data-error="required" data-field="password1">
+                            Required field
+                        </div>
+                        <div class="form-control_errors" data-error="minlength" data-field="password1">
+                            Minimum password length 8 characters
+                        </div>
+                        <div class="form-control_errors" data-error="pattern" data-field="password1">
+                            Incorrect password
+                        </div>
+                    </div>
+                </div>
+                <div class="form-control">
+                    <span class="form-control_label">
+                        Confirm password
+                    </span>
+                    <div class="form-control_input">
+                        <input type="password"
+                               minlength="8"
+                               autocomplete="new-password"
+                               name="password2" required>
+                        <div class="form-control_errors" data-error="match" data-field="password2">
+                            Passwords do not match
+                        </div>
+                    </div>
+                </div>
+                <div class="custom-modal_content_footer">
+                    <div class="custom-modal_buttons">
+                        <button class="btn btn-submit uppercase btn-rounded bold" type="submit">
+                            Create your account
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <form class="custom-modal_content_body" data-form="signin" name="signin" novalidate>
+                <label class="form-control">
+                    <span class="form-control_label">
+                        E-mail
+                    </span>
+                    <span class="form-control_input">
+                        <input type="email" name="email" required>
+                    </span>
+                </label>
+                <label class="form-control">
+                    <span class="form-control_label">
+                        Password
+                    </span>
+                    <span class="form-control_input">
+                        <input type="password"
+                               minlength="8"
+                               name="password" required>
+                    </span>
+                </label>
+                <div class="custom-modal_content_footer">
+                    <div class="custom-modal_buttons">
+                        <a class="reset-password-link" data-open-form data-form-link="forgot">Forgot your password?</a>
+                        <button class="btn btn-submit uppercase btn-rounded bold" type="submit">
+                            Login
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+
+            <form class="custom-modal_content_body" data-form="forgot"
+                  name="forgot" novalidate  autocomplete="off">
+                <p class="modal-text">
+                    Enter your username or email to recover your password. You will receive an email with instructions
+                </p>
+                <div class="form-control">
+                    <span class="form-control_label">
+                        E-mail
+                    </span>
+                    <div class="form-control_input">
+                        <input type="email" name="email" required
+                               autocomplete="new-password">
+                        <div class="form-control_errors" data-error="required" data-field="email">
+                            Required field
+                        </div>
+                        <div class="form-control_errors" data-error="email" data-field="email">
+                            Enter your e-mail
+                        </div>
+                    </div>
+                </div>
+                <div class="custom-modal_content_footer">
+                    <div class="custom-modal_buttons">
+                        <button class="btn btn-submit uppercase btn-rounded bold" type="submit">
+                            Continue
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+
+            <button class="custom-modal-close" data-close-modal="auth">
+                <span></span>
+            </button>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
+
+
+

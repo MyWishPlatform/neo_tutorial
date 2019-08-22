@@ -145,6 +145,9 @@ input, textarea, select {
         width: 100%;
         color: #4a4a4a;
       }
+      .submitted &:invalid, &.touched:invalid {
+        border-color: #EE4256;
+      }
     }
     .text-field {
       width: 100%;
