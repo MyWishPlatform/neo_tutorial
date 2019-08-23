@@ -37,7 +37,7 @@ def portal_signup(request):
             user.is_active = False
             user.save()
             current_site = get_current_site(request)
-            mail_subject = 'Activate your blog account.'
+            mail_subject = 'Please Confirm Your E-mail Address'
             token = user_signup_token.make_token(user)
             message = render_to_string('profile/user_registration_email.html', {
                 'user': user,
