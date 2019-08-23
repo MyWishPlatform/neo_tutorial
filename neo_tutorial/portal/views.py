@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from django.views.generic.base import TemplateView
 from neo_tutorial.courses.api import get_all_courses_details, get_lesson_details, get_speciality_by_id, \
     get_courses_details, get_languages, get_specialities
@@ -9,8 +10,9 @@ class HomeView(TemplateView):
 
 
 class HomeLoginView(HomeView):
-    pass
 
+    def get(self, request, *args, **kwargs):
+        return HttpResponseRedirect('/')
 #     def get_context_data(self, **kwargs):
 #         context = super().get_context_data(**kwargs)
 #         course_list = get_all_courses_details()
