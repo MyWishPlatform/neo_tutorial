@@ -1,5 +1,9 @@
 'use strict';
 
+require('./constants');
+require('./services/request');
+require('./directives');
+
 var module = angular.module('adminApp', ['Constants', 'ui.router', 'Services', 'Directives','ngSanitize']);
 
 require('./admin/login');

@@ -1,6 +1,3 @@
-require('./constants');
-require('./services/request');
-require('./directives');
 
 (function() {
     $(function() {
@@ -39,7 +36,5 @@ require('./directives');
     });
 })();
 
-
-require('./portal/lesson');
 
 

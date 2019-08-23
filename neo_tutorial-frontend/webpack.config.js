@@ -19,7 +19,6 @@ module.exports = {
 
     entry: {
         main: [
-            './node_modules/jquery/dist/jquery.min.js',
             './node_modules/angular',
             './node_modules/angular-ui-router',
             './node_modules/angular-sanitize',
@@ -74,12 +73,12 @@ module.exports = {
         new CopyWebpackPlugin([
             {from:'./fonts',to: 'fonts'}
         ]),
-
-        new webpack.ProvidePlugin({
-            $: "jquery/dist/jquery.min.js",
-            jQuery: "jquery/dist/jquery.min.js",
-            "window.jQuery": "jquery/dist/jquery.min.js"
-        })
+        //
+        // new webpack.ProvidePlugin({
+        //     $: "jquery/dist/jquery.min.js",
+        //     jQuery: "jquery/dist/jquery.min.js",
+        //     "window.jQuery": "jquery/dist/jquery.min.js"
+        // })
         // new CleanWebpackPlugin(),
         // new HtmlWebpackPlugin({
         //     title: 'Production'
