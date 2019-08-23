@@ -21,17 +21,12 @@ def get_email_confirmation_url(request, uid, token):
 
     url = reverse('registration_email_confirm', args=[uid, token])
 
-    if request.is_secure:
-        pref = 'https://'
-    else:
-        pref = 'http://'
-
-    url_base = pref + HOST_URL
-
-    return join(url_base, url)
+    response_url = '{scheme}://{host}{api_url}'.format(scheme=request.scheme, host=HOST_URL, api_url=url)
+    return response_url
 
 
 def get_password_change_url(request, uid, token):
 
     url = reverse('user_password_reset_confirm', args=[uid, token])
-    return request.build_absolute_uri(url)
+    response_url = '{scheme}://{host}{api_url}'.format(scheme=request.scheme, host=HOST_URL, api_url=url)
+    return response_url
