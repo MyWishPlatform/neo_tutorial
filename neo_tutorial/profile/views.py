@@ -1,16 +1,19 @@
 import django.contrib.auth.views as auth_views
 from rest_auth.views import LoginView as rest_LoginView
+from rest_auth.views import LogoutView as rest_LogoutView
 
+from django.conf import settings
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate
-
-from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import EmailMessage
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
+from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth import login, logout
 from django.contrib.auth.models import User
-from django.core.mail import EmailMessage
+
+from django.contrib.sites.shortcuts import get_current_site
 
 from neo_tutorial.profile.models import TutorialUser
 from neo_tutorial.profile.forms import SignupForm
@@ -27,6 +30,26 @@ class TutorialLogoutView(auth_views.LogoutView):
 
 class TutorialAPILoginView(rest_LoginView):
     pass
+
+
+class TutorialAPILogoutView(rest_LogoutView):
+
+    def logout(self, request):
+        try:
+            request.user.auth_token.delete()
+        except (AttributeError, ObjectDoesNotExist):
+            pass
+        if getattr(settings, 'REST_SESSION_LOGIN', True):
+            logout(request)
+
+        #response = Response({"detail": _("Successfully logged out.")},
+        #                    status=status.HTTP_200_OK)
+        response = HttpResponseRedirect('/')
+        if getattr(settings, 'REST_USE_JWT', False):
+            from rest_framework_jwt.settings import api_settings as jwt_settings
+            if jwt_settings.JWT_AUTH_COOKIE:
+               response.delete_cookie(jwt_settings.JWT_AUTH_COOKIE)
+        return response
 
 
 def portal_signup(request):

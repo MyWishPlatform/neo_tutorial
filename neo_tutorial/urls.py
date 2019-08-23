@@ -19,10 +19,10 @@ from django.conf.urls import include
 from django.conf.urls.static import static
 from django.conf import settings
 
-from rest_auth.views import LoginView, LogoutView, PasswordResetView, PasswordResetConfirmView, PasswordChangeView
+from rest_auth.views import LoginView, PasswordResetView, PasswordResetConfirmView, PasswordChangeView
 
 from neo_tutorial.portal.views import HomeLoginView, HomePasswordChangeView
-from neo_tutorial.profile.views import portal_signup, portal_signup_activate
+from neo_tutorial.profile.views import portal_signup, portal_signup_activate, TutorialAPILogoutView
 
 
 urlpatterns = [
@@ -38,7 +38,7 @@ urlpatterns += [
          HomePasswordChangeView.as_view(), name='user_password_reset_confirm'),
     #path('api/rest-auth/', include('rest_auth.urls')),
     path('api/rest-auth/login/', LoginView.as_view()),
-    path('api/rest-auth/logout/', LogoutView.as_view()),
+    path('api/rest-auth/logout/', TutorialAPILogoutView.as_view()),
     path('api/rest-auth/password/reset/', PasswordResetView.as_view()),
     re_path('api/rest-auth/password/reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
             PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
