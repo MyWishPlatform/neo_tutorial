@@ -16,9 +16,9 @@ class HomeLoginView(HomeView):
 
 
 class HomePasswordChangeView(HomeView):
-
-    def get(self, request, *args, **kwargs):
-        return HttpResponseRedirect('/')
+    pass
+    #def get(self, request, *args, **kwargs):
+    #    return HttpResponseRedirect('/')
 
 
 class CourseListView(TemplateView):
