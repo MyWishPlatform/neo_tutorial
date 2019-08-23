@@ -129,7 +129,7 @@ $(function() {
             data[k === 'email' ? 'username' : k] = fields.signin.fields[k].val();
         }
         authUser(data).then(function() {
-            window.location = window.location;
+            window.location = window.location.href;
         }, function(error) {
             const errors = error.responseJSON;
             for (let i in errors) {

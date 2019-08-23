@@ -48,7 +48,10 @@
 </div>
 
 
-<div data-modal="auth" class="custom-modal" style="display: none">
+
+{% if not user.username %}
+
+<div data-modal="auth" class="custom-modal" {% if request.path != '/login/' %}style="display: none"{% endif %}>
     <div class="custom-modal_overlay" id="auth-form">
         <div class="custom-modal_content">
             <div class="custom-modal_content_header">
@@ -274,6 +277,7 @@
     </div>
 </div>
 
+{% endif %}
 
 {% endblock %}
 
