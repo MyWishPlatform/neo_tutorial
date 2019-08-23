@@ -38,7 +38,7 @@ urlpatterns += [
     path('api/rest-auth/login/', LoginView.as_view()),
     path('api/rest-auth/logout/', LogoutView.as_view()),
     path('api/rest-auth/password/reset/', PasswordResetView.as_view()),
-    re_path('api/rest-auth/password/reset/confirm/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',
+    re_path('api/rest-auth/password/reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
             PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('api/rest-auth/password/change/', PasswordChangeView.as_view()),
     path('api/rest-auth/registration/', portal_signup),

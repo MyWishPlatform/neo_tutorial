@@ -119,6 +119,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTH_USER_MODEL = 'profile.TutorialUser'
 
+REST_AUTH_SERIALIZERS = {
+        'PASSWORD_RESET_SERIALIZER': 'neo_tutorial.profile.serializers.PortalPasswordResetSerializer',
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
