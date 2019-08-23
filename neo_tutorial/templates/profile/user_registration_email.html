@@ -1,4 +1,9 @@
-{% autoescape off %}
-Hello {{ user.username }},
-Please click on the link to confirm your registration,http://{{ domain }}{% url 'activate' uidb64=uid token=token %}
-{% endautoescape %}
+{% load account %}{% load i18n %}NEO Knowlegde Center team welcomes you!
+
+You're receiving this e-mail because user {{ user_display }} has given yours as an e-mail address to connect their account.
+
+To confirm the registration, click on the link below:
+{{ activate_url }}
+
+Best regards!
+{{ site_domain }}
