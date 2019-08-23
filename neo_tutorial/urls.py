@@ -21,6 +21,7 @@ from django.conf import settings
 
 from rest_auth.views import PasswordResetView, PasswordResetConfirmView, LoginView, LogoutView
 
+from neo_tutorial.portal.views import HomeLoginView
 from neo_tutorial.profile.views import portal_signup, portal_signup_activate
 
 
@@ -32,6 +33,7 @@ urlpatterns = [
 urlpatterns += [
     path('administration/', include('neo_tutorial.administration.urls')),
     path('', include('neo_tutorial.portal.urls')),
+    path('login/', HomeLoginView.as_view()),
     #path('api/rest-auth/', include('rest_auth.urls')),
     path('api/rest-auth/login/', LoginView.as_view()),
     path('api/rest-auth/logout/', LogoutView.as_view()),

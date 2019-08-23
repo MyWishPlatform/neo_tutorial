@@ -7,6 +7,10 @@ from neo_tutorial.courses.models import BasicCourse, Lesson
 class HomeView(TemplateView):
     template_name = 'portal/home.html'
 
+
+class HomeLoginView(HomeView):
+    pass
+
 #     def get_context_data(self, **kwargs):
 #         context = super().get_context_data(**kwargs)
 #         course_list = get_all_courses_details()
