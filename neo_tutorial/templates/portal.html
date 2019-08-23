@@ -47,10 +47,82 @@
     </div>
 </div>
 
+{% ifequal request.resolver_match.url_name 'user_password_reset_confirm' %}
+
+<div data-modal="reset-password" class="custom-modal">
+    <div class="custom-modal_overlay" id="reset-pass-form">
+        <div class="custom-modal_content">
+            <div class="custom-modal_content_header">
+                <div class="back-to-forms">
+                    Set a new password
+                </div>
+            </div>
+            <form class="custom-modal_content_body" data-form="new-password"
+                  style="display: block"
+                  id="new-password-form"
+                  name="new-password" novalidate  autocomplete="off">
+                <div class="form-control">
+                    <span class="form-control_label">
+                        Password
+                    </span>
+                    <div class="form-control_input">
+                        <input type="password"
+                               minlength="8"
+                               autocomplete="new-password"
+                               name="new_password1" required>
+                        <div class="form-control_errors" data-error="required" data-field="new_password1">
+                            Required field
+                        </div>
+                        <div class="form-control_errors" data-error="minlength" data-field="new_password1">
+                            Minimum password length 8 characters
+                        </div>
+                        <div class="form-control_errors" data-error="pattern" data-field="new_password1">
+                            Incorrect password
+                        </div>
+                        <div class="form-control_errors" data-error="server" data-field="new_password1">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-control">
+                    <span class="form-control_label">
+                        Confirm password
+                    </span>
+                    <div class="form-control_input">
+                        <input type="password"
+                               minlength="8"
+                               autocomplete="new-password"
+                               name="new_password2" required>
+                        <div class="form-control_errors" data-error="match" data-field="new_password2">
+                            Passwords do not match
+                        </div>
+                        <div class="form-control_errors" data-error="server" data-field="new_password2">
+                        </div>
+                        <div class="form-control_errors" data-error="server" data-field="non_field_errors">
+                        </div>
+                    </div>
+                </div>
+                <div class="custom-modal_content_footer">
+                    <div class="custom-modal_buttons">
+                        <button class="btn btn-submit uppercase btn-rounded bold" type="submit">
+                            Set password
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <button class="custom-modal-close" data-close-modal="reset-password">
+                <span></span>
+            </button>
+        </div>
+    </div>
+</div>
+{% endifequal %}
+
+
+
+
 
 
 {% if not user.username %}
-
 <div data-modal="auth" class="custom-modal" {% if request.path != '/login/' %}style="display: none"{% endif %}>
     <div class="custom-modal_overlay" id="auth-form">
         <div class="custom-modal_content">
@@ -71,8 +143,9 @@
                         Password assistance
                     </a>
                 </div>
-
             </div>
+
+
             <form class="custom-modal_content_body" data-form="signup"
                   id="registration-form"
                   name="register" novalidate  autocomplete="off">
@@ -175,8 +248,6 @@
                     </div>
                 </div>
             </form>
-
-
             <form class="custom-modal_content_body" data-form="forgot"
                   id="forgot-password-form"
                   name="forgot" novalidate  autocomplete="off">
@@ -224,13 +295,13 @@
             <div class="custom-modal_content_header">
                 <div class="back-to-forms">
                     <div>
-                        Confirm Email
+                        Confirm registration
                     </div>
                 </div>
             </div>
             <div class="custom-modal_content_body" style="display: block;">
                 <p class="modal-text">
-                    На Ваш Email отправлено письмо, подтвердите адрес электронной почты перейдя по ссылке в письме
+                    The message has been sent to your email, follow the link in the email to confirm registration
                 </p>
             </div>
             <div class="custom-modal_content_footer">
@@ -253,13 +324,13 @@
             <div class="custom-modal_content_header">
                 <div class="back-to-forms">
                     <div>
-                        Сброс пароля
+                        Password reset
                     </div>
                 </div>
             </div>
             <div class="custom-modal_content_body" style="display: block;">
                 <p class="modal-text">
-                    На Ваш Email отправлено письмо, перейдите по ссылке в письме для сброса пароля
+                    The message has been sent to your email, follow the link in the email to reset your password
                 </p>
             </div>
             <div class="custom-modal_content_footer">

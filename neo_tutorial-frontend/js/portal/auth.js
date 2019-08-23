@@ -11,7 +11,6 @@ $(document).ready(function() {
         }
         return "";
     };
-
     $(document).ajaxSend(function(elm, xhr, s) {
         if (s.type === "POST") {
             xhr.setRequestHeader('X-CSRFToken', getCookie("csrftoken"));
@@ -67,7 +66,22 @@ const forgotPassword = (data) => {
     });
 };
 
+const resetPasswordConfirm = (data) => {
+    return new Promise((resolve, reject) => {
 
+        const ajax = $.ajax({
+            method: "POST",
+            url: `/api/rest-auth/password/reset/confirm/${data.uid}/${data.token}/`,
+            data: data
+        });
+
+        ajax.done(function(result) {
+            resolve(result);
+        }).fail(function(error) {
+            reject(error);
+        });
+    });
+};
 
 
 $(function() {
@@ -80,7 +94,36 @@ $(function() {
     const regForm = $('#registration-form');
     const loginForm = $('#login-form');
     const forgotPasswordForm = $('#forgot-password-form');
+    const resetPasswordForm = $('#new-password-form');
 
+
+    resetPasswordForm.on('submit', function(event) {
+        event.preventDefault();
+        const parsedPath = location.pathname.replace(/^\//, '').split('/').slice(1, 3);
+        const data = {
+            uid: parsedPath[0],
+            token: parsedPath[1]
+        };
+
+        for (let k in fields['new-password'].fields) {
+            data[k] = fields['new-password'].fields[k].val();
+        }
+        resetPasswordForm.addClass('in-progress');
+        resetPasswordConfirm(data).then(function() {
+            window.history.pushState({path: '/'}, null, '/');
+            openModal('auth');
+        }, function(error) {
+            const errors = error.responseJSON;
+            for (let i in errors) {
+                let fieldName = i === 'non_field_errors' ? 'email': i;
+                fields['new-password'].errors[fieldName].server.show();
+                fields['new-password'].errors[fieldName].server.html(errors[i].join("<br/>"));
+            }
+        }).finally(() => {
+            resetPasswordForm.removeClass('in-progress');
+        });
+        return false;
+    });
 
     forgotPasswordForm.on('submit', function(event) {
         event.preventDefault();
@@ -88,6 +131,7 @@ $(function() {
         for (let k in fields.forgot.fields) {
             data[k] = fields.forgot.fields[k].val();
         }
+        forgotPasswordForm.addClass('in-progress');
         forgotPassword(data).then(function(response) {
             openModal('success-reset-password');
         }, function(error) {
@@ -97,10 +141,11 @@ $(function() {
                 fields.forgot.errors[fieldName].server.show();
                 fields.forgot.errors[fieldName].server.html(errors[i].join("<br/>"));
             }
+        }).finally(() => {
+            forgotPasswordForm.removeClass('in-progress');
         });
         return false;
     });
-
 
     regForm.on('submit', function(event) {
         event.preventDefault();
@@ -108,6 +153,7 @@ $(function() {
         for (let k in fields.register.fields) {
             data[k] = fields.register.fields[k].val();
         }
+        regForm.addClass('in-progress');
         registrationUser(data).then(function(response) {
             openModal('confirm-email');
         }, function(error) {
@@ -117,10 +163,11 @@ $(function() {
                 fields.register.errors[fieldName].server.show();
                 fields.register.errors[fieldName].server.html(errors[i].join("<br/>"));
             }
+        }).finally(() => {
+            regForm.removeClass('in-progress');
         });
         return false;
     });
-
 
     loginForm.on('submit', function(event) {
         event.preventDefault();
@@ -128,6 +175,7 @@ $(function() {
         for (let k in fields.signin.fields) {
             data[k === 'email' ? 'username' : k] = fields.signin.fields[k].val();
         }
+        loginForm.addClass('in-progress');
         authUser(data).then(function() {
             window.location = window.location.href;
         }, function(error) {
@@ -137,6 +185,8 @@ $(function() {
                 fields.signin.errors[fieldName].server.show();
                 fields.signin.errors[fieldName].server.html(errors[i].join("<br/>"));
             }
+        }).then(() => {
+            loginForm.removeClass('in-progress');
         });
         return false;
     });
@@ -148,13 +198,9 @@ $(function() {
     let activeForm;
 
     const showForm = (event) => {
-
         const element = $(event.target).is('[data-form-link]') ? $(event.target) : $(event.target).parents('[data-form-link]').first();
-
         const formName = element.data('form-link');
-
         const allLinks = $('[data-form-link="' + formName + '"]').addClass('active');
-
         if (activeForm && (activeForm.name !== formName)) {
             activeForm.links.removeClass('active');
             activeForm.form.hide();
@@ -178,6 +224,7 @@ $(function() {
             name: formName
         };
     };
+
     authFormMenuItems.on('click', showForm);
     authFormMenuItems.eq(0).click();
 
@@ -201,21 +248,24 @@ $(function() {
                     break;
 
                 case 'password1':
+                case 'new_password1':
                     if (field.get(0).validity.valueMissing) {
-                        formFields.errors['password1'].required.show();
+                        formFields.errors[k].required.show();
                     } else if (field.get(0).validity.tooShort) {
-                        formFields.errors['password1'].minlength.show();
+                        formFields.errors[k].minlength.show();
                     }
                     break;
 
                 case 'password2':
-                    if (formFields.fields['password2'].val() !== formFields.fields['password1'].val()) {
-                        formFields.fields['password2'].get(0).setCustomValidity("Invalid");
-                        if (formFields.fields['password2'].val()) {
-                            formFields.errors['password2'].match.show();
+                case 'new_password2':
+                    const pass1Name = k === 'new_password2' ? 'new_password1' : 'password1';
+                    if (formFields.fields[k].val() !== formFields.fields[pass1Name].val()) {
+                        formFields.fields[k].get(0).setCustomValidity("Invalid");
+                        if (formFields.fields[k].val()) {
+                            formFields.errors[k].match.show();
                         }
                     } else {
-                        formFields.fields['password2'].get(0).setCustomValidity("");
+                        formFields.fields[k].get(0).setCustomValidity("");
                     }
                     break;
             }
@@ -231,7 +281,8 @@ $(function() {
         }
     };
 
-    $('form', authForm).each(function() {
+
+    $('[data-form]').each(function() {
         const form = $(this);
         const formFields = fields[form.attr('name')] = {
             button: $('button[type="submit"]', form),
@@ -264,12 +315,10 @@ $(function() {
 
         validateForm(formFields);
     });
-
     $('[data-open-form]').each(function() {
         const _th = $(this);
         _th.on('click', showForm);
     });
-
 
     let openedModal;
 
@@ -280,7 +329,6 @@ $(function() {
         openedModal = name;
         $('[data-modal="' + name + '"]').show();
     };
-
     const closeModal = function(name) {
         if (openedModal === name) {
             openedModal = false;
@@ -294,8 +342,6 @@ $(function() {
             openModal($(this).data('open-modal'));
         });
     });
-
-
     $('[data-close-modal]').each(function() {
         const _th = $(this);
         _th.on('click', function() {
@@ -303,6 +349,8 @@ $(function() {
         });
     });
 
-
+    if (resetPasswordForm) {
+        openModal('reset-password');
+    }
 });
 
