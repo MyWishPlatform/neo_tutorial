@@ -34,7 +34,7 @@ class TutorialAdminLoginView(TutorialLoginView):
 
 class TutorialAdminLogoutView(TutorialLogoutView):
     template_name = 'administration/auth.html'
-    next_page = '/administration/login/'
+    next_page = '/'
 
 
 class AdministrationView(TemplateView):
