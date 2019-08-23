@@ -52,6 +52,21 @@ const authUser = (data) => {
     });
 };
 
+const forgotPassword = (data) => {
+    return new Promise((resolve, reject) => {
+        const ajax = $.ajax({
+            method: "POST",
+            url: '/api/rest-auth/password/reset/',
+            data: data
+        });
+        ajax.done(function(result) {
+            resolve(result);
+        }).fail(function(error) {
+            reject(error);
+        });
+    });
+};
+
 
 
 
@@ -64,6 +79,28 @@ $(function() {
 
     const regForm = $('#registration-form');
     const loginForm = $('#login-form');
+    const forgotPasswordForm = $('#forgot-password-form');
+
+
+    forgotPasswordForm.on('submit', function(event) {
+        event.preventDefault();
+        const data = {};
+        for (let k in fields.forgot.fields) {
+            data[k] = fields.forgot.fields[k].val();
+        }
+        forgotPassword(data).then(function(response) {
+            openModal('success-reset-password');
+        }, function(error) {
+            const errors = error.responseJSON;
+            for (let i in errors) {
+                let fieldName = i === 'non_field_errors' ? 'email': i;
+                fields.forgot.errors[fieldName].server.show();
+                fields.forgot.errors[fieldName].server.html(errors[i].join("<br/>"));
+            }
+        });
+        return false;
+    });
+
 
     regForm.on('submit', function(event) {
         event.preventDefault();
@@ -76,7 +113,7 @@ $(function() {
         }, function(error) {
             const errors = error.responseJSON;
             for (let i in errors) {
-                let fieldName = i === 'username' ? 'email': 'non_field_errors' ? 'password2': i;
+                let fieldName = i === 'username' ? 'email': i === 'non_field_errors' ? 'password2': i;
                 fields.register.errors[fieldName].server.show();
                 fields.register.errors[fieldName].server.html(errors[i].join("<br/>"));
             }

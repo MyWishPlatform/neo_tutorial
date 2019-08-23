@@ -175,6 +175,7 @@
 
 
             <form class="custom-modal_content_body" data-form="forgot"
+                  id="forgot-password-form"
                   name="forgot" novalidate  autocomplete="off">
                 <p class="modal-text">
                     Enter your username or email to recover your password. You will receive an email with instructions
@@ -223,16 +224,12 @@
                         Confirm Email
                     </div>
                 </div>
-
             </div>
-
-
             <div class="custom-modal_content_body" style="display: block;">
                 <p class="modal-text">
                     На Ваш Email отправлено письмо, подтвердите адрес электронной почты перейдя по ссылке в письме
                 </p>
             </div>
-
             <div class="custom-modal_content_footer">
                 <div class="custom-modal_buttons">
                     <button class="btn btn-submit uppercase btn-rounded bold" type="button" data-close-modal="confirm-email">
@@ -240,8 +237,37 @@
                     </button>
                 </div>
             </div>
-
             <button class="custom-modal-close" data-close-modal="confirm-email">
+                <span></span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div data-modal="success-reset-password" class="custom-modal" style="display: none">
+    <div class="custom-modal_overlay">
+        <div class="custom-modal_content">
+            <div class="custom-modal_content_header">
+                <div class="back-to-forms">
+                    <div>
+                        Сброс пароля
+                    </div>
+                </div>
+            </div>
+            <div class="custom-modal_content_body" style="display: block;">
+                <p class="modal-text">
+                    На Ваш Email отправлено письмо, перейдите по ссылке в письме для сброса пароля
+                </p>
+            </div>
+            <div class="custom-modal_content_footer">
+                <div class="custom-modal_buttons">
+                    <button class="btn btn-submit uppercase btn-rounded bold"
+                            type="button" data-close-modal="success-reset-password">
+                        Ok
+                    </button>
+                </div>
+            </div>
+            <button class="custom-modal-close" data-close-modal="success-reset-password">
                 <span></span>
             </button>
         </div>
