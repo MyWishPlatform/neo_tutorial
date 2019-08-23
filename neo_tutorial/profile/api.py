@@ -22,5 +22,5 @@ def get_email_confirmation_url(request, uid, token):
 
 def get_password_change_url(request, uid, token):
 
-    url = reverse('password_reset_confirm', args=[uid, token])
+    url = reverse('user_password_reset_confirm', args=[uid, token])
     return request.build_absolute_uri(url)

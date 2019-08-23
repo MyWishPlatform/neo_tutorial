@@ -13,11 +13,12 @@ class HomeLoginView(HomeView):
 
     def get(self, request, *args, **kwargs):
         return HttpResponseRedirect('/')
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         course_list = get_all_courses_details()
-#         context['courses'] = course_list
-#         return context
+
+
+class HomePasswordChangeView(HomeView):
+
+    def get(self, request, *args, **kwargs):
+        return HttpResponseRedirect('/')
 
 
 class CourseListView(TemplateView):
