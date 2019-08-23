@@ -1,10 +1,10 @@
 import django.contrib.auth.views as auth_views
 from rest_auth.views import LoginView as rest_LoginView
 
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
-from .forms import SignupForm
+
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -13,6 +13,7 @@ from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 
 from neo_tutorial.profile.models import TutorialUser
+from neo_tutorial.profile.forms import SignupForm
 from neo_tutorial.profile.api import user_signup_token
 
 
@@ -66,6 +67,7 @@ def portal_signup_activate(request, uidb64, token):
         user.save()
         login(request, user)
         # return redirect('home')
-        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+        #return JsonResponse('Thank you for your email confirmation. Now you can login your account.')
+        return HttpResponseRedirect('/login')
     else:
-        return HttpResponse('Activation link is invalid!')
+        return JsonResponse({'error': 'Activation link is invalid'})
