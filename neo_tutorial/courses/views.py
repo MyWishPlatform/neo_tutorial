@@ -1,9 +1,10 @@
+from django.db.models import Max
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.exceptions import PermissionDenied, ParseError
 from .models import BasicCourse, CourseMaterial, Lesson, Test, Speciality, CourseImage
 from .api import get_courses_details, get_or_create_speciality, get_all_courses_details, get_courses_by_tag_details, \
-    parse_image_course, parse_image_lesson, get_lesson_details
+    parse_image_course, parse_image_lesson, get_lesson_details, get_course_lesson_users
 from ast import literal_eval
 
 
@@ -229,12 +230,16 @@ def create_lesson_view(request):
     video_id = params['video_id'] if 'video_id' in params else ""
     content = params['content'] if 'content' in params else ""
 
+    other_lessons = Lesson.objects.filter(course=course_object)
+    order = params['order'] if 'order' in params else other_lessons.aggregate(Max('order'))['order_max']
+
     lesson = Lesson(
             course=course_object,
             name=params['name'],
             description=description,
             video_id=video_id,
-            content=content
+            content=content,
+            order=order
     )
     lesson.save()
 
@@ -385,4 +390,7 @@ def get_course_by_id(request):
     lessons_by_course = Lesson.objects.filter(course=course.first())
 
     details['lessons_count'] = len(lessons_by_course)
+
+    main_course = BasicCourse.objects.get(id=course.first().course_id)
+    details['users_completed'] = get_course_lesson_users(main_course)
     return Response(details)

@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
 
+from neo_tutorial.profile.models import TutorialUser
+
 
 class Speciality(models.Model):
     name = models.CharField(max_length=120, db_index=True, unique=True)
@@ -75,3 +77,14 @@ class Test(models.Model):
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
     name = models.CharField(max_length=80, null=True, default='')
     description = models.CharField(max_length=120, null=True, default=None)
+
+
+class CompletedCourses(models.Model):
+    course = models.ForeignKey(BasicCourse, on_delete=models.CASCADE)
+    user = models.ForeignKey(TutorialUser, on_delete=models.CASCADE)
+
+
+class CompletedLessons(models.Model):
+    course = models.ForeignKey(BasicCourse, on_delete=models.CASCADE)
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
+    user = models.ForeignKey(TutorialUser, on_delete=models.CASCADE)

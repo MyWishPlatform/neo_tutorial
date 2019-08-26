@@ -5,15 +5,18 @@ from django.http import HttpResponseBadRequest
 from rest_framework.response import Response
 from neo_tutorial.profile.models import TutorialUser
 from neo_tutorial.courses.models import BasicCourse
+from neo_tutorial.profile.api import get_full_user_statistics
+from neo_tutorial.courses.api import get_course_lesson_users
 
 
 @api_view(http_method_names=['GET'])
 def profile_view(request):
-    if 'user' in request:
-        if request.user.is_anonymous:
-            raise PermissionDenied
+    if request.user.is_anonymous:
+        raise PermissionDenied
 
-    user_id = request.user.id
+    request_params = request.GET
+    user_id = request_params.get('id', None)
+
     user_object = TutorialUser.objects.get(id=user_id)
 
     details = {
@@ -21,6 +24,7 @@ def profile_view(request):
         'username': user_object.email,
         'is_manager': user_object.is_manager,
         'is_administrator': user_object.is_administrator,
+        'stats': get_full_user_statistics(user_object)
     }
 
     return Response(details)
@@ -80,3 +84,30 @@ def create_user_view(request):
 
     return Response(details)
 
+
+@api_view(http_method_names=['GET'])
+def get_user_stats(request):
+    request_params = request.GET
+    username = request_params.get('username', None)
+
+    try:
+        user = TutorialUser.objects.get(username=username)
+    except TutorialUser.DoesNotExist:
+        raise ParseError('User is not found')
+
+    completed_statistics = get_full_user_statistics(user)
+    return Response(completed_statistics)
+
+
+@api_view(http_method_names=['GET'])
+def get_course_stats(request):
+    request_params = request.GET
+    course_id = request_params.get('course_id', None)
+
+    try:
+        course = BasicCourse.objects.get(course_id=course_id)
+    except BasicCourse.DoesNotExist:
+        raise ParseError('Course is not found')
+
+    completed_statistics = get_course_lesson_users(course)
+    return Response(completed_statistics)

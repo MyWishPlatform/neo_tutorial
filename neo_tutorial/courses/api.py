@@ -124,6 +124,12 @@ def get_lesson_details(lesson_id, detail_contents=True):
 
     if detail_contents:
         details['content'] = lesson.content
+
+    main_course = BasicCourse.objects.get(id=lesson.course.course_id)
+    print(lesson)
+    main_lng_lesson = Lesson.objects.get(order=lesson.order, course=main_course)
+    lesson_stats = get_course_lesson_users(main_lng_lesson)
+    details['users_completed'] = lesson_stats
     return details
 
 
@@ -181,3 +187,15 @@ def get_langs_for_course(course_id):
             internal_ids[course_other_lang.lng] = course_other_lang.id
 
     return internal_ids
+
+
+def get_course_lesson_users(query_object):
+    obj_classname = query_object.__class__.__name__
+
+    if obj_classname == 'BasicCourse':
+        obj_set = query_object.completedcourses_set.all()
+    elif obj_classname == 'Lesson':
+        obj_set = query_object.completedlessons_set.all()
+
+    users = [x.user.username for x in obj_set]
+    return users

@@ -2,7 +2,11 @@ from django.http import HttpResponseRedirect
 from django.views.generic.base import TemplateView
 from neo_tutorial.courses.api import get_all_courses_details, get_lesson_details, get_speciality_by_id, \
     get_courses_details, get_languages, get_specialities
-from neo_tutorial.courses.models import BasicCourse, Lesson
+from neo_tutorial.courses.models import BasicCourse, Lesson, CompletedCourses, CompletedLessons
+
+
+def require_login():
+    return HttpResponseRedirect('/login')
 
 
 class HomeView(TemplateView):
@@ -94,12 +98,20 @@ class CourseListView(TemplateView):
 class CourseLessonView(TemplateView):
     template_name = 'portal/course_lesson.html'
 
+    def get(self, request, *args, **kwargs):
+        if self.request.user.is_anonymous:
+            return require_login()
+
+        return super().get(self, request, *args, **kwargs)
+
     def get_context_data(self, id, **kwargs):
         context = super().get_context_data(**kwargs)
         lesson_details = get_lesson_details(id)
+        this_lesson = Lesson.objects.get(id=id)
 
         course_q = BasicCourse.objects.filter(id=lesson_details['course_id'])
-        lessons = course_q.first().lesson_set.all().order_by('order')
+        this_course = course_q.first()
+        lessons = this_course.lesson_set.all().order_by('order')
 
         lessons_details = []
         for i, lesson in enumerate(lessons):
@@ -115,7 +127,34 @@ class CourseLessonView(TemplateView):
         course_details['lessons'] = lessons_details
         lesson_details['course'] = course_details
         context['lesson'] = lesson_details
-        print(lesson_details)
+
+        current_user = self.request.user
+
+        main_course = BasicCourse.objects.get(id=this_course.course_id)
+        #main_lesson = Lesson.objects.get(id=this_lesson.course_id)
+        main_lng_lesson = Lesson.objects.get(order=this_lesson.order, course=main_course)
+        print(main_course)
+        print(main_lng_lesson)
+
+        lesson_completed, created_now_l = CompletedLessons.objects.get_or_create(
+                course=main_course,
+                lesson=main_lng_lesson,
+                user=current_user
+        )
+        if created_now_l:
+            lesson_completed.save()
+
+        completed_in_course = CompletedLessons.objects.filter(
+                course=main_course,
+                user=current_user
+        )
+        if len(completed_in_course) == len(lessons):
+            course_completed, created_now_q = CompletedCourses.objects.get_or_create(
+                    course=main_course,
+                    user=current_user
+            )
+            if created_now_q:
+                course_completed.save()
 
         return context
 
