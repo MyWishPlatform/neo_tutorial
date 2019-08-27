@@ -1,11 +1,12 @@
+from ast import literal_eval
+
 from django.db.models import Max
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.exceptions import PermissionDenied, ParseError
 from .models import BasicCourse, CourseMaterial, Lesson, Test, Speciality, CourseImage
 from .api import get_courses_details, get_or_create_speciality, get_all_courses_details, get_courses_by_tag_details, \
-    parse_image_course, parse_image_lesson, get_lesson_details, get_course_lesson_users
-from ast import literal_eval
+    parse_image_course, parse_image_lesson, get_lesson_details, get_course_lesson_users, get_course_started_users
 
 
 @api_view(http_method_names=['GET'])
@@ -14,13 +15,18 @@ def all_courses_view(request):
     details = get_courses_details(all_courses)
 
     for course in details:
-        other_lang_courses = BasicCourse.objects.filter(course_id=course['course_id'])
+        this_course_id = course['course_id']
+        other_lang_courses = BasicCourse.objects.filter(course_id=this_course_id)
 
         lang_lessons = {}
         for course_lang in other_lang_courses:
             lang_lessons[course_lang.lng] = len(Lesson.objects.filter(course=course_lang))
 
         course['lessons_count'] = lang_lessons
+
+        main_course = BasicCourse.objects.get(id=this_course_id)
+        course['users_completed'] = len(get_course_lesson_users(main_course))
+        course['users_started'] = len(get_course_started_users(main_course))
 
     return Response(details)
 

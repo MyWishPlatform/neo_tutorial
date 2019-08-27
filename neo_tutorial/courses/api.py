@@ -199,3 +199,11 @@ def get_course_lesson_users(query_object):
 
     users = [x.user.username for x in obj_set]
     return users
+
+
+def get_course_started_users(course):
+    lesson_list = course.completedlessons_set.all()
+    users = lesson_list.values_list('user', flat=True).distinct('user').order_by()
+    return list(users)
+
+
