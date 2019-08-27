@@ -1,6 +1,51 @@
 angular.module('adminApp')
     .controller('UsersListController', ['$scope', 'usersList', function($scope, usersList) {
-        $scope.usersList = usersList.data;
+        $scope.usersList = angular.copy(usersList.data);
+
+        $scope.sort = {};
+
+        var applySort = function() {
+            switch($scope.sort.name) {
+                case 'lessons':
+                    $scope.usersList.sort(function(user1, user2) {
+                        return $scope.sort.asc ?
+                            (user1.stats.completed_lessons_count > user2.stats.completed_lessons_count) ? 1 : -1 :
+                            (user1.stats.completed_lessons_count <= user2.stats.completed_lessons_count) ? 1 : -1;
+                    });
+                    break;
+                case 'courses-started':
+                    $scope.usersList.sort(function(user1, user2) {
+                        return $scope.sort.asc ?
+                            (user1.stats.started_courses_count > user2.stats.started_courses_count) ? 1 : -1 :
+                            (user1.stats.started_courses_count <= user2.stats.started_courses_count) ? 1 : -1;
+                    });
+                    break;
+                case 'courses-completed':
+                    $scope.usersList.sort(function(user1, user2) {
+                        return $scope.sort.asc ?
+                            (user1.stats.completed_courses_count > user2.stats.completed_courses_count) ? 1 : -1 :
+                            (user1.stats.completed_courses_count <= user2.stats.completed_courses_count) ? 1 : -1;
+                    });
+                    break;
+                default:
+                    $scope.usersList = angular.copy(usersList.data);
+            }
+        };
+
+        $scope.sortBy = function(name) {
+            if ($scope.sort.name !== name) {
+                $scope.sort.name = name;
+                $scope.sort.asc = false;
+            } else {
+                if ($scope.sort.asc) {
+                    $scope.sort = {};
+                } else {
+                    $scope.sort.asc = true;
+                }
+            }
+            applySort();
+        }
+
     }])
 
     .controller('UsersAddController', [
@@ -63,8 +108,9 @@ angular.module('adminApp')
 
         }]
     )
-    .controller('UsersViewController', [function() {
-
+    .controller('UsersViewController', ['userProfile', '$scope', function(userProfile, $scope) {
+        $scope.user = userProfile.data;
+        console.log($scope.user);
     }]);
 
 

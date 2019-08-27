@@ -131,7 +131,7 @@ angular.module('adminApp')
                 API_PATH: API.ADMIN_PATH,
                 path: API.LESSONS.PATH + API.LESSONS.METHODS.UPDATE,
                 data: angular.extend({}, $scope.request, {
-                    content: lessonContent.html()
+                    content: lessonContent.length ? lessonContent.html() : $scope.request.content
                 })
             }).then(function(result) {
                 $scope.request.id = result.data.id;

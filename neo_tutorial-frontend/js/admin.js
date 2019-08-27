@@ -115,7 +115,6 @@ module.config(['$stateProvider', '$locationProvider', '$urlRouterProvider',
         resolve: {
             course: ['$stateParams', 'RequestService', 'API', '$state', '$timeout',
                 function($stateParams, RequestService, API, $state, $timeout) {
-
                 return RequestService.get({
                     'API_PATH': API.ADMIN_PATH,
                     'path': API.COURSES.PATH + API.COURSES.METHODS.GET_BY_COURSE_ID,

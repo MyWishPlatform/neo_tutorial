@@ -7,6 +7,7 @@
     <thead>
     <tr>
         <th class="normal-width">Title</th>
+        <th>Views</th>
         <th colspan="2" width="1px">Order</th>
     </tr>
     </thead>
@@ -17,6 +18,7 @@
         <td class="text-left normal-width">
             <nobr>{{ lesson.name }}</nobr>
         </td>
+        <td>{{ lesson.users_completed.length }}</td>
         <td width="1px">
             <button type="button" ng-if="$index" ng-click="toUp(lesson); $event.stopPropagation();">&#8593;</button>
         </td>

@@ -1,6 +1,42 @@
 angular.module('adminApp')
     .controller('CoursesListController', ['$scope', 'coursesList', function($scope, coursesList) {
-        $scope.coursesList = coursesList.data;
+        $scope.coursesList = angular.copy(coursesList.data);
+        $scope.sort = {};
+
+        var applySort = function() {
+            switch($scope.sort.name) {
+                case 'started':
+                    $scope.coursesList.sort(function(course1, course2) {
+                        return $scope.sort.asc ?
+                            (course1.users_started > course2.users_started) ? 1 : -1 :
+                            (course1.users_started <= course2.users_started) ? 1 : -1;
+                    });
+                    break;
+                case 'completed':
+                    $scope.coursesList.sort(function(course1, course2) {
+                        return $scope.sort.asc ?
+                            (course1.users_completed > course2.users_completed) ? 1 : -1 :
+                            (course1.users_completed <= course2.users_completed) ? 1 : -1;
+                    });
+                    break;
+                default:
+                    $scope.coursesList = angular.copy(coursesList.data);
+            }
+        };
+
+        $scope.sortBy = function(name) {
+            if ($scope.sort.name !== name) {
+                $scope.sort.name = name;
+                $scope.sort.asc = false;
+            } else {
+                if ($scope.sort.asc) {
+                    $scope.sort = {};
+                } else {
+                    $scope.sort.asc = true;
+                }
+            }
+            applySort();
+        }
     }])
     .controller('CoursesAddController',
         ['$scope', 'RequestService', 'API', '$state', 'specialitiesList', 'course', function($scope, RequestService, API, $state, specialitiesList, course) {
@@ -60,8 +96,8 @@ angular.module('adminApp')
                 file: $scope.coverFile
             }).then(function(response) {
                 $state.go('main.base.courses_view', {
-                    course_id: requestData.course_id,
-                    lng: requestData.lng
+                    course_id: response.data.course_id,
+                    lng: response.data.lng
                 });
             }, function(error) {
                 switch (error.status) {

@@ -8,7 +8,15 @@
         <th>Title</th>
         <th>Speciality</th>
         <th>Lessons</th>
-        <!--<th>Materials</th>-->
+        <th width="1px"
+            class="with-sorting"
+            ng-class="{sorted: sort.name === 'started', 'sorted-asc': sort.asc}"
+            ng-click="sortBy('started')"
+        >Started</th>
+        <th width="1px"
+            ng-class="{sorted: sort.name === 'completed', 'sorted-asc': sort.asc}"
+            ng-click="sortBy('completed')"
+            class="with-sorting">Completed</th>
         <th>Active</th>
     </tr>
     </thead>
@@ -28,6 +36,12 @@
             </span>
         </td>
         <!--<td>n/a</td>-->
+        <td width="1px" class="text-center">
+            {{ course.users_started }}
+        </td>
+        <td width="1px" class="text-center">
+            {{ course.users_completed }}
+        </td>
         <td>
             <span ng-if="course.is_active">Yes</span>
             <span ng-if="!course.is_active">No</span>
