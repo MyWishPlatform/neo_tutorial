@@ -18,30 +18,7 @@ from neo_tutorial.profile.api import user_signup_token, get_email_confirmation_u
 
 
 class TutorialLoginView(auth_views.LoginView):
-    template_name = 'portal/auth.html'
-    next = '/courses/'
-
-    def __init__(self):
-        self.profile = None
-        super().__init__()
-
-    def check_privileges(self):
-        if self.profile.is_manager or self.profile.is_administrator:
-            return True
-
-    def form_valid(self, form):
-        username = form.cleaned_data['username']
-        password = form.cleaned_data['password']
-        user = authenticate(username=username, password=password)
-        self.profile = user
-
-        # Check here if the user is an admin
-        print(self.check_privileges())
-        if user is not None and user.is_active and self.check_privileges():
-            login(self.request, user)
-            return HttpResponseRedirect(self.next)
-        else:
-            return HttpResponseForbidden()
+    pass
 
 
 class TutorialLogoutView(auth_views.LogoutView):

@@ -14,9 +14,7 @@ class HomeView(TemplateView):
 
 
 class HomeLoginView(HomeView):
-
-    def get(self, request, *args, **kwargs):
-        return HttpResponseRedirect('/')
+    pass
 
 
 class HomePasswordChangeView(HomeView):
@@ -27,6 +25,12 @@ class HomePasswordChangeView(HomeView):
 
 class CourseListView(TemplateView):
     template_name = 'portal/course_list.html'
+
+    def get(self, request, *args, **kwargs):
+        if self.request.user.is_anonymous:
+            return require_login()
+
+        return super().get(self, request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
