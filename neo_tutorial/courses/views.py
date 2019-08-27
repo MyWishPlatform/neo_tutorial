@@ -78,6 +78,7 @@ def create_course_view(request):
 
     details = {
         'id': course.id,
+        'course_id': course.course_id,
         'name': course.name,
         'speciality': {
             'id': course.speciality.id,
@@ -231,7 +232,7 @@ def create_lesson_view(request):
     content = params['content'] if 'content' in params else ""
 
     other_lessons = Lesson.objects.filter(course=course_object)
-    order = params['order'] if 'order' in params else other_lessons.aggregate(Max('order'))['order_max']
+    order = params['order'] if 'order' in params else other_lessons.aggregate(Max('order'))['order__max']
 
     lesson = Lesson(
             course=course_object,
