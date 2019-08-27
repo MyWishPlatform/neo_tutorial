@@ -207,3 +207,11 @@ def get_course_started_users(course):
     return list(users)
 
 
+def to_query(obj, id_list):
+    query = obj.objects.filter(id__in=id_list)
+    return query
+
+
+def course_to_query(id_list):
+    return to_query(BasicCourse, id_list)
+

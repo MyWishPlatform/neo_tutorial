@@ -5,7 +5,7 @@ from django.http import HttpResponseBadRequest
 from rest_framework.response import Response
 from neo_tutorial.profile.models import TutorialUser
 from neo_tutorial.courses.models import BasicCourse
-from neo_tutorial.profile.api import get_full_user_statistics
+from neo_tutorial.profile.api import get_full_user_statistics, get_simplified_user_statistics
 from neo_tutorial.courses.api import get_course_lesson_users
 
 
@@ -41,6 +41,7 @@ def all_users_view(request):
             'username': profile.username,
             'is_manager': profile.is_manager,
             'is_administrator': profile.is_administrator,
+            'stats': get_simplified_user_statistics(profile)
         })
 
     return Response(details)
