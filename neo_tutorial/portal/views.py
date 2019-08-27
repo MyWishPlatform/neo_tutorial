@@ -162,6 +162,12 @@ class CourseLessonView(TemplateView):
 class CourseView(TemplateView):
     template_name = 'portal/course.html'
 
+    def get(self, request, *args, **kwargs):
+        if self.request.user.is_anonymous:
+            return require_login()
+
+        return super().get(self, request, *args, **kwargs)
+
     def get_context_data(self, id, **kwargs):
         context = super().get_context_data(**kwargs)
         course_q = BasicCourse.objects.filter(id=id)
