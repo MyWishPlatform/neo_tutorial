@@ -21,7 +21,7 @@ $(document).ready(function() {
 
 
 const registrationUser = (data) => {
-    data.username = data.email;
+    data.username = data.email = data.email.toLowerCase();
     return new Promise((resolve, reject) => {
         const ajax = $.ajax({
             method: "POST",
@@ -37,6 +37,7 @@ const registrationUser = (data) => {
 };
 
 const authUser = (data) => {
+    data.username = data.username.toLowerCase();
     return new Promise((resolve, reject) => {
         const ajax = $.ajax({
             method: "POST",
@@ -85,6 +86,7 @@ const resetPasswordConfirm = (data) => {
 
 
 $(function() {
+
     const authForm = $('#auth-form');
     const authMenu = $('#modal-menu');
     const backLink = $('#back-to-form');
@@ -110,12 +112,13 @@ $(function() {
         }
         resetPasswordForm.addClass('in-progress');
         resetPasswordConfirm(data).then(function() {
-            window.history.pushState({path: '/'}, null, '/');
+            window.history.replaceState(null, null, '/login/');
             openModal('auth');
         }, function(error) {
             const errors = error.responseJSON;
             for (let i in errors) {
-                let fieldName = i === 'non_field_errors' ? 'email': i;
+                let fieldName = ((i === 'non_field_errors') || (i === 'token')) ? 'new_password2': i;
+                if (!fields['new-password'].errors[fieldName]) return;
                 fields['new-password'].errors[fieldName].server.show();
                 fields['new-password'].errors[fieldName].server.html(errors[i].join("<br/>"));
             }
@@ -177,7 +180,7 @@ $(function() {
         }
         loginForm.addClass('in-progress');
         authUser(data).then(function() {
-            window.location = window.location.href;
+            window.location.reload();
         }, function(error) {
             const errors = error.responseJSON;
             for (let i in errors) {
@@ -332,6 +335,13 @@ $(function() {
     const closeModal = function(name) {
         if (openedModal === name) {
             openedModal = false;
+        }
+        switch (name) {
+            case 'auth':
+                authFormMenuItems.eq(0).click();
+                $('input', authForm).val('').removeClass('touched');
+                $('[data-error]', authForm).hide('');
+                break;
         }
         $('[data-modal="' + name + '"]').hide();
     };

@@ -68,7 +68,6 @@
                     <div class="form-control_input">
                         <input type="password"
                                minlength="8"
-                               autocomplete="new-password"
                                name="new_password1" required>
                         <div class="form-control_errors" data-error="required" data-field="new_password1">
                             Required field
@@ -90,7 +89,6 @@
                     <div class="form-control_input">
                         <input type="password"
                                minlength="8"
-                               autocomplete="new-password"
                                name="new_password2" required>
                         <div class="form-control_errors" data-error="match" data-field="new_password2">
                             Passwords do not match
@@ -179,7 +177,7 @@
                             Required field
                         </div>
                         <div class="form-control_errors" data-error="minlength" data-field="password1">
-                            Minimum password length 8 characters
+                            Minimum password length is 8 characters
                         </div>
                         <div class="form-control_errors" data-error="pattern" data-field="password1">
                             Incorrect password
@@ -252,7 +250,7 @@
                   id="forgot-password-form"
                   name="forgot" novalidate  autocomplete="off">
                 <p class="modal-text">
-                    Enter your username or email to recover your password. You will receive an email with instructions
+                    Enter your email to recover your password. You will receive an email with instructions
                 </p>
                 <div class="form-control">
                     <span class="form-control_label">
@@ -265,6 +263,9 @@
                             Required field
                         </div>
                         <div class="form-control_errors" data-error="email" data-field="email">
+                            Enter your e-mail
+                        </div>
+                        <div class="form-control_errors" data-error="server" data-field="email">
                             Enter your e-mail
                         </div>
                     </div>
