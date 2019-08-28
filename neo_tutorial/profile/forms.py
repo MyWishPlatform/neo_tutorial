@@ -32,7 +32,9 @@ class PortalPasswordResetForm(PasswordResetForm):
         """
         to_email = self.cleaned_data["email"]
 
-        for user in self.get_users(to_email):
+        reset_users = self.get_users(to_email)
+
+        for user in reset_users:
             current_site = request.META['HTTP_HOST']
             mail_subject = 'Password Reset'
 
@@ -48,3 +50,9 @@ class PortalPasswordResetForm(PasswordResetForm):
             email = EmailMessage(mail_subject, message, to=[to_email])
             email.send()
 
+    def clean(self):
+        email = self.cleaned_data.get('email')
+
+        reset_users = self.get_users(email)
+        if len(list(reset_users)) < 1:
+            raise forms.ValidationError('Profile with this email does not exist or not activated')
