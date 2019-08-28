@@ -9,14 +9,14 @@
         <th>Username</th>
         <th>Role</th>
         <th class="with-sorting text-center"
-            ng-class="{sorted: sort.name === 'lessons', 'sorted-asc': sort.asc}"
-            ng-click="sortBy('lessons')">Lessons views</th>
-        <th class="with-sorting text-center"
             ng-class="{sorted: sort.name === 'courses-started', 'sorted-asc': sort.asc}"
             ng-click="sortBy('courses-started')">Courses started</th>
         <th class="with-sorting text-center"
             ng-class="{sorted: sort.name === 'courses-completed', 'sorted-asc': sort.asc}"
             ng-click="sortBy('courses-completed')">Courses completed</th>
+        <th class="with-sorting text-center"
+            ng-class="{sorted: sort.name === 'lessons', 'sorted-asc': sort.asc}"
+            ng-click="sortBy('lessons')">Lessons viewed</th>
     </tr>
     </thead>
     <tbody>
@@ -31,9 +31,9 @@
         <td>
             {{ user.is_administrator ? 'Administrator' : (user.is_manager ? 'Manager' : 'User') }}
         </td>
-        <td class="text-center">{{ user.stats.completed_lessons_count }}</td>
         <td class="text-center">{{ user.stats.started_courses_count }}</td>
         <td class="text-center">{{ user.stats.completed_courses_count }}</td>
+        <td class="text-center">{{ user.stats.completed_lessons_count }}</td>
     </tr>
     </tbody>
 </table>
