@@ -1,7 +1,7 @@
 import django.contrib.auth.views as auth_views
 from rest_auth.views import LoginView as rest_LoginView
 
-from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 
