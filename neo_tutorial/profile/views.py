@@ -15,6 +15,7 @@ from django.core.mail import EmailMessage
 from neo_tutorial.profile.models import TutorialUser
 from neo_tutorial.profile.forms import SignupForm
 from neo_tutorial.profile.api import user_signup_token, get_email_confirmation_url
+from neo_tutorial.settings import DEFAULT_FROM_EMAIL
 
 
 class TutorialLoginView(auth_views.LoginView):
@@ -49,7 +50,7 @@ def portal_signup(request):
                 'activate_url': activate_url
             })
             to_email = form.cleaned_data.get('email')
-            email = EmailMessage(mail_subject, message, to=[to_email])
+            email = EmailMessage(mail_subject, message, from_email= DEFAULT_FROM_EMAIL, to=[to_email])
             email.send()
             return JsonResponse({'key': token})
     else:

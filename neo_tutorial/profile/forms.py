@@ -8,6 +8,7 @@ from django.utils.encoding import force_bytes
 
 from neo_tutorial.profile.models import TutorialUser
 from neo_tutorial.profile.api import get_password_change_url
+from neo_tutorial.settings import DEFAULT_FROM_EMAIL
 
 
 class SignupForm(UserCreationForm):
@@ -47,7 +48,7 @@ class PortalPasswordResetForm(PasswordResetForm):
                 'domain':       current_site,
                 'reset_link': reset_url
             })
-            email = EmailMessage(mail_subject, message, to=[to_email])
+            email = EmailMessage(mail_subject, message, from_email=DEFAULT_FROM_EMAIL, to=[to_email])
             email.send()
 
     def clean(self):
