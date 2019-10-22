@@ -1,7 +1,7 @@
 import django.contrib.auth.views as auth_views
 from rest_auth.views import LoginView as rest_LoginView
 
-from django.http import HttpResponse, JsonResponse, HttpResponseRedirect, HttpResponseForbidden
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect, HttpResponseForbidden, HttpResponseBadRequest
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 
@@ -53,6 +53,8 @@ def portal_signup(request):
             email = EmailMessage(mail_subject, message, from_email= DEFAULT_FROM_EMAIL, to=[to_email])
             email.send()
             return JsonResponse({'key': token})
+        else:
+            return HttpResponseBadRequest({'error': form.errors})
     else:
         form = SignupForm()
     return render(request, 'profile/user_registration.html', {'form': form})
