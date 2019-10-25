@@ -54,7 +54,7 @@ def portal_signup(request):
             email.send()
             return JsonResponse({'key': token})
         else:
-            return JsonResponse({'errors': form.errors}, status=400)
+            return JsonResponse(form.errors, status=400)
     else:
         form = SignupForm()
     return render(request, 'profile/user_registration.html', {'form': form})
